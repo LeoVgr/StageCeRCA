@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: a71527850ca5b6647a5f17d3e8cda8cb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - a_IsPlayerLock: {fileID: 11400000, guid: 1538f65da10b16d4fbf4f809e87e902c, type: 2}
+  - targetCount: {fileID: 11400000, guid: c4d80aeec2a5caf448224d260d301704, type: 2}
+  - targetHit: {fileID: 11400000, guid: 0bf3203a3ed23d643b809180df1979e3, type: 2}
+  - corridorLength: {fileID: 11400000, guid: 2dc1943597174f84486651913eb770a1, type: 2}
+  - turnCount: {fileID: 11400000, guid: 40aef326c318a824b892d716ae64543a, type: 2}
+  - imageTime: {fileID: 11400000, guid: 1e797b68470377a4dabedfa80e7bbbeb, type: 2}
+  - imageSize: {fileID: 11400000, guid: e324e0a6612f28d4b99a46dc504a000f, type: 2}
+  - imageRandom: {fileID: 11400000, guid: a2165e6d4fa685946883ddbb84fa857c, type: 2}
+  - seedNumber: {fileID: 11400000, guid: a2f15147b769162489a3b044f75ee289, type: 2}
+  - presetName: {fileID: 11400000, guid: efc805666c764a54e8c61b8dfe779195, type: 2}
+  - timeToShootList: {fileID: 11400000, guid: 1da2ab57a39258f4f95803b7908c839d, type: 2}
+  - targetList: {fileID: 11400000, guid: 26a3e23c8a051fd4fb496d204fcdb5f3, type: 2}
+  - idPlayer: {fileID: 11400000, guid: 6b40424f6d528704191880f7de751b65, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

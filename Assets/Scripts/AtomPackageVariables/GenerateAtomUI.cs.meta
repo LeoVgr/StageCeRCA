@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f4fb201973a213b4b8bcd4cccf8e5e64
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - prefabSlider: {fileID: 5312353489502800463, guid: b658d9abd5003664e92469d88068f4b8,
+      type: 3}
+  - prefabCheckBox: {fileID: 3786465106131929920, guid: 3c0efe37f5912e84d812ac9671fbc8d5,
+      type: 3}
+  - prefabInputField: {fileID: 5472902734379256868, guid: be8459280097380438cc7873f18cd913,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
