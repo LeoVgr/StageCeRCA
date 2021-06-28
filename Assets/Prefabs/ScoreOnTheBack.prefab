@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Material: {fileID: 2100000, guid: 96d0be269f002804e9695e8437759ccf, type: 2}
   m_Color: {r: 0, g: 1, b: 0.97254896, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -92,6 +93,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateEvent: {fileID: 11400000, guid: 4035d89cfd7d5e449a5469e71d543269, type: 2}
+  isCameraFps: {fileID: 0}
+  isScoreShow: {fileID: 0}
   increaseScore: 
   decreaseScore: event:/UI/Score Decrease
 --- !u!1 &6155903082004750838
@@ -177,6 +180,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6155903082004750832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,3 +211,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisEvent: {fileID: 11400000, guid: ffbefd6ddf2cc0b4fb893f9d142ea8ff, type: 2}
+  cameraInFPS: {fileID: 0}
+  cameraNeedToBeInFPS: 0
