@@ -50,7 +50,7 @@ public class MazeGenerator : MonoBehaviour
     
     private CinemachineSmoothPath _playerPath;
     private CinemachineSmoothPath.Waypoint[] _wayPointsPath;
-    
+
     //_master is the old generated maze
     private GameObject _master;
     private bool _canCreate;
@@ -71,12 +71,10 @@ public class MazeGenerator : MonoBehaviour
         _maze = new Dictionary<NodePosition, MazeNode>();
         _turnValue = new List<int>();
         _imageValue = new List<int>();
-
         
         //Load images in _baseSpriteList
         ReadImageFolderThenCreateMaze();
     }
-
 
     /**
      * @brief Set values bases on AtomsVariables then create corridor

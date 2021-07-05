@@ -50,6 +50,7 @@ public class PlayerSaveData : MonoBehaviour
         if (!a_IsPlayerLock.Value && !_endGame)
         {
             totalTimer.Value += Time.deltaTime;
+            
         }
     }
 

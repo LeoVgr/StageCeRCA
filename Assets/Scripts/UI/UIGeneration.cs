@@ -24,14 +24,12 @@ public class UIGeneration : MonoBehaviour
     public bool hideOnGenerate;
 
     private Vector3 idBaseScale;
-    private MazeGenerator _mazeGenerator;
-    private PlayerMovement _playerMovement;
     
     // Start is called before the first frame update
     void Start()
     {
+        //can remove that since main menu is now in another scene
         a_isPlayerLock.SetValue(true);
-        _mazeGenerator = FindObjectOfType<MazeGenerator>();
         idBaseScale = inputIdentfiant.transform.localScale;
     }
 
