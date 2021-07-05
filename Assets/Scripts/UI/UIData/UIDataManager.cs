@@ -14,33 +14,44 @@ public class UIDataManager : MonoBehaviour
     [HideInInspector]
     public int maxInt;
 
-    public bool registerThisEvent = true;
+    public bool RegisterThisEvent = true;
     
-    public IntVariable atomVariableInt;
-    public FloatVariable atomVariableFloat;
-    public BoolVariable atomVariableBool;
-    
+    public IntVariable AtomVariableInt;
+    public FloatVariable AtomVariableFloat;
+    public BoolVariable AtomVariableBool;
+
     private IntEvent _atomVariableIntEvent;
     private FloatEvent _atomVariableFloatEvent;
     private BoolEvent _atomVariableBoolEvent;
     
     public StringVariable presetName;
-    
+
+    private void OnDestroy()
+    {
+        if (_atomVariableIntEvent)
+            _atomVariableIntEvent.Unregister(UpdateValue);
+
+        if (_atomVariableFloatEvent)
+            _atomVariableFloatEvent.Unregister(UpdateValue);
+
+        if (_atomVariableBoolEvent)
+            _atomVariableBoolEvent.Unregister(UpdateValue);
+    }
+
     public virtual void SetMinMaxInit()
     {
        
     }
-
     public virtual void Init()
     {
-        if (atomVariableInt)
-            _atomVariableIntEvent = atomVariableInt.Changed;
-        if (atomVariableFloat)
-            _atomVariableFloatEvent = atomVariableFloat.Changed;
-        if (atomVariableBool)
-            _atomVariableBoolEvent = atomVariableBool.Changed;
+        if (AtomVariableInt)
+            _atomVariableIntEvent = AtomVariableInt.Changed;
+        if (AtomVariableFloat)
+            _atomVariableFloatEvent = AtomVariableFloat.Changed;
+        if (AtomVariableBool)
+            _atomVariableBoolEvent = AtomVariableBool.Changed;
 
-        if (registerThisEvent)
+        if (RegisterThisEvent)
         {
             if (_atomVariableIntEvent)
             {
@@ -61,39 +72,21 @@ public class UIDataManager : MonoBehaviour
             }
         }
 
-        atomVariableInt?.Reset();
-        atomVariableFloat?.Reset();
-        atomVariableBool?.Reset();
+        AtomVariableInt?.Reset();
+        AtomVariableFloat?.Reset();
+        AtomVariableBool?.Reset();
     }
-
-
     public virtual void UpdateValue(int i)
     {
         presetName?.SetValue("");
-        //Debug.Log("Updae int");
-    }
-    
+    }   
     public virtual  void UpdateValue(float f)
     {
         presetName?.SetValue("");
-        //Debug.Log("Updae float");
-    }
-    
+    }  
     public virtual  void UpdateValue(bool b)
     {
         presetName?.SetValue("");
-        //Debug.Log("Updae bool " + b);
     }
-
-    private void OnDestroy()
-    {
-        if(_atomVariableIntEvent)
-            _atomVariableIntEvent.Unregister(UpdateValue);
-        
-        if(_atomVariableFloatEvent)
-            _atomVariableFloatEvent.Unregister(UpdateValue);
-        
-        if(_atomVariableBoolEvent)
-            _atomVariableBoolEvent.Unregister(UpdateValue);
-    }
+    
 }

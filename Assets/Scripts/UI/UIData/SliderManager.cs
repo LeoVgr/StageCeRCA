@@ -80,8 +80,8 @@ public class SliderManager : UIDataManager
 
         SetMinMax(minInt, maxInt);
 
-        _slider.value = atomVariableInt != null ? atomVariableInt.Value :
-            atomVariableFloat != null ? atomVariableFloat.Value : 0;
+        _slider.value = AtomVariableInt != null ? AtomVariableInt.Value :
+            AtomVariableFloat != null ? AtomVariableFloat.Value : 0;
 
         value.text = _slider.value.ToString("F2");
     }
@@ -93,12 +93,12 @@ public class SliderManager : UIDataManager
             _slider.value = (float) Math.Round(_slider.value , roundNumber);
         
         
-        if (atomVariableInt)
-            atomVariableInt.SetValue((int)_slider.value);
+        if (AtomVariableInt)
+            AtomVariableInt.SetValue((int)_slider.value);
         
 
-        if (atomVariableFloat)
-            atomVariableFloat.SetValue(_slider.value);
+        if (AtomVariableFloat)
+            AtomVariableFloat.SetValue(_slider.value);
 
 
         if (sliderType == SliderType.Length && _slider.value > 0.0f)

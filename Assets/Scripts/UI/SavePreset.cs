@@ -26,6 +26,13 @@ public class SavePreset : MonoBehaviour
     public FloatVariable tempsImage;
     public FloatVariable chronoImage;
     public BoolVariable  randomizeImage;
+    //
+    public BoolVariable showScore;
+    public BoolVariable fpsCamera;
+    public BoolVariable isShootActivated;
+    public BoolVariable isRemySelected;
+    public BoolVariable isMeganSelected;
+    public BoolVariable isMouseySelected;
 
     public Image saveImage;
     public Image deleteImage;
@@ -53,6 +60,7 @@ public class SavePreset : MonoBehaviour
     {
         if (_Input.text != "")
         {
+
             _Input.text = _Input.text.Replace(";", ".");
             
             if(fillPresetObject.Value && !fillPresets)
@@ -71,6 +79,12 @@ public class SavePreset : MonoBehaviour
             dico[inputTextName][(FillPresets.ColumnNames.RandomizeImage)] = randomizeImage.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.TailleDesImages)] = tailleDesImages.Value;
             dico[inputTextName][(FillPresets.ColumnNames.Timer)] = chronoImage.Value;
+            dico[inputTextName][(FillPresets.ColumnNames.Score)] = showScore.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.FpsCamera)] = fpsCamera.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.Shoot)] = isShootActivated.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.Remy)] = isRemySelected.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.Megan)] = isMeganSelected.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = isMouseySelected.Value ? 1 : 0;
             delete = false;
             
             DOVirtual.DelayedCall(Time.deltaTime, (() => presetName?.SetValue(inputTextName)));
@@ -78,7 +92,6 @@ public class SavePreset : MonoBehaviour
             SaveCSV();
         }
     }
-    
     public void DeleteItemThenSave()
     {
         delete = true;
@@ -89,7 +102,6 @@ public class SavePreset : MonoBehaviour
         if (dico.Remove(fillPresets.GetText()))
             SaveCSV();
     }
-
     private void SaveCSV()
     {
         DirectoryInfo directoryInfo = new DirectoryInfo(Application.streamingAssetsPath);
@@ -127,7 +139,6 @@ public class SavePreset : MonoBehaviour
 
         File.WriteAllText(directoryInfo + "/presetsSave.csv", text);
     }
-
     private string GetColumnName(FillPresets.ColumnNames name)
     {
         switch (name)
@@ -150,6 +161,18 @@ public class SavePreset : MonoBehaviour
                 return "Taille des images";
             case FillPresets.ColumnNames.Timer:
                 return "Timer";
+            case FillPresets.ColumnNames.Score:
+                return "Score";
+            case FillPresets.ColumnNames.FpsCamera:
+                return "FpsCamera";
+            case FillPresets.ColumnNames.Shoot:
+                return "Shoot";
+            case FillPresets.ColumnNames.Remy:
+                return "Remy";
+            case FillPresets.ColumnNames.Megan:
+                return "Megan";
+            case FillPresets.ColumnNames.Mousey:
+                return "Mousey";
             default:
                 return "";
         }

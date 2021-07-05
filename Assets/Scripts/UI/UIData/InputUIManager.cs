@@ -30,19 +30,19 @@ public class InputUIManager : UIDataManager
 
     public void ResetValue()
     {
-        atomVariableInt?.Reset();
-        atomVariableFloat?.Reset();
+        AtomVariableInt?.Reset();
+        AtomVariableFloat?.Reset();
     }
     
     // Invoked when the value of the slider changes.
     public void ValueChangeCheck()
     {
-        if (atomVariableInt && int.TryParse(_tmpInputField.text, out int i))
-            atomVariableInt.SetValue(i);
+        if (AtomVariableInt && int.TryParse(_tmpInputField.text, out int i))
+            AtomVariableInt.SetValue(i);
         
 
-        if (atomVariableFloat && float.TryParse(_tmpInputField.text, out float f))
-            atomVariableFloat.SetValue(f);
+        if (AtomVariableFloat && float.TryParse(_tmpInputField.text, out float f))
+            AtomVariableFloat.SetValue(f);
 
         if (atomVariableString)
             atomVariableString.SetValue(_tmpInputField.text);
@@ -53,8 +53,8 @@ public class InputUIManager : UIDataManager
         if(!_tmpInputField)
             _tmpInputField = GetComponentInChildren<InputField>();
 
-        _tmpInputField.text = atomVariableInt != null ? atomVariableInt.Value.ToString() :
-            atomVariableFloat != null ? atomVariableFloat.Value.ToString(CultureInfo.InvariantCulture) : "";
+        _tmpInputField.text = AtomVariableInt != null ? AtomVariableInt.Value.ToString() :
+            AtomVariableFloat != null ? AtomVariableFloat.Value.ToString(CultureInfo.InvariantCulture) : "";
     }
 
     public override void UpdateValue(float f)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 /**
@@ -44,14 +45,15 @@ public class UIGeneration : MonoBehaviour
         }
         else
         {
-            if (_mazeGenerator.GenerateMaze())
-            {
-                isGameStart.SetValue(true);
-                if(hideOnGenerate)
-                    mazeUI.SetActive(false);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //if (_mazeGenerator.GenerateMaze())
+            //{
+            //    isGameStart.SetValue(true);
+            //    if(hideOnGenerate)
+            //        mazeUI.SetActive(false);
 
-                a_isPlayerLock.SetValue(false);
-            }
+            //    a_isPlayerLock.SetValue(false);
+            //}
         }
     }
 

@@ -15,22 +15,27 @@ using UnityEngine.UI;
  */
 public class FillPresets : MonoBehaviour
 {
-    public IntVariable seed;
-    public IntVariable longueur;
-    public IntVariable nbrVirage;
-    public FloatVariable largeur;
-    public FloatVariable hauteur;
-    public FloatVariable tailleDesImages;
-    public FloatVariable tempsImage;
-    public FloatVariable tempsChrono;
-    public BoolVariable randomizeImage;
+    public StringVariable PresetName;
+    public InputField Input;
+    public IntVariable Seed;
+    public IntVariable CorridorLength;
+    public IntVariable TurnNumber;
+    public FloatVariable CorridorWidth;
+    public FloatVariable WallHeight;
+    public FloatVariable ImageSize;
+    public FloatVariable ImageTime;
+    public FloatVariable Timer;
+    public BoolVariable RandomizeImage;
+    public BoolVariable DisplayScore;
+    public BoolVariable FpsCamera;
+    public BoolVariable IsShootActivated;
+    public BoolVariable IsRemySelected;
+    public BoolVariable IsMeganSelected;
+    public BoolVariable IsMouseySelected;  
     
-    
-    public StringVariable presetName;
+    private Dropdown _tmpDropdown;
+    private Dictionary<string, Dictionary<ColumnNames, float>> _presets;
 
-    public InputField _Input;
-    private Dropdown _TmpDropdown;
-    
     public enum ColumnNames
     {
         Seed,
@@ -41,20 +46,24 @@ public class FillPresets : MonoBehaviour
         TempsImage,
         RandomizeImage,
         TailleDesImages,
-        Timer
-    }
-
-    private Dictionary<string, Dictionary<ColumnNames, float>> _presets;
+        Timer,
+        Score,
+        FpsCamera,
+        Shoot,
+        Remy,
+        Megan,
+        Mousey
+    }    
 
     private void Start()
     {
-        _TmpDropdown = GetComponentInChildren<Dropdown>();
+        _tmpDropdown = GetComponentInChildren<Dropdown>();
         Dropdown.OptionData option = new Dropdown.OptionData("");
-        _TmpDropdown.options.Add(option);
+        _tmpDropdown.options.Add(option);
         
         _presets = new Dictionary<string, Dictionary<ColumnNames, float>>();
         
-        _TmpDropdown.onValueChanged.AddListener (delegate {ValueChangeCheck ();});
+        _tmpDropdown.onValueChanged.AddListener (delegate {ValueChangeCheck ();});
         
         ReadCsv();
     }
@@ -63,58 +72,77 @@ public class FillPresets : MonoBehaviour
     {
         return _presets;
     }
-
     private void ValueChangeCheck()
     {
-        string text = _TmpDropdown.options[_TmpDropdown.value].text;
-        _Input.text = text;
+        //Set the preset name in the input field and dropdown UI
+        string text = _tmpDropdown.options[_tmpDropdown.value].text;
+        Input.text = text;
         
-        DOVirtual.DelayedCall(Time.deltaTime, (() => presetName?.SetValue(text)));
+        DOVirtual.DelayedCall(Time.deltaTime, () => PresetName?.SetValue(text));
         
+        //Set all the csv value to atom's variable
         Dictionary<ColumnNames, float> dico;
-         if (_presets.TryGetValue(text, out dico))
-         {
-             foreach (var keyValuePair in dico)
-             {
-                 switch (keyValuePair.Key)
-                 {
-                     case ColumnNames.Seed:
-                         seed.SetValue((int)keyValuePair.Value);
-                         break;
-                     case ColumnNames.Longueur:
-                         longueur.SetValue((int)keyValuePair.Value);
-                         break;
-                     case ColumnNames.Largeur:
-                         largeur.SetValue(keyValuePair.Value);
-                         break;
-                     case ColumnNames.Hauteur:
-                         hauteur.SetValue(keyValuePair.Value);
-                         break;
-                     case ColumnNames.TailleDesImages:
-                         tailleDesImages.SetValue(keyValuePair.Value);
-                         break;
-                     case ColumnNames.NbrVirage:
-                         nbrVirage.SetValue((int)keyValuePair.Value);
-                         break;
-                     case ColumnNames.TempsImage:
-                         tempsImage.SetValue((int)keyValuePair.Value);
-                         break;
-                     case ColumnNames.RandomizeImage:
-                         randomizeImage.SetValue(keyValuePair.Value >= 0.5f);
-                         break;
-                     case ColumnNames.Timer:
-                         tempsChrono.SetValue(keyValuePair.Value);
-                         break;
-                 }
-             }
-         }
+
+        if (_presets.TryGetValue(text, out dico))
+        {
+            foreach (var keyValuePair in dico)
+            {
+
+                switch (keyValuePair.Key)
+                {                    
+                    case ColumnNames.Seed:
+                        Seed.SetValue((int)keyValuePair.Value);
+                        break;
+                    case ColumnNames.Longueur:                       
+                        CorridorLength.SetValue((int)keyValuePair.Value);
+                        break;
+                    case ColumnNames.Largeur:
+                        CorridorWidth.SetValue(keyValuePair.Value);
+                        break;
+                    case ColumnNames.Hauteur:
+                        WallHeight.SetValue(keyValuePair.Value);
+                        break;
+                    case ColumnNames.TailleDesImages:
+                        ImageSize.SetValue(keyValuePair.Value);
+                        break;
+                    case ColumnNames.NbrVirage:
+                        TurnNumber.SetValue((int)keyValuePair.Value);
+                        break;
+                    case ColumnNames.TempsImage:
+                        ImageTime.SetValue(keyValuePair.Value);
+                        break;
+                    case ColumnNames.RandomizeImage:
+                        RandomizeImage.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.Timer:
+                        Timer.SetValue(keyValuePair.Value);
+                        break;
+                    case ColumnNames.Score:
+                        DisplayScore.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.FpsCamera:
+                        FpsCamera.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.Shoot:
+                        IsShootActivated.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.Remy:
+                        IsRemySelected.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.Megan:
+                        IsMeganSelected.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.Mousey:
+                        IsMouseySelected.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                }
+            }
+        }
     }
-
-
     private void ReadCsv()
     {
         DirectoryInfo directoryInfo = new DirectoryInfo(Application.streamingAssetsPath);
-        //print("Streaming Assets Path: " + Application.streamingAssetsPath);
+        
         FileInfo[] allFiles = directoryInfo.GetFiles("*.*");
                  
         foreach (FileInfo file in allFiles)
@@ -137,9 +165,11 @@ public class FillPresets : MonoBehaviour
 
                         if (selection != "")
                         {
+                            //Add this preset into options of the dropdown box
                             Dropdown.OptionData option = new Dropdown.OptionData(selection);
-                            _TmpDropdown.options.Add(option);
+                            _tmpDropdown.options.Add(option);
                         
+                            //Fill the preset with all the varaibles
                             _presets[selection] = new Dictionary<ColumnNames, float>();
 
                             float f = CheckStringLength(value[1]);
@@ -158,16 +188,34 @@ public class FillPresets : MonoBehaviour
                             _presets[selection][(ColumnNames.NbrVirage)] =  f;
                             
                             f = CheckStringLength(value[6]);
-                            _presets[selection][(ColumnNames.TailleDesImages)] = f;
+                            _presets[selection][(ColumnNames.TempsImage)] = f;
                             
                             f = CheckStringLength(value[7]);
                             _presets[selection][(ColumnNames.RandomizeImage)] = f;
                             
                             f = CheckStringLength(value[8]);
-                            _presets[selection][(ColumnNames.TempsImage)] = f;
+                            _presets[selection][(ColumnNames.TailleDesImages)] = f;
 
                             f = CheckStringLength(value[9]);
                             _presets[selection][(ColumnNames.Timer)] = f;
+
+                            f = CheckStringLength(value[10]);
+                            _presets[selection][(ColumnNames.Score)] = f;
+
+                            f = CheckStringLength(value[11]);
+                            _presets[selection][(ColumnNames.FpsCamera)] = f;
+
+                            f = CheckStringLength(value[12]);
+                            _presets[selection][(ColumnNames.Shoot)] = f;
+
+                            f = CheckStringLength(value[13]);
+                            _presets[selection][(ColumnNames.Remy)] = f;
+
+                            f = CheckStringLength(value[14]);
+                            _presets[selection][(ColumnNames.Megan)] = f;
+
+                            f = CheckStringLength(value[15]);
+                            _presets[selection][(ColumnNames.Mousey)] = f;
                         }
                     }
                     i++;
@@ -178,11 +226,10 @@ public class FillPresets : MonoBehaviour
             }
         }
     }
-
     private float CheckStringLength(string s)
     {
         if (s.Length > 0)
-            s.Replace(".", ",");
+            s = s.Replace(".", ",");
 
         if (float.TryParse(s, out float result))
         {
@@ -190,28 +237,25 @@ public class FillPresets : MonoBehaviour
         }
         return 0;
     }
-
     public void UpdateDictionnary(Dictionary<string, Dictionary<ColumnNames, float>> newDico, bool resetSelect)
     {
         _presets = newDico;
-        _TmpDropdown.options.Clear();
+        _tmpDropdown.options.Clear();
         
         Dropdown.OptionData option = new Dropdown.OptionData("");
-        _TmpDropdown.options.Add(option);
+        _tmpDropdown.options.Add(option);
 
         if(resetSelect)
-            _TmpDropdown.value = 0;
+            _tmpDropdown.value = 0;
 
         foreach (var keyValuePair in _presets)
         {
              option = new Dropdown.OptionData(keyValuePair.Key);
-            _TmpDropdown.options.Add(option);
+            _tmpDropdown.options.Add(option);
         }
     }
-
-
     public string GetText()
     {
-      return _TmpDropdown.options[_TmpDropdown.value].text;
+      return _tmpDropdown.options[_tmpDropdown.value].text;
     }
 }

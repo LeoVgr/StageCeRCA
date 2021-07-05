@@ -19,8 +19,7 @@ public class ToggleUIManager : UIDataManager
         _toggle = GetComponentInChildren<Toggle>();
         
         _toggle.onValueChanged.AddListener (delegate {ValueChangeCheck ();});
-    }
-    
+    }    
     private void OnDestroy()
     {
         _toggle.onValueChanged.RemoveListener(delegate {ValueChangeCheck ();});
@@ -28,21 +27,21 @@ public class ToggleUIManager : UIDataManager
 
     private void ValueChangeCheck()
     {
-        if(atomVariableBool)
-            atomVariableBool.SetValue( _toggle.isOn );
+        //When the toggle change, update the atom's variable value
+        if(AtomVariableBool)
+            AtomVariableBool.SetValue( _toggle.isOn );
     }
-
     public override void UpdateValue(bool b)
     {
+        //When the atom's variable change, change the value of the toggle
         _toggle.isOn = b;
     }
-
     public override void Init()
     {
         base.Init();
 
-        if (atomVariableBool)
-            _toggle.isOn = atomVariableBool.Value;
+        if (AtomVariableBool)
+            _toggle.isOn = AtomVariableBool.Value;
         
     }
     

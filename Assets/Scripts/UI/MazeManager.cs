@@ -12,158 +12,196 @@ using UnityEngine.UI;
  */
 public class MazeManager : MonoBehaviour
 {
-
+    #region "Attributs"
     [Header("GameObject")]
-    public GameObject lengthSlider;
-    public GameObject sizeSlider;
-    public GameObject imageSizeSlider;
-    public GameObject heightSlider;
-    public GameObject nbrTurnSlider;
-    public GameObject toggleRandomImage;
-    public GameObject toggleDisplayScore;
-    public GameObject togglePlayerCanFire;
-    public GameObject toggleCameraFPS;
-    public GameObject imageTime;
-    public GameObject seed;
-    public GameObject timer;
-    public GameObject id_player;
+    public GameObject LengthCorridorSlider;
+    public GameObject WidthCorridorSlider;
+    public GameObject ImageSizeSlider;
+    public GameObject WallHeightSlider;
+    public GameObject TurnNumberSlider;
+    public GameObject ImageTimeSlider;
+    public GameObject SeedField;
+    public GameObject TimerField;
+    public GameObject RandomImageToggle;
+    public GameObject DisplayScoreToggle;
+    public GameObject FpsCameraToggle;
+    public GameObject PlayerCanFireToggle;
+    public GameObject IsRemySelectedToggle;
+    public GameObject IsMeganSelectedToggle;
+    public GameObject IsMouseySelectedToggle;
+    public GameObject IdPlayerField;   
+    //player selection ?
+    //preset input filed ?
+    //pour lui size = largeur
 
     [Header("Scriptable object references")]
-    public FloatVariable corridorSize;
-    public FloatVariable imageSize;
-    public FloatVariable wallHeight;
-    public IntVariable corridorLength;
-    public IntVariable seedNumber;
-    public IntVariable turnNumber;
-    public FloatVariable imageTimeVariable;
-    public BoolVariable randomizeImage;
-    public BoolVariable displayScore;
-    public BoolVariable playerCanFire;
-    public BoolVariable cameraFPS;
-    public FloatVariable timerVariable;
-    public StringVariable id_playerVariable;
+    public IntVariable Seed;
+    public IntVariable CorridorLength;
+    public IntVariable TurnNumber;
+    public FloatVariable CorridorWidth;
+    public FloatVariable WallHeight;
+    public FloatVariable ImageSize;
+    public FloatVariable ImageTime;
+    public FloatVariable Timer;
+    public BoolVariable RandomizeImage;
+    public BoolVariable DisplayScore;
+    public BoolVariable FpsCamera;
+    public BoolVariable IsShootActivated;
+    public BoolVariable IsRemySelected;
+    public BoolVariable IsMeganSelected;
+    public BoolVariable IsMouseySelected;
+    public StringVariable IdPlayer;
 
     [Header("Min max")]
-    public Vector2Constant minMaxLength;
-    public Vector2Constant minMaxSize;
-    public Vector2Constant minMaxImageSizeSlider;
-    public Vector2Constant minMaxHeightSlider;
-    public Vector2Variable minMaxTurnSlider;
-    public Vector2Constant minMaxImagesTime;
-
-    
-    [Header("Sound Effect")]
-    [FMODUnity.EventRef][SerializeField]
-    private string music;
+    public Vector2Constant MinMaxLength;
+    public Vector2Constant MinMaxSize;
+    public Vector2Constant MinMaxImageSizeSlider;
+    public Vector2Constant MinMaxHeightSlider;
+    public Vector2Variable MinMaxTurnSlider;
+    public Vector2Constant MinMaxImagesTime;
 
     private List<UIDataManager> _dataManagers;
+
+    [Header("Sound Effect")]
+    [FMODUnity.EventRef][SerializeField]
+    private string _music;
+
     
-    // Start is called before the first frame update
-    void Start()
+    #endregion
+
+    #region "Events"
+    private void Start()
     {
+        //Set the cursor available
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        
+
         _dataManagers = new List<UIDataManager>
         {
-            lengthSlider.GetComponent<UIDataManager>(),
-            sizeSlider.GetComponent<UIDataManager>(),
-            imageSizeSlider.GetComponent<UIDataManager>(),
-            heightSlider.GetComponent<UIDataManager>(),
-            nbrTurnSlider.GetComponent<UIDataManager>(),
-            seed.GetComponent<UIDataManager>(),
-            toggleRandomImage.GetComponent<UIDataManager>(),
-            toggleDisplayScore.GetComponent<UIDataManager>(),
-            imageTime.GetComponent<UIDataManager>(),
-            id_player.GetComponent<InputUIManager>(), 
-            togglePlayerCanFire.GetComponent<UIDataManager>(),
-            toggleCameraFPS.GetComponent<UIDataManager>(),
-            timer.GetComponent<UIDataManager>()
+            LengthCorridorSlider.GetComponent<UIDataManager>(),
+            WidthCorridorSlider.GetComponent<UIDataManager>(),
+            ImageSizeSlider.GetComponent<UIDataManager>(),
+            WallHeightSlider.GetComponent<UIDataManager>(),
+            TurnNumberSlider.GetComponent<UIDataManager>(),
+            SeedField.GetComponent<UIDataManager>(),
+            RandomImageToggle.GetComponent<UIDataManager>(),
+            DisplayScoreToggle.GetComponent<UIDataManager>(),
+            ImageTimeSlider.GetComponent<UIDataManager>(),
+            IdPlayerField.GetComponent<InputUIManager>(),
+            PlayerCanFireToggle.GetComponent<UIDataManager>(),
+            FpsCameraToggle.GetComponent<UIDataManager>(),
+            TimerField.GetComponent<UIDataManager>(),
+            IsRemySelectedToggle.GetComponent<UIDataManager>(),
+            IsMeganSelectedToggle.GetComponent<UIDataManager>(),
+            IsMouseySelectedToggle.GetComponent<UIDataManager>()
         };
 
         //Corridor Length
-        lengthSlider.GetComponent<UIDataManager>().minInt = (int) minMaxLength.Value.x;
-        lengthSlider.GetComponent<UIDataManager>().maxInt = (int) minMaxLength.Value.y;
-        lengthSlider.GetComponent<UIDataManager>().atomVariableInt = corridorLength;
-        lengthSlider.GetComponent<UIDataManager>().registerThisEvent = true;
+        LengthCorridorSlider.GetComponent<UIDataManager>().minInt = (int) MinMaxLength.Value.x;
+        LengthCorridorSlider.GetComponent<UIDataManager>().maxInt = (int) MinMaxLength.Value.y;
+        LengthCorridorSlider.GetComponent<UIDataManager>().AtomVariableInt = CorridorLength;
+        LengthCorridorSlider.GetComponent<UIDataManager>().RegisterThisEvent = true;
         
-        //Corridor Size
-        sizeSlider.GetComponent<UIDataManager>().minInt = (int) minMaxSize.Value.x;
-        sizeSlider.GetComponent<UIDataManager>().maxInt = (int) minMaxSize.Value.y;
-        sizeSlider.GetComponent<UIDataManager>().atomVariableFloat = corridorSize;
-        sizeSlider.GetComponent<UIDataManager>().registerThisEvent = true;
+        //Corridor Width
+        WidthCorridorSlider.GetComponent<UIDataManager>().minInt = (int) MinMaxSize.Value.x;
+        WidthCorridorSlider.GetComponent<UIDataManager>().maxInt = (int) MinMaxSize.Value.y;
+        WidthCorridorSlider.GetComponent<UIDataManager>().AtomVariableFloat = CorridorWidth;
+        WidthCorridorSlider.GetComponent<UIDataManager>().RegisterThisEvent = true;
         
         //Image Size
-        imageSizeSlider.GetComponent<UIDataManager>().minInt = (int) minMaxImageSizeSlider.Value.x;
-        imageSizeSlider.GetComponent<UIDataManager>().maxInt = (int) minMaxImageSizeSlider.Value.y;
-        imageSizeSlider.GetComponent<UIDataManager>().atomVariableFloat = imageSize;
-        imageSizeSlider.GetComponent<UIDataManager>().registerThisEvent = true;
+        ImageSizeSlider.GetComponent<UIDataManager>().minInt = (int) MinMaxImageSizeSlider.Value.x;
+        ImageSizeSlider.GetComponent<UIDataManager>().maxInt = (int) MinMaxImageSizeSlider.Value.y;
+        ImageSizeSlider.GetComponent<UIDataManager>().AtomVariableFloat = ImageSize;
+        ImageSizeSlider.GetComponent<UIDataManager>().RegisterThisEvent = true;
         
-        //Height Slider
-        heightSlider.GetComponent<UIDataManager>().minInt = (int) minMaxHeightSlider.Value.x;
-        heightSlider.GetComponent<UIDataManager>().maxInt = (int) minMaxHeightSlider.Value.y;
-        heightSlider.GetComponent<UIDataManager>().atomVariableFloat = wallHeight;
-        heightSlider.GetComponent<UIDataManager>().registerThisEvent = true;
+        //Wall Height Slider
+        WallHeightSlider.GetComponent<UIDataManager>().minInt = (int) MinMaxHeightSlider.Value.x;
+        WallHeightSlider.GetComponent<UIDataManager>().maxInt = (int) MinMaxHeightSlider.Value.y;
+        WallHeightSlider.GetComponent<UIDataManager>().AtomVariableFloat = WallHeight;
+        WallHeightSlider.GetComponent<UIDataManager>().RegisterThisEvent = true;
         
         //Turn number
-        nbrTurnSlider.GetComponent<UIDataManager>().minInt = (int) minMaxTurnSlider.Value.x;
-        nbrTurnSlider.GetComponent<UIDataManager>().maxInt = (int) minMaxTurnSlider.Value.y;
-        nbrTurnSlider.GetComponent<UIDataManager>().atomVariableInt = turnNumber;
-        nbrTurnSlider.GetComponent<UIDataManager>().registerThisEvent = true;
+        TurnNumberSlider.GetComponent<UIDataManager>().minInt = (int) MinMaxTurnSlider.Value.x;
+        TurnNumberSlider.GetComponent<UIDataManager>().maxInt = (int) MinMaxTurnSlider.Value.y;
+        TurnNumberSlider.GetComponent<UIDataManager>().AtomVariableInt = TurnNumber;
+        TurnNumberSlider.GetComponent<UIDataManager>().RegisterThisEvent = true;
+        
+        //Toggle random image
+        RandomImageToggle.GetComponent<UIDataManager>().minInt = 0;
+        RandomImageToggle.GetComponent<UIDataManager>().maxInt = 0;
+        RandomImageToggle.GetComponent<UIDataManager>().AtomVariableBool = RandomizeImage;
+        RandomImageToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
 
-        //seed
-        seed.GetComponent<UIDataManager>().minInt = (int) minMaxTurnSlider.Value.x;
-        seed.GetComponent<UIDataManager>().maxInt = (int) minMaxTurnSlider.Value.y;
-        seed.GetComponent<UIDataManager>().atomVariableInt = seedNumber;
-        seed.GetComponent<UIDataManager>().registerThisEvent = true;
-        
-        //Toggle image
-        toggleRandomImage.GetComponent<UIDataManager>().minInt = 0;
-        toggleRandomImage.GetComponent<UIDataManager>().maxInt = 0;
-        toggleRandomImage.GetComponent<UIDataManager>().atomVariableBool = randomizeImage;
-        toggleRandomImage.GetComponent<UIDataManager>().registerThisEvent = true;
-        
-        //Toggle fire
-        togglePlayerCanFire.GetComponent<UIDataManager>().minInt = 0;
-        togglePlayerCanFire.GetComponent<UIDataManager>().maxInt = 0;
-        togglePlayerCanFire.GetComponent<UIDataManager>().atomVariableBool = playerCanFire;
-        togglePlayerCanFire.GetComponent<UIDataManager>().registerThisEvent = false;
+        //Toggle Fire
+        PlayerCanFireToggle.GetComponent<UIDataManager>().minInt = 0;
+        PlayerCanFireToggle.GetComponent<UIDataManager>().maxInt = 0;
+        PlayerCanFireToggle.GetComponent<UIDataManager>().AtomVariableBool = IsShootActivated;
+        PlayerCanFireToggle.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
 
         //Display Score
-        toggleDisplayScore.GetComponent<UIDataManager>().minInt = 0;
-        toggleDisplayScore.GetComponent<UIDataManager>().maxInt = 0;
-        toggleDisplayScore.GetComponent<UIDataManager>().atomVariableBool = displayScore;
-        toggleDisplayScore.GetComponent<UIDataManager>().registerThisEvent = false;
+        DisplayScoreToggle.GetComponent<UIDataManager>().minInt = 0;
+        DisplayScoreToggle.GetComponent<UIDataManager>().maxInt = 0;
+        DisplayScoreToggle.GetComponent<UIDataManager>().AtomVariableBool = DisplayScore;
+        DisplayScoreToggle.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
 
         //Image time
-        imageTime.GetComponent<UIDataManager>().minInt = (int) minMaxImagesTime.Value.x;
-        imageTime.GetComponent<UIDataManager>().maxInt = (int) minMaxImagesTime.Value.y;
-        imageTime.GetComponent<UIDataManager>().atomVariableFloat = imageTimeVariable;
-        imageTime.GetComponent<UIDataManager>().registerThisEvent = true;
+        ImageTimeSlider.GetComponent<UIDataManager>().minInt = (int) MinMaxImagesTime.Value.x;
+        ImageTimeSlider.GetComponent<UIDataManager>().maxInt = (int) MinMaxImagesTime.Value.y;
+        ImageTimeSlider.GetComponent<UIDataManager>().AtomVariableFloat = ImageTime;
+        ImageTimeSlider.GetComponent<UIDataManager>().RegisterThisEvent = true;
         
         //Toggle Camera
-        toggleCameraFPS.GetComponent<UIDataManager>().minInt = 0;
-        toggleCameraFPS.GetComponent<UIDataManager>().maxInt = 0;
-        toggleCameraFPS.GetComponent<UIDataManager>().atomVariableBool = cameraFPS;
-        toggleCameraFPS.GetComponent<UIDataManager>().registerThisEvent = false;
+        FpsCameraToggle.GetComponent<UIDataManager>().minInt = 0;
+        FpsCameraToggle.GetComponent<UIDataManager>().maxInt = 0;
+        FpsCameraToggle.GetComponent<UIDataManager>().AtomVariableBool = FpsCamera;
+        FpsCameraToggle.GetComponent<UIDataManager>().RegisterThisEvent = true; //false
         
         //Timer 
-        timer.GetComponent<UIDataManager>().minInt = 0;
-        timer.GetComponent<UIDataManager>().maxInt = 0;
-        timer.GetComponent<UIDataManager>().atomVariableFloat = timerVariable;
-        timer.GetComponent<UIDataManager>().registerThisEvent = false;
+        TimerField.GetComponent<UIDataManager>().minInt = 0;
+        TimerField.GetComponent<UIDataManager>().maxInt = 0;
+        TimerField.GetComponent<UIDataManager>().AtomVariableFloat = Timer;
+        TimerField.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
 
-        id_player.GetComponent<InputUIManager>().atomVariableString = id_playerVariable;
+        //Seed
+        SeedField.GetComponent<UIDataManager>().minInt = 0;
+        SeedField.GetComponent<UIDataManager>().maxInt = 0;
+        SeedField.GetComponent<UIDataManager>().AtomVariableInt = Seed;
+        SeedField.GetComponent<UIDataManager>().RegisterThisEvent = true; 
+
+        //Toggle remy selected
+        IsRemySelectedToggle.GetComponent<UIDataManager>().minInt = 0;
+        IsRemySelectedToggle.GetComponent<UIDataManager>().maxInt = 0;
+        IsRemySelectedToggle.GetComponent<UIDataManager>().AtomVariableBool = IsRemySelected;
+        IsRemySelectedToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
+
+        //Toggle megan selected
+        IsMeganSelectedToggle.GetComponent<UIDataManager>().minInt = 0;
+        IsMeganSelectedToggle.GetComponent<UIDataManager>().maxInt = 0;
+        IsMeganSelectedToggle.GetComponent<UIDataManager>().AtomVariableBool = IsMeganSelected;
+        IsMeganSelectedToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
+
+        //Toggle mousey selected
+        IsMouseySelectedToggle.GetComponent<UIDataManager>().minInt = 0;
+        IsMouseySelectedToggle.GetComponent<UIDataManager>().maxInt = 0;
+        IsMouseySelectedToggle.GetComponent<UIDataManager>().AtomVariableBool = IsMouseySelected;
+        IsMouseySelectedToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
         
+        IdPlayerField.GetComponent<InputUIManager>().atomVariableString = IdPlayer;       
         
-        FMODUnity.RuntimeManager.PlayOneShot(music, transform.position);
+        FMODUnity.RuntimeManager.PlayOneShot(_music, transform.position);
 
         ResetVariable();
         
-        InitSlider();
+        InitUI();
     }
+    private void OnDestroy()
+    {
+        _dataManagers.Clear();
+    }
+    #endregion
 
-    void InitSlider()
+    #region "Methods"
+    void InitUI()
     {
         foreach (UIDataManager dataManager in _dataManagers)
         {
@@ -174,22 +212,24 @@ public class MazeManager : MonoBehaviour
             }
         }
     }
-
-    private void OnDestroy()
-    {
-        _dataManagers.Clear();
-    }
-
     private void ResetVariable()
     {
-          corridorSize.Reset();
-          imageSize.Reset();
-          wallHeight.Reset();
-          corridorLength.Reset();
-          seedNumber.Reset();
-          turnNumber.Reset();
-          imageTimeVariable.Reset();
-          randomizeImage.Reset();
-          id_playerVariable.Reset();
-    }
+        Seed.Reset();
+        CorridorLength.Reset();
+        TurnNumber.Reset();
+        CorridorWidth.Reset();
+        WallHeight.Reset();
+        ImageSize.Reset();
+        ImageTime.Reset();
+        Timer.Reset();
+        RandomizeImage.Reset();
+        DisplayScore.Reset();
+        FpsCamera.Reset();
+        IsShootActivated.Reset();
+        IdPlayer.Reset();
+        IsRemySelected.Reset();
+        IsMeganSelected.Reset();
+        IsMouseySelected.Reset();
+}
+    #endregion
 }
