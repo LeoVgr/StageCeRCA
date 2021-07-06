@@ -245,11 +245,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 149780663819152030, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
-        type: 3}
-      propertyPath: m_text
-      value: SEED
-      objectReference: {fileID: 0}
     - target: {fileID: 197055195870822402, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -270,6 +265,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2640545020506629416, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2640545020506629416, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2640545020506629416, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2963327986082900960, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -279,41 +289,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5074571630961980493, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5074571630961980493, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5074571630961980493, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1085988947}
-    - target: {fileID: 5074571630961980493, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5074571630961980493, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: test
-      objectReference: {fileID: 0}
-    - target: {fileID: 5074571630961980493, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MazeManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 5074571630961980493, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
-        type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6021031034870352646, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
         type: 3}
@@ -853,18 +828,6 @@ MonoBehaviour:
   ToggleRemy: {fileID: 497602050}
   ToggleMegan: {fileID: 1298610038}
   ToggleMousey: {fileID: 1444125555}
---- !u!114 &1085988947 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7913062259889363050, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
-    type: 3}
-  m_PrefabInstance: {fileID: 227260763}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca0d7a8dee4b3f04ba329afee26bcb85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1127910930
 GameObject:
   m_ObjectHideFlags: 0

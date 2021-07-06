@@ -82,6 +82,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &763208262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +161,7 @@ MonoBehaviour:
   m_Material: {fileID: 2100000, guid: 63c395149a798654582a53e2d9d9ed26, type: 2}
   m_Color: {r: 0, g: 1, b: 0.97254896, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -248,6 +250,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -272,6 +275,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7246851261278487827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,26 +288,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5dfc299110cbc4f9ba4c298495e7ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
-  sprite: {fileID: 0}
-  scoreUpText: {fileID: 1911317745}
-  splashImage: {fileID: 21300000, guid: f556e9231fe62b845bd38ce02f3ec6bd, type: 3}
-  showTime: {fileID: 11400000, guid: 1e797b68470377a4dabedfa80e7bbbeb, type: 2}
-  distanceToShow: {fileID: 11400000, guid: 279a6b959a0a9724b92d6d34af42480f, type: 2}
-  timeToShootList: {fileID: 11400000, guid: 1da2ab57a39258f4f95803b7908c839d, type: 2}
-  score: {fileID: 11400000, guid: 430167122483e4f4db623e61b74f5da2, type: 2}
-  targetCount: {fileID: 11400000, guid: c4d80aeec2a5caf448224d260d301704, type: 2}
-  targetHit: {fileID: 11400000, guid: 0bf3203a3ed23d643b809180df1979e3, type: 2}
-  targetList: {fileID: 11400000, guid: 26a3e23c8a051fd4fb496d204fcdb5f3, type: 2}
-  displayScore: {fileID: 11400000, guid: 858691476eddd37479523f19b4fd1735, type: 2}
-  player: {fileID: 11400000, guid: 568a051a508ce914588e3e41642586b7, type: 2}
-  playerWaypointChange: {fileID: 11400000, guid: 1a8098de4b8af1044b9498a43a61127d,
+  Direction: 0
+  Sprite: {fileID: 0}
+  ScoreUpText: {fileID: 1911317745}
+  SplashImage: {fileID: 21300000, guid: f556e9231fe62b845bd38ce02f3ec6bd, type: 3}
+  HasToBeShot: {fileID: 11400000, guid: 4b0597ade4b0ddd4b895207440a85005, type: 2}
+  ShowTime: {fileID: 11400000, guid: 1e797b68470377a4dabedfa80e7bbbeb, type: 2}
+  DistanceToShow: {fileID: 11400000, guid: 279a6b959a0a9724b92d6d34af42480f, type: 2}
+  TimeToShootList: {fileID: 11400000, guid: 1da2ab57a39258f4f95803b7908c839d, type: 2}
+  Score: {fileID: 11400000, guid: 430167122483e4f4db623e61b74f5da2, type: 2}
+  TargetCount: {fileID: 11400000, guid: c4d80aeec2a5caf448224d260d301704, type: 2}
+  TargetHit: {fileID: 11400000, guid: 0bf3203a3ed23d643b809180df1979e3, type: 2}
+  TargetList: {fileID: 11400000, guid: 26a3e23c8a051fd4fb496d204fcdb5f3, type: 2}
+  DisplayScore: {fileID: 11400000, guid: 858691476eddd37479523f19b4fd1735, type: 2}
+  Player: {fileID: 11400000, guid: 568a051a508ce914588e3e41642586b7, type: 2}
+  PlayerWaypointChange: {fileID: 11400000, guid: 1a8098de4b8af1044b9498a43a61127d,
     type: 2}
-  widthHeight: {fileID: 11400000, guid: e42d50b71015c8e45b6c2c1b636b9d96, type: 2}
-  hit: event:/Target/Hit
-  miss: event:/Target/Miss
-  wayPointIndex: 0
-  isNegateImage: 0
+  WidthHeight: {fileID: 11400000, guid: e42d50b71015c8e45b6c2c1b636b9d96, type: 2}
+  _hit: 
+  _miss: 
+  WayPointIndex: 0
+  IsNegateImage: 0
 --- !u!65 &2017004084669965757
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -364,6 +369,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

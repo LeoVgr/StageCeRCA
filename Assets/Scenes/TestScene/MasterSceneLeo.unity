@@ -315,6 +315,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6104584123341069373, guid: 64d11f9389d384346b0eea81007cec1f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 809207567}
+    - target: {fileID: 6104584123341069373, guid: 64d11f9389d384346b0eea81007cec1f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104584123341069373, guid: 64d11f9389d384346b0eea81007cec1f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6104584123577842431, guid: 64d11f9389d384346b0eea81007cec1f,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -470,7 +485,24 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7538485402945540060, guid: 64d11f9389d384346b0eea81007cec1f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 809207567}
+    - target: {fileID: 7538485402945540060, guid: 64d11f9389d384346b0eea81007cec1f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7538485402945540060, guid: 64d11f9389d384346b0eea81007cec1f,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6104584123341069374, guid: 64d11f9389d384346b0eea81007cec1f, type: 3}
+    - {fileID: 8153774429686518311, guid: 64d11f9389d384346b0eea81007cec1f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 64d11f9389d384346b0eea81007cec1f, type: 3}
 --- !u!1001 &1851178443
 PrefabInstance:

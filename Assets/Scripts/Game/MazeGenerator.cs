@@ -125,7 +125,6 @@ public class MazeGenerator : MonoBehaviour
     private void ReadImageFolderThenCreateMaze()
     {
         DirectoryInfo directoryInfo = new DirectoryInfo(Application.streamingAssetsPath);
-        //print("Streaming Assets Path: " + Application.streamingAssetsPath);
         FileInfo[] allFiles = directoryInfo.GetFiles("Images/*.*");
 
         StartCoroutine(nameof(LoadImages), allFiles);
@@ -470,24 +469,24 @@ public class MazeGenerator : MonoBehaviour
                 if (target)
                 {
                     //Set target direction
-                    target.direction = node.GetDirection();
+                    target.Direction = node.GetDirection();
 
                     //True = Get Random image, False = get the images in alphabetical order
                     if (randomizeImage.Value)
                     {
                         int random = Random.Range(0, _spriteList.Count);
-                        target.sprite = _spriteList[random];
+                        target.Sprite = _spriteList[random];
                         _spriteList.RemoveAt(random);
                     }
                     else
                     {
-                        target.sprite = _spriteList[0];
+                        target.Sprite = _spriteList[0];
                         _spriteList.RemoveAt(0);
                     }
                     
                     //Depending the target side left or right 
-                    target.isNegateImage = node.IsNegateImagePosition();
-                    target.wayPointIndex = i;
+                    target.IsNegateImage = node.IsNegateImagePosition();
+                    target.WayPointIndex = i;
 
                     var transform1 = target.transform;
                     transform1.localScale = _imageSize *  transform1.localScale;
@@ -501,11 +500,20 @@ public class MazeGenerator : MonoBehaviour
                             transform2.localPosition = -transform2.localPosition;
                         }
                     }
+
+                    //Set if a target has to be shoot or not, depending his name (name of picture should be like 01_Y_Image01.png)
+                    if(target.Sprite.name.Split('_').Length >= 2)
+                    {
+                        string stringHasToBeShot = target.Sprite.name.Split('_')[1];
+
+                        if (stringHasToBeShot == "N")
+                        {
+                            target.HasToBeShot.SetValue(false);
+                        }
+                    }
+                    
+                    
                 }
-            }
-            else
-            {
-              
             }
             
             #endregion

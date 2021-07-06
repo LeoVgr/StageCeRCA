@@ -12,11 +12,16 @@ MonoImporter:
   - imageTime: {fileID: 11400000, guid: 1e797b68470377a4dabedfa80e7bbbeb, type: 2}
   - imageSize: {fileID: 11400000, guid: e324e0a6612f28d4b99a46dc504a000f, type: 2}
   - imageRandom: {fileID: 11400000, guid: a2165e6d4fa685946883ddbb84fa857c, type: 2}
+  - isFPSBool: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0, type: 2}
   - seedNumber: {fileID: 11400000, guid: a2f15147b769162489a3b044f75ee289, type: 2}
   - presetName: {fileID: 11400000, guid: efc805666c764a54e8c61b8dfe779195, type: 2}
   - timeToShootList: {fileID: 11400000, guid: 1da2ab57a39258f4f95803b7908c839d, type: 2}
   - targetList: {fileID: 11400000, guid: 26a3e23c8a051fd4fb496d204fcdb5f3, type: 2}
   - idPlayer: {fileID: 11400000, guid: 6b40424f6d528704191880f7de751b65, type: 2}
+  - score: {fileID: 11400000, guid: 430167122483e4f4db623e61b74f5da2, type: 2}
+  - scoreDisplay: {fileID: 11400000, guid: 858691476eddd37479523f19b4fd1735, type: 2}
+  - enableFire: {fileID: 11400000, guid: be80e8c6a3b5fe244b0b5d53bd4f9bf0, type: 2}
+  - totalTimer: {fileID: 11400000, guid: f6974a4d68489614a9c5fb133fc24882, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

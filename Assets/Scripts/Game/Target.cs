@@ -15,42 +15,44 @@ using UnityEngine.UI;
 
 public class Target : MonoBehaviour
 {
+    #region "Attributs"
     [HideInInspector()]
-    public Direction direction;
+    public Direction Direction;
     [HideInInspector()]
-    public Sprite sprite;
+    public Sprite Sprite;
 
     [Header("FX")] 
-    public Text scoreUpText;
-    public Sprite splashImage;
-    
+    public Text ScoreUpText;
+    public Sprite SplashImage;
+
     [Header("Atoms Variables")]
-    public FloatVariable showTime;
-    public FloatVariable distanceToShow;
-    public FloatValueList timeToShootList;
-    public IntVariable score;
-    public IntVariable targetCount;
-    public IntVariable targetHit;
-    public GameObjectValueList targetList;
-    public BoolVariable displayScore;
-    public GameObjectVariable player;
+    public BoolVariable HasToBeShot;
+    public FloatVariable ShowTime;
+    public FloatVariable DistanceToShow;
+    public FloatValueList TimeToShootList;
+    public IntVariable Score;
+    public IntVariable TargetCount;
+    public IntVariable TargetHit;
+    public GameObjectValueList TargetList;
+    public BoolVariable DisplayScore;
+    public GameObjectVariable Player;
     
     [Header("Atoms Events")]
-    public IntEvent playerWaypointChange;
+    public IntEvent PlayerWaypointChange;
     
     [Header("Atoms Constant")]
-    public Vector2Constant widthHeight;
+    public Vector2Constant WidthHeight;
     
     [Header("Sound Effect")]
     [FMODUnity.EventRef][SerializeField]
-    private string hit;
+    private string _hit;
     [FMODUnity.EventRef][SerializeField]
-    private string miss;
+    private string _miss;
     
     [HideInInspector()]
-    public int wayPointIndex;
+    public int WayPointIndex;
     [HideInInspector()]
-    public bool isNegateImage;
+    public bool IsNegateImage;
 
     private List<Collider> _colliders;
     private SpriteRenderer _spriteRenderer;
@@ -65,11 +67,12 @@ public class Target : MonoBehaviour
     private float _endTimeValue;
     private bool _loose = false;
     private static readonly int ColorMat = Shader.PropertyToID("_Color");
+    #endregion
 
-    // Start is called before the first frame update
+    #region "Events"
     void Start()
     {
-        switch (direction)
+        switch (Direction)
         {
             case Direction.North:
                 transform.eulerAngles =  Vector3.zero;
@@ -88,13 +91,13 @@ public class Target : MonoBehaviour
                 break;
         }
         
-        targetList.Add(gameObject);
+        TargetList.Add(gameObject);
 
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
 
-        targetCount?.SetValue(targetCount.Value + 1);
+        TargetCount?.SetValue(TargetCount.Value + 1);
         
-        timeToShootList.Clear();
+        TimeToShootList.Clear();
 
         _colliders = GetComponentsInChildren<Collider>().ToList();
         foreach (Collider collider1 in _colliders)
@@ -105,20 +108,18 @@ public class Target : MonoBehaviour
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (_spriteRenderer)
         {
-            _spriteRenderer.sprite = sprite;
-            GetComponentInChildren<SpriteRenderer>().size = widthHeight.Value;
+            _spriteRenderer.sprite = Sprite;
+            GetComponentInChildren<SpriteRenderer>().size = WidthHeight.Value;
             _spriteRenderer.transform.localPosition = -_spriteRenderer.transform.localPosition;
         }
         
-        playerWaypointChange.Register(CheckDistanceToPlayer);
+        PlayerWaypointChange.Register(CheckDistanceToPlayer);
         
-        scoreUpText.material = Instantiate(scoreUpText.material);
+        ScoreUpText.material = Instantiate(ScoreUpText.material);
 
         CheckDistanceToPlayer(0);
 
     }
-
-
     private void Update()
     {
         if (!_loose && !_isHit)
@@ -128,13 +129,13 @@ public class Target : MonoBehaviour
                 Vector3 right = transform.right;
                 Vector3 position = transform.position;
                 
-                Vector3 origin = position + (isNegateImage ? -right : right);
-                Vector3 direction = player.Value.transform.position + Vector3.up - position +
-                                    (isNegateImage ? right : -right);
+                Vector3 origin = position + (IsNegateImage ? -right : right);
+                Vector3 direction = Player.Value.transform.position + Vector3.up - position +
+                                    (IsNegateImage ? right : -right);
 
                 if (Physics.Raycast(origin, direction, out RaycastHit hitinfo))
                 {
-                    if (hitinfo.collider.gameObject == player.Value)
+                    if (hitinfo.collider.gameObject == Player.Value)
                     {
                         Show();
                     }
@@ -147,18 +148,19 @@ public class Target : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region "Methods"
     private void CheckDistanceToPlayer(int playerPosition)
     {
         if (!_loose && !_isHit)
         {
-            if (!_isShown && Mathf.Abs(wayPointIndex - playerPosition) < distanceToShow.Value)
+            if (!_isShown && Mathf.Abs(WayPointIndex - playerPosition) < DistanceToShow.Value)
             {
                 _canShow = true;
             }
         }
     }
-
     private void Show()
     {
         if (!_loose && !_isHit)
@@ -172,33 +174,32 @@ public class Target : MonoBehaviour
                 collider1.enabled = true;
             }
         
-            if (showTime.Value > 0.1f)
-                DOVirtual.DelayedCall(showTime.Value, Hide);
+            if (ShowTime.Value > 0.1f)
+                DOVirtual.DelayedCall(ShowTime.Value, Hide);
         }
     }
-
     private void Hide()
     {
         if (!_loose && !_isHit)
         {
-            FMODUnity.RuntimeManager.PlayOneShot(miss, transform.position);
+            FMODUnity.RuntimeManager.PlayOneShot(_miss, transform.position);
             
-            Canvas parent = scoreUpText.GetComponentInParent<Canvas>();
+            Canvas parent = ScoreUpText.GetComponentInParent<Canvas>();
             var transform1 = parent.transform;
             Vector3 worldCanvasPosition = new Vector3(transform1.position.x, transform1.position.y, transform1.position.z);
             parent.transform.SetParent(null);
             parent.transform.position = worldCanvasPosition;
 
-            if (score.Value > 0 && displayScore.Value)
+            if (Score.Value > 0 && DisplayScore.Value)
             {
-                score.SetValue(score.Value - 1);
-                scoreUpText.text = "-100";
-                scoreUpText.material.SetColor(ColorMat, new Color(0,0,0,0));
+                Score.SetValue(Score.Value - 1);
+                ScoreUpText.text = "-100";
+                ScoreUpText.material.SetColor(ColorMat, new Color(0,0,0,0));
                 Sequence scoreUpSequence = DOTween.Sequence();
-                scoreUpSequence.Append(scoreUpText.material.DOColor(Color.red * 3.0f, "_Color", 0.5f).SetEase(Ease.InBounce));
-                scoreUpSequence.Join(scoreUpText.transform.DOMove(transform1.position + Vector3.up * 1.5f, 0.2f));
-                scoreUpSequence.Append(scoreUpText.transform.DOScale(scoreUpText.transform.localScale + scoreUpText.transform.localScale * 1.5f, 0.5f).SetEase(Ease.OutBounce));
-                scoreUpSequence.Append(scoreUpText.transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBounce));
+                scoreUpSequence.Append(ScoreUpText.material.DOColor(Color.red * 3.0f, "_Color", 0.5f).SetEase(Ease.InBounce));
+                scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 1.5f, 0.2f));
+                scoreUpSequence.Append(ScoreUpText.transform.DOScale(ScoreUpText.transform.localScale + ScoreUpText.transform.localScale * 1.5f, 0.5f).SetEase(Ease.OutBounce));
+                scoreUpSequence.Append(ScoreUpText.transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBounce));
                 scoreUpSequence.AppendCallback(() =>  Destroy(parent.gameObject));
             }
 
@@ -216,18 +217,17 @@ public class Target : MonoBehaviour
 
             _time = 0.0f;
             _endTimeValue = 0.0f;
-            timeToShootList.Add(_time);
+            TimeToShootList.Add(_time);
             _loose = true;
         }  
     }
-
     public void Hit()
     {
         if (!_isHit && _isShown)
         {
-            FMODUnity.RuntimeManager.PlayOneShot(hit, transform.position);
+            FMODUnity.RuntimeManager.PlayOneShot(_hit, transform.position);
             
-            Canvas parent = scoreUpText.GetComponentInParent<Canvas>();
+            Canvas parent = ScoreUpText.GetComponentInParent<Canvas>();
             var transform1 = parent.transform;
             Vector3 worldCanvasPosition = new Vector3(transform1.position.x, transform1.position.y, transform1.position.z);
             parent.transform.SetParent(null);
@@ -238,46 +238,46 @@ public class Target : MonoBehaviour
                 .SetEase(Ease.OutBounce);
 
 
-            timeToShootList.Add(_time);
+            TimeToShootList.Add(_time);
 
             _endTimeValue = _time;
 
-            switch (direction)
+            switch (Direction)
             {
                 case Direction.North:
-                    transform.DORotate(new Vector3(0.0f,  isNegateImage ? 85 : -85, 0.0f), _bounceDuration).SetEase(Ease.OutBounce);
+                    transform.DORotate(new Vector3(0.0f,  IsNegateImage ? 85 : -85, 0.0f), _bounceDuration).SetEase(Ease.OutBounce);
                     break;
                 case Direction.South:
-                    transform.DORotate(new Vector3(0.0f, isNegateImage ? -95 : 95, 0.0f), _bounceDuration).SetEase(Ease.OutBounce);
+                    transform.DORotate(new Vector3(0.0f, IsNegateImage ? -95 : 95, 0.0f), _bounceDuration).SetEase(Ease.OutBounce);
                     break;
                 case Direction.East:
-                    transform.DORotate(new Vector3(0.0f, isNegateImage ? 175 : 5, 0.0f), _bounceDuration).SetEase(Ease.OutBounce);
+                    transform.DORotate(new Vector3(0.0f, IsNegateImage ? 175 : 5, 0.0f), _bounceDuration).SetEase(Ease.OutBounce);
                     break;
                 case Direction.West:
-                    transform.DORotate(new Vector3(0.0f, isNegateImage ? -5 : -175, 0.0f), _bounceDuration).SetEase(Ease.OutBounce);
+                    transform.DORotate(new Vector3(0.0f, IsNegateImage ? -5 : -175, 0.0f), _bounceDuration).SetEase(Ease.OutBounce);
                     break;
             }
 
             Sequence changeImage = DOTween.Sequence();
             
             changeImage.Append( _spriteRenderer.DOColor(new Color(0, 0.25f, 0.25f, 1), 0.5f).SetEase(Ease.OutBounce));
-            changeImage.AppendCallback(() => _spriteRenderer.sprite = splashImage);
+            changeImage.AppendCallback(() => _spriteRenderer.sprite = SplashImage);
             changeImage.Append( _spriteRenderer.DOColor(Color.white, 0.5f).SetEase(Ease.OutBounce));
 
-            targetHit?.SetValue(targetHit.Value + 1);
+            TargetHit?.SetValue(TargetHit.Value + 1);
 
-            if (displayScore.Value)
+            if (DisplayScore.Value)
             {
-                score.SetValue(score.Value + 1);
-                scoreUpText.text = "+100";
-                scoreUpText.material.SetColor(ColorMat, new Color(0,0,0,0));
+                Score.SetValue(Score.Value + 1);
+                ScoreUpText.text = "+100";
+                ScoreUpText.material.SetColor(ColorMat, new Color(0,0,0,0));
                 Sequence scoreUpSequence = DOTween.Sequence();
-                scoreUpSequence.Append(scoreUpText.material.DOColor(Color.green * 3.0f, "_Color", 0.5f).SetEase(Ease.InBounce));
-                scoreUpSequence.Join(scoreUpText.transform.DOMove(transform1.position + Vector3.up * 1.5f, 0.5f));
-                scoreUpSequence.Join(scoreUpText.transform.DOScale(scoreUpText.transform.localScale + scoreUpText.transform.localScale * 1.2f, 0.5f).SetEase(Ease.OutBounce));
-                scoreUpSequence.Append(scoreUpText.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBounce));
+                scoreUpSequence.Append(ScoreUpText.material.DOColor(Color.green * 3.0f, "_Color", 0.5f).SetEase(Ease.InBounce));
+                scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 1.5f, 0.5f));
+                scoreUpSequence.Join(ScoreUpText.transform.DOScale(ScoreUpText.transform.localScale + ScoreUpText.transform.localScale * 1.2f, 0.5f).SetEase(Ease.OutBounce));
+                scoreUpSequence.Append(ScoreUpText.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBounce));
                 scoreUpSequence.AppendCallback(() => 
-                    scoreUpText.material.SetColor(ColorMat, new Color(0,0,0,0)));
+                    ScoreUpText.material.SetColor(ColorMat, new Color(0,0,0,0)));
                 scoreUpSequence.AppendCallback(() =>  Destroy(parent.gameObject));
             }
 
@@ -289,27 +289,14 @@ public class Target : MonoBehaviour
             
         }
     }
-
-    /**
-     * @brief : Debug fonction to see a the ray between target and player
-     */
-    private void OnDrawGizmosSelected()
-    {
-      /*  Gizmos.color = Color.red;  
-        Vector3 origin = transform.position + (isNegateImage ? -transform.right : transform.right);
-        Vector3 direction = _player.transform.position + Vector3.up - transform.position + (isNegateImage ? transform.right : -transform.right);;
-        Gizmos.DrawRay(origin, direction * 3.0f);*/
-    }
-
     public bool IsHit()
     {
         return _isHit;
     }
-
     public float GetTimeToShoot()
     {
         return _endTimeValue;
     }
-    
-    
+    #endregion
+
 }

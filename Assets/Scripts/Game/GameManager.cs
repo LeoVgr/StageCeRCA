@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    #region "Attributs"
     public BoolVariable FpsCamera;
     public BoolVariable IsPlayerLock;
     public BoolVariable IsGameStarted;
@@ -26,7 +28,9 @@ public class GameManager : MonoBehaviour
 
     private MazeGenerator _mazeGenerator;
     private bool _isMazeGenerated = false;
+    #endregion
 
+    #region "Events"
     void Start()
     {
         //Get references to other components
@@ -94,7 +98,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
     private void Update()
     {
         //While the maze isn't generated (due to loading image before generate the maze) just try to generate again
@@ -107,4 +110,17 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    #endregion
+
+    #region "Methods"
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
+    #endregion
 }

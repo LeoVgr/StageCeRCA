@@ -129,7 +129,7 @@ public class PlayerSaveData : MonoBehaviour
         
         foreach (GameObject o in targetList.List)
         {
-            text += o.GetComponent<Target>().sprite.name + ";" + o.GetComponent<Target>().GetTimeToShoot() + "\n";
+            text += o.GetComponent<Target>().Sprite.name + ";" + o.GetComponent<Target>().GetTimeToShoot() + "\n";
         }
 
         string path = "";
