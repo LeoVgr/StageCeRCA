@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
             Player.SetValue(Remy.GetComponentInChildren<PlayerMovement>().gameObject);
 
             //Activate the right camera
-            if (FpsCamera)
+            if (FpsCamera.Value)
             {
                 RemyFPSCamera.Priority = 1;
                 RemyTPSCamera.Priority = 0;
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
             Player.SetValue(Megan.GetComponentInChildren<PlayerMovement>().gameObject);
 
             //Activate the right camera
-            if (FpsCamera)
+            if (FpsCamera.Value)
             {
                 MeganFPSCamera.Priority = 1;
                 MeganTPSCamera.Priority = 0;
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
             Player.SetValue(Mousey.GetComponentInChildren<PlayerMovement>().gameObject);
 
             //Activate the right camera
-            if (FpsCamera)
+            if (FpsCamera.Value)
             {
                 MeganFPSCamera.Priority = 1;
                 MeganTPSCamera.Priority = 0;
