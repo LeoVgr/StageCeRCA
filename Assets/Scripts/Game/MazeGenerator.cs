@@ -369,9 +369,7 @@ public class MazeGenerator : MonoBehaviour
             previousNode = _maze[position];
             
         }
-    }
-    
-   
+    }     
 
     /**
      * @brief If image is generated in turner move it
@@ -500,19 +498,7 @@ public class MazeGenerator : MonoBehaviour
                             transform2.localPosition = -transform2.localPosition;
                         }
                     }
-
-                    //Set if a target has to be shoot or not, depending his name (name of picture should be like 01_Y_Image01.png)
-                    if(target.Sprite.name.Split('_').Length >= 2)
-                    {
-                        string stringHasToBeShot = target.Sprite.name.Split('_')[1];
-
-                        if (stringHasToBeShot == "N")
-                        {
-                            target.HasToBeShot.SetValue(false);
-                        }
-                    }
-                    
-                    
+                                
                 }
             }
             

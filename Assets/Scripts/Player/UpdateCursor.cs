@@ -19,12 +19,12 @@ public class UpdateCursor : MonoBehaviour
         {
             if (hit.collider.gameObject.GetComponent<Target>())
             {
-                if (hit.collider.gameObject.GetComponent<Target>().HasToBeShot.Value)
-                {
+                if (hit.collider.gameObject.GetComponent<Target>().HasToBeShot)
+                {                  
                     CrossHair.color = Color.green;
                 }
                 else
-                {
+                {                
                     CrossHair.color = Color.red;
                 }
                 
