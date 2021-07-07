@@ -15,99 +15,106 @@ using UnityEngine.VFX;
  */
 public class PlayerFire : MonoBehaviour
 {
-
+    #region "Attributs"
     [Header("Atom variables")]
-    public GameObjectVariable cameraAtomVariable;
-    public GameObject fireStartPositonFPS;
-    public GameObject fireStartPositonTPS;
-    public BoolVariable a_isPlayerLock;
-    public BoolVariable playerCanFire;
-    public BoolVariable cameraInfps;
-
+    public GameObject FireStartPositonFPS;
+    public GameObject FireStartPositonTPS;
+    public BoolVariable IsPlayerLock;
+    public BoolVariable PlayerCanFire;
+    public BoolVariable CameraInfps;
 
     [Header("FX")]
-    //public VisualEffect gunShootFX;
-    public GameObject gunObjectFirstPerson;
-    public GameObject gunObjectThirdPerson;
-
+    public GameObject GunObjectFirstPerson;
+    public GameObject GunObjectThirdPerson;
     
     [Header("Sound Effect")]
     [FMODUnity.EventRef][SerializeField]
-    private string fireEvent;
+    private string _fireEvent;
     
     [Header("Pool")]
-    public GameObject objectToPool;
+    public GameObject ObjectToPool;
     private int _amountToPool;
 
+    public GameObject Crosshair;
     private bool _isFiring;
     private List<GameObject> _pooledObjects;
     private InputActionMap _inputActions;
     private PlayerInput _input;
     private Camera _camera;
-
     private GameObject _gunObject;
     private GameObject _fireStartPositon;
-
     private float _timer;
-    private float _timeToFire = 0.5f;
-    
-    
-    // Start is called before the first frame update
+    private float _cooldownFire = 0.5f;
+    #endregion
+
+
+    #region "Events"
     void Start()
     {
+        //Find references 
+        _camera = Camera.main;
+
+        //Create bullet pool
         _amountToPool = 3;
-        
+        CreatePooledObjectList();
+
+        //Bind player inputs on methods
         _input = GetComponent<PlayerInput>();
         _inputActions = _input.actions.actionMaps[0];
         _inputActions["Fire"].performed += Fire;
         _inputActions["Fire"].canceled += CancelFire;
-
-        _camera = cameraAtomVariable.Value.GetComponent<Camera>();
-        cameraInfps.Changed.Register(UpdateGun);
-        UpdateGun(cameraInfps.Value);
-
-        CreatePooledObjectList();
+        
+        //Update the origin of the shot depending if we are in fps or tps
+        CameraInfps.Changed.Register(UpdateGun);
+        UpdateGun(CameraInfps.Value);      
     }
-
-
     private void Update()
     {
+        //We need to update the reference (don't delete this line, it wreates a bug)
+        _camera = Camera.main;
+
+        //Update the timer
         _timer += Time.deltaTime;
+
+        //Check if the fire action has been done by the player
         if (_isFiring)
         {
-            if (_timer > _timeToFire)
+            if (_timer > _cooldownFire)
             {
                 _timer = 0f;
                 RapidFire();
             }
         }
+        
     }
-
-    private void UpdateGun(bool b)
-    {
-        _gunObject = b ? gunObjectFirstPerson : gunObjectThirdPerson;
-        _fireStartPositon = b ? fireStartPositonFPS : fireStartPositonTPS;
-    }
-
     private void OnDestroy()
     {
+        //Unregister methods when object is destroyed
         _inputActions["Fire"].performed -= Fire;
         _inputActions["Fire"].canceled -= CancelFire;
     }
-    
+    #endregion
+
+    #region "Methods"
+    private void UpdateGun(bool b)
+    {
+        _gunObject = b ? GunObjectFirstPerson : GunObjectThirdPerson;
+        _fireStartPositon = b ? FireStartPositonFPS : FireStartPositonTPS;
+    }      
     private void CreatePooledObjectList()
     {
         _pooledObjects = new List<GameObject>();
+
         for (int i = 0; i < _amountToPool; ++i)
         {
-            GameObject obj = Instantiate(objectToPool);
+            GameObject obj = Instantiate(ObjectToPool);
             obj.SetActive(false);
             _pooledObjects.Add(obj);
         }
     }
-
-    private GameObject GetPooledObject()
+    private GameObject GetFirstAvailablePooledObject()
     {
+        //Looking for the first bullet not active in hierarchy (aka not used)
         for (int i = 0; i < _pooledObjects.Count; ++i)
         {
             if (!_pooledObjects[i].activeInHierarchy)
@@ -118,30 +125,32 @@ public class PlayerFire : MonoBehaviour
 
         return null;
     }
-
     private void RapidFire()
     {
-        if(!a_isPlayerLock.Value && playerCanFire.Value)
+        if(!IsPlayerLock.Value && PlayerCanFire.Value)
         {
-            FMODUnity.RuntimeManager.PlayOneShot(fireEvent, transform.position);
+            //Play Sound
+            FMODUnity.RuntimeManager.PlayOneShot(_fireEvent, transform.position);
 
+            //Shot animation
             if (_gunObject)
-                _gunObject.transform.DOPunchScale(_gunObject.transform.localScale * 0.1f, _timeToFire * 0.75f);
-            
-            RaycastHit hit;
-            Ray ray = _camera.ScreenPointToRay(new Vector3(_camera.pixelWidth / 2.0f, _camera.pixelHeight / 2.0f, 0));
+                _gunObject.transform.DOPunchScale(_gunObject.transform.localScale * 0.1f, _cooldownFire * 0.75f);
 
-            Vector3 normal = Vector3.zero;;
-
-            GameObject go = GetPooledObject();
+            //Prepare the bullet
+            GameObject go = GetFirstAvailablePooledObject();
             if (go)
                 go.SetActive(true);
 
+            //Looking for target
+            RaycastHit hit;
+            Ray ray = _camera.ScreenPointToRay(Crosshair.transform.position);
+
+            Vector3 normal = Vector3.zero;;
             Vector3 endPoint =  Vector3.zero;
             bool hitSomething = false;
             
             if (Physics.Raycast(ray, out hit, 100.0f, ~LayerMask.GetMask("Player")))
-            {
+            {              
                 Target t = hit.collider.GetComponentInChildren<Target>();
                 t?.Hit();
                 endPoint =  hit.point;
@@ -150,23 +159,23 @@ public class PlayerFire : MonoBehaviour
             }
             else
             {
+                //If there is no target, just makes the bullet go far away
                 endPoint = ray.GetPoint(100.0f);
             }
 
+            //Fire the bullet
             if (go)
                 go.GetComponentInChildren<Bullet>().Fire(_fireStartPositon.transform.position,  endPoint, hitSomething, normal);
 
         }
     }
-
     private void Fire(InputAction.CallbackContext obj)
     {
         _isFiring = true;
     }
-    
     private void CancelFire(InputAction.CallbackContext obj)
     {
         _isFiring = false;
     }
-
+    #endregion
 }
