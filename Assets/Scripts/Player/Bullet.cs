@@ -24,9 +24,7 @@ public class Bullet : MonoBehaviour
     public GameObject bulletImpact;
     public GameObject bulletSphere;
     
-    [Header("Sound Effect")]
-    [FMODUnity.EventRef][SerializeField]
-    private string hit;
+    [Header("Audio")] public AudioSource ImpactSource;
     
     private CinemachineImpulseSource _impulseSource;
     private Vector3 _startPosition;
@@ -88,15 +86,17 @@ public class Bullet : MonoBehaviour
 
     private void HitEvent()
     {
+        //VFX
         sparkle.SendEvent("OnFire");
         sparkle.transform.position += _hitNormal * 0.1f;
-        MeshRenderer meshRenderer = bulletImpact.GetComponent<MeshRenderer>();
-        meshRenderer.material.SetFloat(Intensity, 1.0f);
+        //Impact Effect
+        MeshRenderer impactRenderer = bulletImpact.GetComponent<MeshRenderer>();
+        impactRenderer.material.SetFloat(Intensity, 1.0f);
+        impactRenderer.material.DOFloat(.0f, "_Intensity", intervalTime);
         bulletImpact.transform.position = _endPosition + _hitNormal * 0.05f;
         bulletImpact.transform.rotation = Quaternion.LookRotation(_hitNormal);
-        meshRenderer.material.DOFloat(.0f, "_Intensity", intervalTime);
-        
-        FMODUnity.RuntimeManager.PlayOneShot(hit, bulletImpact.transform.position);
+        //AUDIO
+        ImpactSource.Play();
     }
 
     private void ResetCiemachine()

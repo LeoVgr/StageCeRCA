@@ -41,12 +41,10 @@ public class Target : MonoBehaviour
     
     [Header("Atoms Constant")]
     public Vector2Constant WidthHeight;
-    
-    [Header("Sound Effect")]
-    [FMODUnity.EventRef][SerializeField]
-    private string _hit;
-    [FMODUnity.EventRef][SerializeField]
-    private string _miss;
+
+    [Header("Sound Effect")] 
+    public AudioSource AudioValidate;
+    public AudioSource AudioMiss;
     
     [HideInInspector()]
     public int WayPointIndex;
@@ -243,7 +241,7 @@ public class Target : MonoBehaviour
         TargetHit?.SetValue(TargetHit.Value + 1);
 
         //Play sound
-        FMODUnity.RuntimeManager.PlayOneShot(_hit, transform.position);
+        //AudioValidate.Play();
 
         //Play animation
         Canvas parent = ScoreUpText.GetComponentInParent<Canvas>();
@@ -290,7 +288,7 @@ public class Target : MonoBehaviour
         TimeToShootList.Add(_time);
 
         //Play sound
-        FMODUnity.RuntimeManager.PlayOneShot(_miss, transform.position);
+        AudioMiss.Play();
 
         //Play animation
         Canvas parent = ScoreUpText.GetComponentInParent<Canvas>();
@@ -335,7 +333,7 @@ public class Target : MonoBehaviour
         TargetHit?.SetValue(TargetHit.Value + 1);
 
         //Play sound
-        FMODUnity.RuntimeManager.PlayOneShot(_hit, transform.position);
+        AudioValidate.Play();
 
         //Play animation
         Canvas parent = ScoreUpText.GetComponentInParent<Canvas>();
@@ -400,7 +398,7 @@ public class Target : MonoBehaviour
         TimeToShootList.Add(_time);
 
         //Play sound
-        FMODUnity.RuntimeManager.PlayOneShot(_miss, transform.position);
+        AudioMiss.Play();
 
         //Play animation
         Canvas parent = ScoreUpText.GetComponentInParent<Canvas>();

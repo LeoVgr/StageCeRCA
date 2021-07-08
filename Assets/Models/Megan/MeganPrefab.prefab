@@ -564,7 +564,7 @@ MonoBehaviour:
   CameraInfps: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0, type: 2}
   GunObjectFirstPerson: {fileID: 0}
   GunObjectThirdPerson: {fileID: 3217138000648035762}
-  _fireEvent: event:/Player/Shoot
+  FireAudio: {fileID: 0}
   ObjectToPool: {fileID: 4434645828648297470, guid: 22004537818c75a4a92290bd1995eba2,
     type: 3}
   Crosshair: {fileID: 0}

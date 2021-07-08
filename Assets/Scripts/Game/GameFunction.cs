@@ -49,9 +49,9 @@ public class GameFunction : MonoBehaviour
         isGameStart.Reset(true);
     }
 
-    public void StartGame(string sceneName)
+    public void StartGame(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
     }
     
     public void ShowGameObject(GameObject go)

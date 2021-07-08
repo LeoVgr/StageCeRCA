@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -27,17 +27,15 @@ public class PlayerFire : MonoBehaviour
     public GameObject GunObjectFirstPerson;
     public GameObject GunObjectThirdPerson;
     
-    [Header("Sound Effect")]
-    [FMODUnity.EventRef][SerializeField]
-    private string _fireEvent;
-    
+    [Header("Audio")] public AudioSource FireAudio;
+
     [Header("Pool")]
     public GameObject ObjectToPool;
     private int _amountToPool;
 
     public GameObject Crosshair;
     private bool _isFiring;
-    private List<GameObject> _pooledObjects;
+    private List<Bullet> _pooledObjects;
     private InputActionMap _inputActions;
     private PlayerInput _input;
     private Camera _camera;
@@ -103,21 +101,21 @@ public class PlayerFire : MonoBehaviour
     }      
     private void CreatePooledObjectList()
     {
-        _pooledObjects = new List<GameObject>();
+        _pooledObjects = new List<Bullet>();
 
         for (int i = 0; i < _amountToPool; ++i)
         {
             GameObject obj = Instantiate(ObjectToPool);
             obj.SetActive(false);
-            _pooledObjects.Add(obj);
+            _pooledObjects.Add(obj.GetComponent<Bullet>());
         }
     }
-    private GameObject GetFirstAvailablePooledObject()
+    private Bullet GetFirstAvailablePooledObject()
     {
         //Looking for the first bullet not active in hierarchy (aka not used)
         for (int i = 0; i < _pooledObjects.Count; ++i)
         {
-            if (!_pooledObjects[i].activeInHierarchy)
+            if (!_pooledObjects[i].gameObject.activeInHierarchy)
             {
                 return _pooledObjects[i];
             }
@@ -129,17 +127,16 @@ public class PlayerFire : MonoBehaviour
     {
         if(!IsPlayerLock.Value && PlayerCanFire.Value)
         {
-            //Play Sound
-            FMODUnity.RuntimeManager.PlayOneShot(_fireEvent, transform.position);
+            FireAudio.Play();
 
             //Shot animation
             if (_gunObject)
                 _gunObject.transform.DOPunchScale(_gunObject.transform.localScale * 0.1f, _cooldownFire * 0.75f);
 
             //Prepare the bullet
-            GameObject go = GetFirstAvailablePooledObject();
-            if (go)
-                go.SetActive(true);
+            Bullet bullet = GetFirstAvailablePooledObject();
+            if (bullet)
+                bullet.gameObject.SetActive(true);
 
             //Looking for target
             RaycastHit hit;
@@ -148,12 +145,13 @@ public class PlayerFire : MonoBehaviour
             Vector3 normal = Vector3.zero;;
             Vector3 endPoint =  Vector3.zero;
             bool hitSomething = false;
-            
+
             if (Physics.Raycast(ray, out hit, 100.0f, ~LayerMask.GetMask("Player")))
             {              
                 Target t = hit.collider.GetComponentInChildren<Target>();
-                t?.Hit();
-                endPoint =  hit.point;
+                if(t != null)
+                    t.Hit();
+                endPoint = hit.point;
                 hitSomething = true;
                 normal = hit.normal;
             }
@@ -164,8 +162,8 @@ public class PlayerFire : MonoBehaviour
             }
 
             //Fire the bullet
-            if (go)
-                go.GetComponentInChildren<Bullet>().Fire(_fireStartPositon.transform.position,  endPoint, hitSomething, normal);
+            if (bullet)
+                bullet.GetComponentInChildren<Bullet>().Fire(_fireStartPositon.transform.position,  endPoint, hitSomething, normal);
 
         }
     }
@@ -177,5 +175,5 @@ public class PlayerFire : MonoBehaviour
     {
         _isFiring = false;
     }
-    #endregion
+#endregion
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityAtoms.BaseAtoms;
@@ -61,11 +61,6 @@ public class MazeManager : MonoBehaviour
     public Vector2Constant MinMaxImagesTime;
 
     private List<UIDataManager> _dataManagers;
-
-    [Header("Sound Effect")]
-    [FMODUnity.EventRef][SerializeField]
-    private string _music;
-
     
     #endregion
 
@@ -188,8 +183,6 @@ public class MazeManager : MonoBehaviour
         
         IdPlayerField.GetComponent<InputUIManager>().atomVariableString = IdPlayer;       
         
-        FMODUnity.RuntimeManager.PlayOneShot(_music, transform.position);
-
         ResetVariable();
         
         InitUI();
