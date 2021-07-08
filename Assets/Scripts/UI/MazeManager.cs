@@ -51,10 +51,6 @@ public class MazeManager : MonoBehaviour
     public Vector2Variable minMaxTurnSlider;
     public Vector2Constant minMaxImagesTime;
 
-    
-    [Header("Sound Effect")]
-    [FMODUnity.EventRef][SerializeField]
-    private string music;
 
     private List<UIDataManager> _dataManagers;
     
@@ -154,9 +150,6 @@ public class MazeManager : MonoBehaviour
         timer.GetComponent<UIDataManager>().registerThisEvent = false;
 
         id_player.GetComponent<InputUIManager>().atomVariableString = id_playerVariable;
-        
-        
-        FMODUnity.RuntimeManager.PlayOneShot(music, transform.position);
 
         ResetVariable();
         

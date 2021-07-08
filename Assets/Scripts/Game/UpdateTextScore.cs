@@ -15,21 +15,15 @@ using Random = UnityEngine.Random;
  */
 public class UpdateTextScore : MonoBehaviour
 {
-
     public IntEvent updateEvent;
     public BoolVariable isCameraFps;
     public BoolVariable isScoreShow;
-    
-    [Header("Sound Effect")]
-    [FMODUnity.EventRef][SerializeField]
-    private string increaseScore;
-    [FMODUnity.EventRef][SerializeField]
-    private string decreaseScore;
+
+    [Header("Audio")] public AudioSource AudioIncreaseScore;
+    public AudioSource AudioDecreaseScore;
 
     private int previousNumber;
-    
-    //FMODUnity.RuntimeManager.PlayOneShot(fireEvent, transform.position);
-    
+
     private TextMeshProUGUI _textMeshProUi;
     private Text _text;
 
@@ -49,7 +43,7 @@ public class UpdateTextScore : MonoBehaviour
 
     private void ShowText(bool val)
     {
-        if(isScoreShow.Value)
+        if (isScoreShow.Value)
             gameObject.SetActive(val);
     }
 
@@ -63,12 +57,13 @@ public class UpdateTextScore : MonoBehaviour
     {
         ScaleEvent();
         ColorEvent();
-        
-        if(previousNumber < i)
-            FMODUnity.RuntimeManager.PlayOneShot(increaseScore, transform.position);
-        else
-            FMODUnity.RuntimeManager.PlayOneShot(decreaseScore, transform.position);
-        
+
+        //TODO Make audio event listener on score modification, now it's manage by score rendering who are actually duplicate on scene
+        if (previousNumber < i && AudioIncreaseScore != null)
+            AudioIncreaseScore.Play();
+        else if (AudioDecreaseScore != null)
+            AudioDecreaseScore.Play();
+
 
         previousNumber = i;
         DOVirtual.Float((i - 1) * 100, i * 100, 0.5f, UpdateFloatText);
@@ -77,7 +72,7 @@ public class UpdateTextScore : MonoBehaviour
     private void ScaleEvent()
     {
         var localScale = transform.localScale;
-        
+
         float x = Random.Range(0.1f * localScale.x, 0.4f * localScale.x);
         float y = Random.Range(0.1f * localScale.y, 0.4f * localScale.y);
 
@@ -91,15 +86,14 @@ public class UpdateTextScore : MonoBehaviour
         if (_text)
             _text.material.DOColor(Color.green * 4.0f, "_Color", 0.35f)
                 .SetEase(Ease.OutQuad)
-                .OnComplete(() =>  _text.material.DOColor(Color.yellow * 2.0f, "_Color", 0.35f));
+                .OnComplete(() => _text.material.DOColor(Color.yellow * 2.0f, "_Color", 0.35f));
     }
 
     private void UpdateFloatText(float f)
     {
-        if(_textMeshProUi)
-            _textMeshProUi.text = "Score : " + (int)f;
-        if(_text)
-            _text.text = "Score : " + (int)f;
+        if (_textMeshProUi)
+            _textMeshProUi.text = "Score : " + (int) f;
+        if (_text)
+            _text.text = "Score : " + (int) f;
     }
-    
 }

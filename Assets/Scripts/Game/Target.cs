@@ -40,12 +40,10 @@ public class Target : MonoBehaviour
     
     [Header("Atoms Constant")]
     public Vector2Constant widthHeight;
-    
-    [Header("Sound Effect")]
-    [FMODUnity.EventRef][SerializeField]
-    private string hit;
-    [FMODUnity.EventRef][SerializeField]
-    private string miss;
+
+    [Header("Sound Effect")] 
+    public AudioSource AudioValidate;
+    public AudioSource AudioMiss;
     
     [HideInInspector()]
     public int wayPointIndex;
@@ -181,7 +179,7 @@ public class Target : MonoBehaviour
     {
         if (!_loose && !_isHit)
         {
-            FMODUnity.RuntimeManager.PlayOneShot(miss, transform.position);
+            AudioMiss.Play();
             
             Canvas parent = scoreUpText.GetComponentInParent<Canvas>();
             var transform1 = parent.transform;
@@ -225,7 +223,7 @@ public class Target : MonoBehaviour
     {
         if (!_isHit && _isShown)
         {
-            FMODUnity.RuntimeManager.PlayOneShot(hit, transform.position);
+            AudioValidate.Play();
             
             Canvas parent = scoreUpText.GetComponentInParent<Canvas>();
             var transform1 = parent.transform;
