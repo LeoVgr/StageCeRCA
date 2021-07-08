@@ -77,9 +77,9 @@ public class FillPresets : MonoBehaviour
         //Set the preset name in the input field and dropdown UI
         string text = _tmpDropdown.options[_tmpDropdown.value].text;
         Input.text = text;
-        
-        DOVirtual.DelayedCall(Time.deltaTime, () => PresetName?.SetValue(text));
-        
+
+        PresetName?.SetValue(text);
+
         //Set all the csv value to atom's variable
         Dictionary<ColumnNames, float> dico;
 

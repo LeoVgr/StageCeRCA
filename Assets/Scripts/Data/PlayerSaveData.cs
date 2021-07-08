@@ -8,66 +8,72 @@ using UnityEngine;
 
 public class PlayerSaveData : MonoBehaviour
 {
-    public BoolVariable a_IsPlayerLock;
-    public IntVariable targetCount;
-    public IntVariable targetHit;
-    public IntVariable corridorLength;
-    public IntVariable turnCount;
-    public FloatVariable imageTime;
-    public FloatVariable imageSize;
-    public BoolVariable imageRandom;
-    public BoolVariable isFPSBool;
-    public IntVariable seedNumber;
-    public StringVariable presetName;
-    public FloatValueList timeToShootList;
-    public GameObjectValueList targetList;
-    public StringVariable idPlayer;
-    public IntVariable score;
-    public BoolVariable scoreDisplay;
-    public BoolVariable enableFire;
-    public FloatVariable totalTimer;
+    #region "Attributs"
+    public BoolVariable IsPlayerLock;
+    public IntVariable TargetCount;
+    public IntVariable TargetHit;
+    public IntVariable CorridorLength;
+    public IntVariable TurnCount;
+    public FloatVariable ImageTime;
+    public FloatVariable ImageSize;
+    public BoolVariable ImageRandom;
+    public BoolVariable IsFPSBool;
+    public IntVariable SeedNumber;
+    public StringVariable PresetName;
+    public FloatValueList TimeToShootList;
+    public GameObjectValueList TargetList;
+    public StringVariable IdPlayer;
+    public IntVariable Score;
+    public BoolVariable ScoreDisplay;
+    public BoolVariable EnableFire;
+    public FloatVariable TotalTimer;
 
-    private string _startTime;
-    
-    private bool _endGame;
-    
+    private string _startTime;   
+    private bool _endGame;   
     private DirectoryInfo _directoryInfo;
+    #endregion "Attributs"
 
-
+    #region "Events"
     private void Awake()
     {
+        //Define where we will save our file
         _directoryInfo = new DirectoryInfo(Application.streamingAssetsPath);
-        targetList.Clear();
+        TargetList.Clear();
     }
-
     private void Start()
     {
         _startTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+        print(PresetName.Value);
     }
-
     private void Update()
     {
-        if (!a_IsPlayerLock.Value && !_endGame)
+        //Increment timer value while the game is running
+        if (!IsPlayerLock.Value && !_endGame)
         {
-            totalTimer.Value += Time.deltaTime;
-            
+            TotalTimer.Value += Time.deltaTime;        
         }
     }
+    #endregion
 
+    #region "Methods"
     public void EndGame()
     {
         _endGame = true;
-        FillCsv();
-        CreateNewPlayerFile();
-        totalTimer.SetValue(.0f);
-    }
 
+        //Save infos in data files
+        FillCsv(); //Csv with all last players
+        CreateNewPlayerFile(); //Specific player file
+
+        //Reset the timer
+        TotalTimer.SetValue(.0f);
+    }
     private void FillCsv()
     {
-        FileInfo[] allFiles = _directoryInfo.GetFiles("*.*");
-
+        //the line that we want to add to the csv file
         string text = "";
 
+        //Looking for the existing file (if there is one)
+        FileInfo[] allFiles = _directoryInfo.GetFiles("*.*");
         bool fileFind = false;
 
         foreach (FileInfo file in allFiles)
@@ -82,6 +88,7 @@ public class PlayerSaveData : MonoBehaviour
             }
         }
 
+        //If not, just create one
         if (!fileFind)
         {
             text = "Date et heure;" +
@@ -99,45 +106,51 @@ public class PlayerSaveData : MonoBehaviour
                    "personnage;" +
                    "preset\n";
 
-            text = AppendString(text);
-            
+            text = AppendString(text);          
         }
         
         File.WriteAllText(_directoryInfo + "/PlayersData.csv", text);
     }
-
     private void CreateNewPlayerFile()
     {
+        // Add data to our specific player file
         string text = "";
         text += "Date et heure;" + _startTime + "\n";
-        text += "Type Camera;" + (isFPSBool.Value ? "FPS" : "TPS") + "\n";
-        text += "Identifiant;" + idPlayer.Value + "\n";
-        text += "Temps de jeu (s);" + totalTimer.Value + "\n";
-        text += "Nombres d'images;" + targetCount.Value + "\n";
-        text += "Cibles manquees;" + (targetCount.Value - targetHit.Value) + "\n";
-        text += "Longueur;" + corridorLength.Value + "\n";
-        text += "Nombre  Virages;" + turnCount.Value + "\n";
-        text += "Images Random;" + (imageRandom.Value ? "Oui" : "Non") + "\n";
-        text += "Taille images;" + imageSize.Value + "\n";
-        text += "Temps images;" + imageTime.Value + "\n";
-        text += "seed;" + seedNumber.Value  + "\n";
-        text += "preset;" + presetName.Value  + "\n";
-        text += "score;" + (score.Value * 100)  + "\n";
-        text += "Tir Actif;" + (enableFire.Value ? "Oui" : "Non") + "\n";
-        text += "Score Affiche;" + (scoreDisplay.Value ? "Oui" : "Non") + "\n";
+        text += "Type Camera;" + (IsFPSBool.Value ? "FPS" : "TPS") + "\n";
+        text += "Identifiant;" + IdPlayer.Value + "\n";
+        text += "Temps de jeu (s);" + TotalTimer.Value + "\n";
+        text += "Nombres d'images;" + TargetCount.Value + "\n";
+        text += "Cibles manquees;" + (TargetCount.Value - TargetHit.Value) + "\n";
+        text += "Longueur;" + CorridorLength.Value + "\n";
+        text += "Nombre  Virages;" + TurnCount.Value + "\n";
+        text += "Images Random;" + (ImageRandom.Value ? "Oui" : "Non") + "\n";
+        text += "Taille images;" + ImageSize.Value + "\n";
+        text += "Temps images;" + ImageTime.Value + "\n";
+        text += "seed;" + SeedNumber.Value  + "\n";
+        text += "preset;" + PresetName.Value  + "\n";
+        text += "score;" + (Score.Value * 100)  + "\n";
+        text += "Tir Actif;" + (EnableFire.Value ? "Oui" : "Non") + "\n";
+        text += "Score Affiche;" + (ScoreDisplay.Value ? "Oui" : "Non") + "\n";
         text += "Personnage;" + gameObject.name + "\n";
         
-        foreach (GameObject o in targetList.List)
+        //For each target in the level, add data
+        foreach (GameObject o in TargetList.List)
         {
-            text += o.GetComponent<Target>().Sprite.name + ";" + o.GetComponent<Target>().GetTimeToShoot() + "\n";
+            text += o.GetComponent<Target>().Sprite.name + ";" 
+                + "Temps affichage : " + (o.GetComponent<Target>().ShowTime.Value - o.GetComponent<Target>().GetTimeToShoot()) + ";" +
+                "Cible a toucher ? : " + (o.GetComponent<Target>().HasToBeShot ? "Oui" : "Non") + ";" +
+                "Cible effectivement touchee ? : " + (o.GetComponent<Target>().GetIsHit() ? "Oui" : "Non") + ";" +
+                "Succes ? : " + ((o.GetComponent<Target>().HasToBeShot && o.GetComponent<Target>().GetIsHit()) || (!o.GetComponent<Target>().HasToBeShot && !o.GetComponent<Target>().GetIsHit()) ? "Oui" : "Non") + ";" +
+                "\n";
         }
 
+        //Create a file in the good path
         string path = "";
 
-        if (presetName.Value.Length > 0)
+        if (PresetName.Value.Length > 0)
         {
-            path = presetName.Value + "/";
-            Directory.CreateDirectory(_directoryInfo + "/Players/" + presetName.Value);
+            path = PresetName.Value + "/";
+            Directory.CreateDirectory(_directoryInfo + "/Players/" + PresetName.Value);
         }
 
         int index = Directory.GetFiles(_directoryInfo + "/Players/" + path).Length;
@@ -146,7 +159,7 @@ public class PlayerSaveData : MonoBehaviour
         if (index > 0)
             playerUniqueId = "_" + index;
 
-        string fullPath = _directoryInfo + "/Players/" + path + idPlayer.Value + playerUniqueId /*+ "(" + DateTime.Now.ToString("hhmm_ss") */+ ".csv";
+        string fullPath = _directoryInfo + "/Players/" + path + IdPlayer.Value + playerUniqueId /*+ "(" + DateTime.Now.ToString("hhmm_ss") */+ ".csv";
 
        FileStream fs = File.Create(fullPath);
        var sr = new StreamWriter(fs);
@@ -155,35 +168,37 @@ public class PlayerSaveData : MonoBehaviour
 
        _endGame = false;
 
-    }
-    
+    }    
     private string AppendString(string text)
     {
+        //Use to add data into the string in parameter
+
         float average = 0.0f;
         
-        foreach (float f in timeToShootList.List)
+        foreach (float f in TimeToShootList.List)
         {
             average += f;
         }
 
-        average /= timeToShootList.Count;
+        average /= TimeToShootList.Count;
 
         text += _startTime + ";";
-        text += (isFPSBool.Value ? "FPS" : "TPS") + ";";
+        text += (IsFPSBool.Value ? "FPS" : "TPS") + ";";
         text += average + ";";
-        text += totalTimer.Value + ";";
-        text += targetCount.Value + ";";
-        text += targetCount.Value - targetHit.Value + ";";
-        text += corridorLength.Value + ";";
-        text += turnCount.Value + ";";
-        text += imageTime.Value + ";";
-        text += (imageRandom.Value ? "Oui" : "Non") + ";";
-        text += imageSize.Value + ";";
-        text += seedNumber.Value + ";";
+        text += TotalTimer.Value + ";";
+        text += TargetCount.Value + ";";
+        text += TargetCount.Value - TargetHit.Value + ";";
+        text += CorridorLength.Value + ";";
+        text += TurnCount.Value + ";";
+        text += ImageTime.Value + ";";
+        text += (ImageRandom.Value ? "Oui" : "Non") + ";";
+        text += ImageSize.Value + ";";
+        text += SeedNumber.Value + ";";
         text += gameObject.name + ";";
-        text += presetName.Value + ";\n";
+        text += PresetName.Value + ";\n";
         return text;
     }
+    #endregion
 }
 
 

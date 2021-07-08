@@ -78,15 +78,15 @@ public class UIDataManager : MonoBehaviour
     }
     public virtual void UpdateValue(int i)
     {
-        presetName?.SetValue("");
+        //presetName?.SetValue("");
     }   
     public virtual  void UpdateValue(float f)
     {
-        presetName?.SetValue("");
+        //presetName?.SetValue("");
     }  
     public virtual  void UpdateValue(bool b)
     {
-        presetName?.SetValue("");
+        //presetName?.SetValue("");
     }
     
 }

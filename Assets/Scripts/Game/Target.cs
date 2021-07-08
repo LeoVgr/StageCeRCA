@@ -57,7 +57,8 @@ public class Target : MonoBehaviour
     private List<Collider> _colliders;
     private SpriteRenderer _spriteRenderer;
     private float _bounceDuration = 0.5f;
-    private bool _isHit;
+    private bool _hasBeenShown = false;
+    private bool _isHit = false;
 
     private bool _isShown;
     private bool _canShow;
@@ -65,7 +66,6 @@ public class Target : MonoBehaviour
 
     private float _time;
     private float _endTimeValue;
-    private bool _loose = false;
     private static readonly int ColorMat = Shader.PropertyToID("_Color");
     #endregion
 
@@ -129,7 +129,8 @@ public class Target : MonoBehaviour
     }
     private void Update()
     {
-        if (!_loose && !_isHit)
+        //If the target hasn't been shown yet
+        if (!_hasBeenShown)
         {
             if (_canShow && !_isShown && _meshRenderer.isVisible)
             {
@@ -149,6 +150,7 @@ public class Target : MonoBehaviour
                 }
             }
 
+            //Update the time that the target is shown
             if (_isShown)
             {
                 _time += Time.deltaTime;
@@ -160,7 +162,7 @@ public class Target : MonoBehaviour
     #region "Methods"
     private void CheckDistanceToPlayer(int playerPosition)
     {
-        if (!_loose && !_isHit)
+        if (!_hasBeenShown)
         {
             if (!_isShown && Mathf.Abs(WayPointIndex - playerPosition) < DistanceToShow.Value)
             {
@@ -170,7 +172,7 @@ public class Target : MonoBehaviour
     }
     private void Show()
     {
-        if (!_loose && !_isHit)
+        if (!_hasBeenShown)
         {
             _isShown = true;
             _spriteRenderer.transform.DOLocalMove(-_spriteRenderer.transform.localPosition, 0.5f)
@@ -188,7 +190,7 @@ public class Target : MonoBehaviour
     private void Hide()
     {
         //When a target hasn't be shot in time, check if it was a good or bad move
-        if (!_loose && !_isHit)
+        if (!_hasBeenShown)
         {
             if (HasToBeShot)
             {
@@ -197,7 +199,10 @@ public class Target : MonoBehaviour
             else
             {
                 NoHitGood();
-            }            
+            }
+
+            //Set some variables
+            _hasBeenShown = true;
         }  
     }
     public void Hit()
@@ -213,7 +218,10 @@ public class Target : MonoBehaviour
             else
             {
                 HitBad();
-            }           
+            }
+
+            //Set some variables
+            _hasBeenShown = true;
         }
     }
     public void NoHitGood()
@@ -226,9 +234,9 @@ public class Target : MonoBehaviour
 
         //Update target's status
         _isShown = false;
-        _isHit = true;
+        _isHit = false;
         _time = 0.0f;
-        _endTimeValue = 0.0f;
+        _endTimeValue = 0.0f;  
 
         //Register some stats for further purpose (save data of player)
         TimeToShootList.Add(_time);       
@@ -276,8 +284,7 @@ public class Target : MonoBehaviour
         //Update target's status
         _isShown = false;
         _time = 0.0f;
-        _endTimeValue = 0.0f;    
-        _loose = true;
+        _endTimeValue = 0.0f;
 
         //Register some stats for further purpose (save data of player)
         TimeToShootList.Add(_time);
@@ -379,8 +386,23 @@ public class Target : MonoBehaviour
     }
     public void HitBad()
     {
+        //Disable colliders
+        foreach (Collider collider1 in _colliders)
+        {
+            collider1.enabled = false;
+        }
+
+        //Update target's status
+        _isHit = true;
+        _endTimeValue = _time;
+
+        //Register some stats for further purpose (save data of player)
+        TimeToShootList.Add(_time);
+
+        //Play sound
         FMODUnity.RuntimeManager.PlayOneShot(_miss, transform.position);
 
+        //Play animation
         Canvas parent = ScoreUpText.GetComponentInParent<Canvas>();
         var transform1 = parent.transform;
         Vector3 worldCanvasPosition = new Vector3(transform1.position.x, transform1.position.y, transform1.position.z);
@@ -400,7 +422,7 @@ public class Target : MonoBehaviour
             scoreUpSequence.AppendCallback(() => Destroy(parent.gameObject));
         }
 
-        _isHit = true;
+        
         GetComponentInChildren<MeshRenderer>().material.DOColor(Color.red * 2.0f, "_Color", 1f)
             .SetEase(Ease.OutBounce);
 
@@ -424,17 +446,7 @@ public class Target : MonoBehaviour
 
         changeImage.Append(_spriteRenderer.DOColor(new Color(0.25f, 0, 0, 1), 0.5f).SetEase(Ease.OutBounce));
         changeImage.AppendCallback(() => _spriteRenderer.sprite = SplashImage);
-        changeImage.Append(_spriteRenderer.DOColor(Color.white, 0.5f).SetEase(Ease.OutBounce));
-
-        foreach (Collider collider1 in _colliders)
-        {
-            collider1.enabled = false;
-        }
-
-        _time = 0.0f;
-        _endTimeValue = 0.0f;
-        TimeToShootList.Add(_time);
-        _loose = true;
+        changeImage.Append(_spriteRenderer.DOColor(Color.white, 0.5f).SetEase(Ease.OutBounce));        
     }
     public bool IsHit()
     {
@@ -443,6 +455,10 @@ public class Target : MonoBehaviour
     public float GetTimeToShoot()
     {
         return _endTimeValue;
+    }
+    public bool GetIsHit()
+    {
+        return _isHit;
     }
     #endregion
 
