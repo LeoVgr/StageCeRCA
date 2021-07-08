@@ -334,6 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 3
+  Source: {fileID: 0}
 --- !u!1 &2362303332352277619
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,6 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 4
+  Source: {fileID: 0}
 --- !u!1 &7246851261278487832
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,7 +580,6 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   ScoreUpText: {fileID: 1911317745}
   SplashImage: {fileID: 21300000, guid: f556e9231fe62b845bd38ce02f3ec6bd, type: 3}
-  HasToBeShot: {fileID: 11400000, guid: 4b0597ade4b0ddd4b895207440a85005, type: 2}
   ShowTime: {fileID: 11400000, guid: 1e797b68470377a4dabedfa80e7bbbeb, type: 2}
   DistanceToShow: {fileID: 11400000, guid: 279a6b959a0a9724b92d6d34af42480f, type: 2}
   TimeToShootList: {fileID: 11400000, guid: 1da2ab57a39258f4f95803b7908c839d, type: 2}
@@ -590,11 +591,12 @@ MonoBehaviour:
   Player: {fileID: 11400000, guid: 568a051a508ce914588e3e41642586b7, type: 2}
   PlayerWaypointChange: {fileID: 11400000, guid: 1a8098de4b8af1044b9498a43a61127d,
     type: 2}
-  widthHeight: {fileID: 11400000, guid: e42d50b71015c8e45b6c2c1b636b9d96, type: 2}
+  WidthHeight: {fileID: 11400000, guid: e42d50b71015c8e45b6c2c1b636b9d96, type: 2}
   AudioValidate: {fileID: 3259813756075022981}
   AudioMiss: {fileID: 3934663047736225333}
-  wayPointIndex: 0
-  isNegateImage: 0
+  WayPointIndex: 0
+  IsNegateImage: 0
+  HasToBeShot: 0
 --- !u!65 &2017004084669965757
 BoxCollider:
   m_ObjectHideFlags: 0

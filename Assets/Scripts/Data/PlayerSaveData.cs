@@ -43,7 +43,6 @@ public class PlayerSaveData : MonoBehaviour
     private void Start()
     {
         _startTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-        print(PresetName.Value);
     }
     private void Update()
     {
