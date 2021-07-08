@@ -28,8 +28,8 @@ namespace Audio
         private void OnLoaded(AudioClip clip)
         {
             Debug.Log("Loading audio file "+path);
-            References.clips.Add(new List<AudioClip>());
-            References.clips[_myIndex].Add(clip);
+            // References.clips.Add(new List<AudioClip>());
+            References.clips.Insert(_myIndex,clip);
         }
 
         private void Update()
@@ -37,11 +37,13 @@ namespace Audio
             if (Importer.isDone)
             {
                 Debug.Log("Audio file "+path+" completely loaded.");
+                Importer.Abort();
                 Destroy(this.gameObject);
             }
             else if (Importer.isError)
             {
                 Debug.LogError("Audio file "+path+" error during loading.");
+                Importer.Abort();
                 Destroy(this.gameObject);
             }
         }

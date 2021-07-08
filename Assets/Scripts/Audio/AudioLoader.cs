@@ -20,7 +20,7 @@ namespace Audio
             if (Source == null)
                 Source = GetComponent<AudioSource>();
 
-            if (References.clips.Count <= SoundIndex || References.clips[SoundIndex].Count == 0)
+            if (References.clips.Count <= SoundIndex /*|| References.clips[SoundIndex].Count == 0*/)
             {
                 Debug.LogError("sound file at path : " + Application.dataPath + "/" +
                                References.AudioFilesPaths[SoundIndex] + " not found ! GameObject : " + gameObject.name +
@@ -29,8 +29,8 @@ namespace Audio
             }
 
             //Set the clip loaded in audio source
-            var index = Random.Range(0, References.clips[SoundIndex].Count);
-            AudioClip referencesClip = References.clips[SoundIndex][index];
+            //var index = Random.Range(0, References.clips[SoundIndex].Count);
+            AudioClip referencesClip = References.clips[SoundIndex];
 
             Source.clip = referencesClip;
             if (Source.playOnAwake)

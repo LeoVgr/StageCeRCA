@@ -23,7 +23,8 @@ namespace Audio
                 return;
             }
             
-            References.clips = new List<List<AudioClip>>();
+            DontDestroyOnLoad(this.gameObject);
+            References.clips = new List<AudioClip>();
 
             for (int i = 0; i < References.AudioFilesPaths.Length; i++)
             {
@@ -31,7 +32,7 @@ namespace Audio
             }
 
             _launched = true;
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
 
         // private void Update()

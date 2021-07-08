@@ -10,6 +10,7 @@ namespace Audio
     {
         public string[] AudioFilesPaths;
 
-        internal List<List<AudioClip>> clips = new List<List<AudioClip>>();
+        [SerializeField]
+        internal List<AudioClip> clips = new List<AudioClip>();
     }
 }
