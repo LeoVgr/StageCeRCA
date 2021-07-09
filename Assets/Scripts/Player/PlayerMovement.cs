@@ -2,6 +2,7 @@
 using Cinemachine;
 using DG.Tweening;
 using UnityAtoms.BaseAtoms;
+using UnityAtoms.Editor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,8 +13,8 @@ using UnityEngine.InputSystem;
  */
 public class PlayerMovement : MonoBehaviour
 {
-    [Range(0,10)][SerializeField]
-    private float speed = 5.0f;
+    //TODO add to settings
+    [Range(0, 10)] [SerializeField] private float speed = 5.0f;
 
     public IntVariable waypointIndex;
     public BoolEvent isGameStart;
@@ -23,12 +24,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject pauseMenu;
 
 
-    
-    [Header("Restart var")]
-    public IntVariable targetCount;
+    [Header("Restart var")] public IntVariable targetCount;
     public IntVariable targetHit;
     public GameObjectValueList _targetList;
-    
+
     private Animator _animator;
 
     private PlayerSaveData _playerSaveData;
@@ -42,8 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float _waypointsDelta;
 
-    private bool isMenuOn;
-    
+    private bool _isMenuOn;
+
     private VictoryScreen _victoryScreenScript;
 
     private float _animatorSpeed;
@@ -84,13 +83,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void ListenKeyBoard()
     {
-        
         _inputActions["MovingForward"].performed += MoveForward;
         _inputActions["MovingForward"].canceled += StopMovement;
-        
+
         _inputActions["MovingBackward"].performed += MoveBackward;
         _inputActions["MovingBackward"].canceled += StopMovement;
-        
+
         _inputActions["Escape"].performed += PauseMenu;
     }
 
@@ -98,27 +96,27 @@ public class PlayerMovement : MonoBehaviour
     {
         _inputActions["MovingForward"].canceled -= StopMovement;
         _inputActions["MovingForward"].performed -= MoveForward;
-        
+
         _inputActions["MovingBackward"].performed -= MoveBackward;
         _inputActions["MovingBackward"].canceled -= StopMovement;
-        
+
         _inputActions["Escape"].performed -= PauseMenu;
     }
 
     private void PauseMenu(InputAction.CallbackContext obj)
     {
-        if(currentPlayerGameObject.Value == gameObject)
+        if (currentPlayerGameObject.Value == gameObject)
             ShowMenu();
     }
 
     public void ShowMenu()
     {
-        isMenuOn = !isMenuOn;
-        
-        Time.timeScale = isMenuOn ? 0.0f : 1.0f;
+        _isMenuOn = !_isMenuOn;
 
-        Cursor.lockState = isMenuOn ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = isMenuOn;
+        Time.timeScale = _isMenuOn ? 0.0f : 1.0f;
+
+        Cursor.lockState = _isMenuOn ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = _isMenuOn;
 
         pauseMenu.SetActive(!pauseMenu.activeSelf);
 
@@ -126,15 +124,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (c != null)
         {
-            c.sortingOrder = isMenuOn ? 100: 0;
+            c.sortingOrder = _isMenuOn ? 100 : 0;
         }
 
         if (_victoryScreenScript == null)
             _victoryScreenScript = FindObjectOfType<VictoryScreen>();
-        
+
         _victoryScreenScript.gameObject.SetActive(!pauseMenu.activeSelf);
 
-        if( pauseMenu.GetComponentInChildren<SetTextMeshProPlayer>()) 
+        if (pauseMenu.GetComponentInChildren<SetTextMeshProPlayer>())
             pauseMenu.GetComponentInChildren<SetTextMeshProPlayer>().SetAllText();
 
         a_isPlayerLock.SetValue(pauseMenu.activeSelf);
@@ -156,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
     public void DisplayScreen(bool isLosse)
     {
         a_isPlayerLock.SetValue(true);
-        
+
         if (_victoryScreenScript == null)
             _victoryScreenScript = FindObjectOfType<VictoryScreen>();
         _victoryScreenScript.ShowScreen();
@@ -167,20 +165,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_dollyCartInfo)
         {
-            float cameraForward = Vector3.Dot(_dollyCartInfo.transform.forward, transform.forward);
-            float angle = Vector3.Angle(_dollyCartInfo.transform.forward, transform.forward);
+            // float cameraForward = Vector3.Dot(_dollyCartInfo.transform.forward, transform.forward);
+            //float angle = Vector3.Angle(_dollyCartInfo.transform.forward, transform.forward);
 
-            if (Mathf.Abs(cameraForward) > 0.2f)
+            if (Mathf.Abs(_currentSpeed) > 0.2f)
             {
-                _dollyCartInfo.m_Position += _currentSpeed  * (cameraForward > 0 ? 1 : -1);
-                Vector3 animatorValue = Quaternion.Euler(0, angle, 0) * Vector3.forward * _animatorSpeed;
+                _dollyCartInfo.m_Position += _currentSpeed * Time.fixedDeltaTime;
+                Vector3 animatorValue = Vector3.forward * _animatorSpeed;
 
                 _animator.SetFloat(DirectionX, animatorValue.x);
                 _animator.SetFloat(DirectionZ, animatorValue.z);
 
                 SetWayPointIndex();
 
-                Vector3 deltaPosition =  _dollyCartInfo.transform.position - transform.position;
+                Vector3 deltaPosition = _dollyCartInfo.transform.position - transform.position;
                 transform.position += deltaPosition;
             }
             else
@@ -193,11 +191,11 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CheckTheEnd()
     {
-        if(_dollyCartInfo)
+        if (_dollyCartInfo)
             return Math.Abs(_dollyCartInfo.m_Position - _dollyCartInfo.m_Path.MaxPos) < 0.5f;
         return false;
     }
-    
+
 
     private void SetWayPointIndex()
     {
@@ -206,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
             waypointIndex.SetValue(waypointIndex.Value + 1);
             _currentPositionTemp += _waypointsDelta;
         }
-            
+
         if (_dollyCartInfo.m_Position <= _currentPositionTemp - _waypointsDelta)
         {
             waypointIndex.SetValue(waypointIndex.Value - 1);
@@ -222,14 +220,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveForward(InputAction.CallbackContext callbackContext)
     {
-        _currentSpeed = speed * Time.deltaTime;
-        DOVirtual.Float(0, 1.0f, 0.3f, SetSpeed);
+        float ratio = callbackContext.ReadValue<float>();
+        _currentSpeed = speed * ratio;
+        DOVirtual.Float(0, ratio, 0.3f, SetSpeed);
     }
-    
+
     public void MoveBackward(InputAction.CallbackContext callbackContext)
     {
-        _currentSpeed = -speed * Time.deltaTime;        
-        DOVirtual.Float(0, 1.0f, 0.3f, SetSpeed);
+        float ratio = callbackContext.ReadValue<float>();
+        _currentSpeed = -speed * ratio;
+        DOVirtual.Float(0, ratio, 0.3f, SetSpeed);
     }
 
     private void SetSpeed(float f)
@@ -248,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
             _dollyCartInfo = dollyCartChild.GetComponent<CinemachineDollyCart>();
             _dollyCartInfo.m_PositionUnits = CinemachinePathBase.PositionUnits.PathUnits;
         }
-        
+
         _dollyCartInfo.m_Path = _playerPath;
         _dollyCartInfo.m_Position = 0.0f;
         transform.position = _dollyCartInfo.transform.position;

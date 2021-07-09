@@ -2752,7 +2752,7 @@ MonoBehaviour:
   CameraInfps: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0, type: 2}
   GunObjectFirstPerson: {fileID: 0}
   GunObjectThirdPerson: {fileID: 3596180229404697469}
-  _fireEvent: event:/Player/Shoot
+  FireAudio: {fileID: 0}
   ObjectToPool: {fileID: 4434645828648297470, guid: 22004537818c75a4a92290bd1995eba2,
     type: 3}
   Crosshair: {fileID: 0}
@@ -2902,7 +2902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0dc32c7cc4ad942b2849992d5ab6b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.75
   waypointIndex: {fileID: 11400000, guid: bce1e3eec14fdbe48b9eb6e5ac0fc20b, type: 2}
   isGameStart: {fileID: 11400000, guid: 57e115642a492e041a07f8db69d823b6, type: 2}
   a_isPlayerLock: {fileID: 11400000, guid: 1538f65da10b16d4fbf4f809e87e902c, type: 2}

@@ -18,14 +18,18 @@ public class PlayerRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.rotation = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y, Vector3.up);
+        var mainTransform = Camera.main.transform;
+        this.transform.rotation = Quaternion.AngleAxis(mainTransform.rotation.eulerAngles.y, Vector3.up);
         if (!isPlayerFPS.Value)
         {
-            this.LookAt(Camera.main.transform.forward + (Camera.main.transform.right * .1f));
+            var transformForward = mainTransform.forward + (mainTransform.right * .1f);
+            //Stop rotation up or down
+            //transformForward.y = 0;
+            this.LookAt(transformForward);
         }
         else
         {
-            Vector3 look = Camera.main.transform.forward;
+            Vector3 look = mainTransform.forward;
             look.y = 0;
             this.LookAt(look);
         }
