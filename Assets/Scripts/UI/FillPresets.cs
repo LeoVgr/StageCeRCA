@@ -29,6 +29,7 @@ public class FillPresets : MonoBehaviour
     public BoolVariable DisplayScore;
     public BoolVariable FpsCamera;
     public BoolVariable IsShootActivated;
+    public BoolVariable ShowEndTime;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
     public BoolVariable IsMouseySelected;  
@@ -50,6 +51,7 @@ public class FillPresets : MonoBehaviour
         Score,
         FpsCamera,
         Shoot,
+        ShowEndTime,
         Remy,
         Megan,
         Mousey
@@ -125,6 +127,9 @@ public class FillPresets : MonoBehaviour
                         break;
                     case ColumnNames.Shoot:
                         IsShootActivated.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.ShowEndTime:
+                        ShowEndTime.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.Remy:
                         IsRemySelected.SetValue(keyValuePair.Value >= 0.5f);
@@ -209,12 +214,15 @@ public class FillPresets : MonoBehaviour
                             _presets[selection][(ColumnNames.Shoot)] = f;
 
                             f = CheckStringLength(value[13]);
-                            _presets[selection][(ColumnNames.Remy)] = f;
+                            _presets[selection][(ColumnNames.ShowEndTime)] = f;
 
                             f = CheckStringLength(value[14]);
-                            _presets[selection][(ColumnNames.Megan)] = f;
+                            _presets[selection][(ColumnNames.Remy)] = f;
 
                             f = CheckStringLength(value[15]);
+                            _presets[selection][(ColumnNames.Megan)] = f;
+
+                            f = CheckStringLength(value[16]);
                             _presets[selection][(ColumnNames.Mousey)] = f;
                         }
                     }
