@@ -21,8 +21,8 @@ namespace CameraBehavior
             lookMovement.x = lookMovement.x * 180f;
             lookMovement.y = lookMovement.y * -90f;
             //Ajust axis values using look speed and Time.deltaTime so the look doesn't go faster if there is more FPS
-            _virtualCameraComponent.m_HorizontalAxis.Value += lookMovement.x * Time.deltaTime;
-            _virtualCameraComponent.m_VerticalAxis.Value += lookMovement.y * Time.deltaTime;
+            _virtualCameraComponent.m_HorizontalAxis.Value += lookMovement.x;
+            _virtualCameraComponent.m_VerticalAxis.Value += lookMovement.y;
         }
 
         public override void SwitchCameraPriority(bool isPriority)
