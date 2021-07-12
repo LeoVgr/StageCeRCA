@@ -127,20 +127,18 @@ public class GameManager : MonoBehaviour
         {
             Player.Value.GetComponent<PlayerMovement>().ShowMenu();
         }
-        
-        Player.Value.GetComponent<PlayerMovement>().Restart();
+
+        //Lock the player because he don't need to move when he is in menu
         IsPlayerLock.Value = true;
-
-        //Cursor.lockState = CursorLockMode.None;
-        //Cursor.visible = true;
-
+    
+        //Reset values of scriptable objects
         Score.Reset(true);
         IsGameStart.Reset(true);
+        Player.Value.GetComponent<PlayerMovement>().Restart();
 
         //Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
-
     public void Exit()
     {
         Application.Quit();
