@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: AudioReferences
   m_EditorClassIdentifier: 
   AudioFilesPaths:
-  - Audio/music.ogg
-  - Audio/fire.ogg
-  - Audio/hit.ogg
-  - Audio/validate.ogg
-  - Audio/faillure.ogg
-  - Audio/increaseScore.ogg
-  - Audio/decreaseScore.ogg
+  - StreamingAssets/Audio/music.ogg
+  - StreamingAssets/Audio/fire.ogg
+  - StreamingAssets/Audio/hit.ogg
+  - StreamingAssets/Audio/validate.ogg
+  - StreamingAssets/Audio/faillure.ogg
+  - StreamingAssets/Audio/increaseScore.ogg
+  - StreamingAssets/Audio/decreaseScore.ogg
+  clips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
