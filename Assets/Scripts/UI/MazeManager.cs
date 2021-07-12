@@ -27,6 +27,7 @@ public class MazeManager : MonoBehaviour
     public GameObject FpsCameraToggle;
     public GameObject PlayerCanFireToggle;
     public GameObject ShowEndTimeToggle;
+    public GameObject SpeedField;
     public GameObject IsRemySelectedToggle;
     public GameObject IsMeganSelectedToggle;
     public GameObject IsMouseySelectedToggle;
@@ -49,6 +50,7 @@ public class MazeManager : MonoBehaviour
     public BoolVariable FpsCamera;
     public BoolVariable IsShootActivated;
     public BoolVariable ShowEndTime;
+    public FloatVariable Speed;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
     public BoolVariable IsMouseySelected;
@@ -87,6 +89,7 @@ public class MazeManager : MonoBehaviour
             IdPlayerField.GetComponent<InputUIManager>(),
             PlayerCanFireToggle.GetComponent<UIDataManager>(),
             ShowEndTimeToggle.GetComponent<UIDataManager>(),
+            SpeedField.GetComponent<UIDataManager>(),
             FpsCameraToggle.GetComponent<UIDataManager>(),
             TimerField.GetComponent<UIDataManager>(),
             IsRemySelectedToggle.GetComponent<UIDataManager>(),
@@ -136,11 +139,17 @@ public class MazeManager : MonoBehaviour
         PlayerCanFireToggle.GetComponent<UIDataManager>().AtomVariableBool = IsShootActivated;
         PlayerCanFireToggle.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
 
-        //Toggle Fire
+        //Show end time
         ShowEndTimeToggle.GetComponent<UIDataManager>().minInt = 0;
         ShowEndTimeToggle.GetComponent<UIDataManager>().maxInt = 0;
         ShowEndTimeToggle.GetComponent<UIDataManager>().AtomVariableBool = ShowEndTime;
         ShowEndTimeToggle.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
+
+        //Speed
+        SpeedField.GetComponent<UIDataManager>().minInt = 0;
+        SpeedField.GetComponent<UIDataManager>().maxInt = 0;
+        SpeedField.GetComponent<UIDataManager>().AtomVariableFloat = Speed;
+        SpeedField.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
 
         //Display Score
         DisplayScoreToggle.GetComponent<UIDataManager>().minInt = 0;
@@ -217,6 +226,8 @@ public class MazeManager : MonoBehaviour
     private void ResetVariable()
     {
         Seed.Reset();
+        Speed.Reset();
+        ShowEndTime.Reset();
         CorridorLength.Reset();
         TurnNumber.Reset();
         CorridorWidth.Reset();
