@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     #region "Attributs"
+    public VictoryScreen VictoryScreen;
+    public IntVariable Score;
+    public BoolVariable IsGameStart;
     public BoolVariable FpsCamera;
     public BoolVariable IsPlayerLock;
     public BoolVariable IsGameStarted;
@@ -115,6 +118,26 @@ public class GameManager : MonoBehaviour
     #region "Methods"
     public void RestartGame()
     {
+        
+        if (VictoryScreen)
+        {
+            VictoryScreen.HideScreen();
+        }
+        else
+        {
+            Player.Value.GetComponent<PlayerMovement>().ShowMenu();
+        }
+        
+        Player.Value.GetComponent<PlayerMovement>().Restart();
+        IsPlayerLock.Value = true;
+
+        //Cursor.lockState = CursorLockMode.None;
+        //Cursor.visible = true;
+
+        Score.Reset(true);
+        IsGameStart.Reset(true);
+
+        //Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
