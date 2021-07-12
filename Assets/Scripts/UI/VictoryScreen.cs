@@ -9,26 +9,27 @@ using UnityEngine.UI;
 
 public class VictoryScreen : MonoBehaviour
 {
-
+    #region "Attributs"
     [Header("Atom Variables")] 
-    public IntVariable scoreAtom;
-    public IntVariable targetHit;
-    public FloatVariable time;
+    public IntVariable ScoreAtom;
+    public IntVariable TargetHit;
+    public BoolVariable ShowEndTime;
+    public FloatVariable Time;
     
     [Header("GameObject")]
-    public TextMeshProUGUI score;
-    public TextMeshProUGUI temps;
-    public TextMeshProUGUI cibleTouchees;
-    public Text messageText;
+    public TextMeshProUGUI ScoreText;
+    public TextMeshProUGUI TimeText;
+    public TextMeshProUGUI TargetHitText;
+    public Text MessageText;
     
     private List<Image> _baseImageList;
     private List<Text> _baseTextList;
     private List<TextMeshProUGUI> _baseTextMeshProList;
 
-    
     private Color alphaNull;
-    
-    // Start is called before the first frame update
+    #endregion
+
+    #region "Events"
     void Awake()
     {
         CheckList();
@@ -38,25 +39,32 @@ public class VictoryScreen : MonoBehaviour
 
         HideScreen();
     }
+    #endregion
 
-
+    #region "Methods"
     public void ShowScreen(bool isLoose = false)
     {
-        
-        messageText.text = isLoose ? "Victoire !!" : "Temps écoulé";
+        //Unlock cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        MessageText.text = isLoose ? "Victoire !!" : "Temps écoulé";     
         SetAll();
         FillText();
     }
-
     public void FillText()
     {
-        score.text = "" + scoreAtom.Value * 100;
-        cibleTouchees.text = "" + targetHit.Value;
-        temps.text = "" + time.Value + " s";
-    }
+        ScoreText.text = "" + ScoreAtom.Value * 100;
+        TargetHitText.text = "" + TargetHit.Value;
+        TimeText.text = "" + Time.Value + " s";
 
+        //Show end time only if it is allowed
+        if (!ShowEndTime.Value)
+        {
+            TimeText.text = "--:--";
+        }
+      
+    }
     public void HideScreen()
     {
         CheckList();
@@ -82,7 +90,6 @@ public class VictoryScreen : MonoBehaviour
             text.color = color;        
         }
     }
-
     public void SetAll()
     {
         CheckList();
@@ -105,7 +112,6 @@ public class VictoryScreen : MonoBehaviour
             text.DOColor(new Color(color.r, color.g, color.b, 1), 0.3f);
         }
     }
-
     private void CheckList()
     {
         if (_baseImageList == null)
@@ -117,4 +123,5 @@ public class VictoryScreen : MonoBehaviour
         if (_baseTextMeshProList == null)
             _baseTextMeshProList = GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
     }
+    #endregion
 }

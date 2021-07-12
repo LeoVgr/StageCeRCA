@@ -26,6 +26,7 @@ public class MazeManager : MonoBehaviour
     public GameObject DisplayScoreToggle;
     public GameObject FpsCameraToggle;
     public GameObject PlayerCanFireToggle;
+    public GameObject ShowEndTimeToggle;
     public GameObject IsRemySelectedToggle;
     public GameObject IsMeganSelectedToggle;
     public GameObject IsMouseySelectedToggle;
@@ -47,6 +48,7 @@ public class MazeManager : MonoBehaviour
     public BoolVariable DisplayScore;
     public BoolVariable FpsCamera;
     public BoolVariable IsShootActivated;
+    public BoolVariable ShowEndTime;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
     public BoolVariable IsMouseySelected;
@@ -84,6 +86,7 @@ public class MazeManager : MonoBehaviour
             ImageTimeSlider.GetComponent<UIDataManager>(),
             IdPlayerField.GetComponent<InputUIManager>(),
             PlayerCanFireToggle.GetComponent<UIDataManager>(),
+            ShowEndTimeToggle.GetComponent<UIDataManager>(),
             FpsCameraToggle.GetComponent<UIDataManager>(),
             TimerField.GetComponent<UIDataManager>(),
             IsRemySelectedToggle.GetComponent<UIDataManager>(),
@@ -132,6 +135,12 @@ public class MazeManager : MonoBehaviour
         PlayerCanFireToggle.GetComponent<UIDataManager>().maxInt = 0;
         PlayerCanFireToggle.GetComponent<UIDataManager>().AtomVariableBool = IsShootActivated;
         PlayerCanFireToggle.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
+
+        //Toggle Fire
+        ShowEndTimeToggle.GetComponent<UIDataManager>().minInt = 0;
+        ShowEndTimeToggle.GetComponent<UIDataManager>().maxInt = 0;
+        ShowEndTimeToggle.GetComponent<UIDataManager>().AtomVariableBool = ShowEndTime;
+        ShowEndTimeToggle.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
 
         //Display Score
         DisplayScoreToggle.GetComponent<UIDataManager>().minInt = 0;

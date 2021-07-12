@@ -26,10 +26,10 @@ public class SavePreset : MonoBehaviour
     public FloatVariable tempsImage;
     public FloatVariable chronoImage;
     public BoolVariable  randomizeImage;
-    //
     public BoolVariable showScore;
     public BoolVariable fpsCamera;
     public BoolVariable isShootActivated;
+    public BoolVariable ShowEndTime;
     public BoolVariable isRemySelected;
     public BoolVariable isMeganSelected;
     public BoolVariable isMouseySelected;
@@ -82,6 +82,7 @@ public class SavePreset : MonoBehaviour
             dico[inputTextName][(FillPresets.ColumnNames.Score)] = showScore.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.FpsCamera)] = fpsCamera.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Shoot)] = isShootActivated.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.ShowEndTime)] = ShowEndTime.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Remy)] = isRemySelected.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Megan)] = isMeganSelected.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = isMouseySelected.Value ? 1 : 0;
@@ -167,6 +168,8 @@ public class SavePreset : MonoBehaviour
                 return "FpsCamera";
             case FillPresets.ColumnNames.Shoot:
                 return "Shoot";
+            case FillPresets.ColumnNames.ShowEndTime:
+                return "ShowEndTime";
             case FillPresets.ColumnNames.Remy:
                 return "Remy";
             case FillPresets.ColumnNames.Megan:

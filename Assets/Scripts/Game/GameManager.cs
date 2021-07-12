@@ -110,7 +110,6 @@ public class GameManager : MonoBehaviour
 
             IsGameStarted.SetValue(true);
             IsPlayerLock.SetValue(false);
-
         }
     }
     #endregion
