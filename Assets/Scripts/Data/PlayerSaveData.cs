@@ -131,13 +131,14 @@ public class PlayerSaveData : MonoBehaviour
         text += "Tir Actif;" + (EnableFire.Value ? "Oui" : "Non") + "\n";
         text += "Score Affiche;" + (ScoreDisplay.Value ? "Oui" : "Non") + "\n";
         text += "Personnage;" + gameObject.name + "\n";
-        text += "\nNom image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?\n";
+        text += "\nNom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?\n";
         
         //For each target in the level, add data
         foreach (GameObject o in TargetList.List)
         {
-            text += o.GetComponent<Target>().Sprite.name + ";" 
-                + (o.GetComponent<Target>().ShowTime.Value - o.GetComponent<Target>().GetTimeToShoot()) + ";" +
+            text += o.GetComponent<Target>().Sprite.name + ";" +
+                o.GetComponent<Target>().TargetPosition + ";" +
+                (o.GetComponent<Target>().ShowTime.Value - o.GetComponent<Target>().GetTimeToShoot()) + ";" +
                 (o.GetComponent<Target>().HasToBeShot ? "Oui" : "Non") + ";" +
                 (o.GetComponent<Target>().GetIsHit() ? "Oui" : "Non") + ";" +
                 ((o.GetComponent<Target>().HasToBeShot && o.GetComponent<Target>().GetIsHit()) || (!o.GetComponent<Target>().HasToBeShot && !o.GetComponent<Target>().GetIsHit()) ? "Oui" : "Non") + ";" +

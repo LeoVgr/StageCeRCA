@@ -48,7 +48,7 @@ public class VictoryScreen : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        MessageText.text = isLoose ? "Victoire !!" : "Temps écoulé";     
+        MessageText.text = isLoose ? "Victoire !" : "Temps écoulé";     
         SetAll();
         FillText();
     }

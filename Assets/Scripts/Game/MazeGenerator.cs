@@ -485,6 +485,7 @@ public class MazeGenerator : MonoBehaviour
                     //Depending the target side left or right 
                     target.IsNegateImage = node.IsNegateImagePosition();
                     target.WayPointIndex = i;
+                    target.TargetPosition = node.GetIntImagePosition();
 
                     var transform1 = target.transform;
                     transform1.localScale = _imageSize *  transform1.localScale;
