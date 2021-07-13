@@ -27,6 +27,10 @@ public class PlayerSaveData : MonoBehaviour
     public BoolVariable ScoreDisplay;
     public BoolVariable EnableFire;
     public FloatVariable TotalTimer;
+    public FloatVariable Speed;
+    public BoolVariable IsAutoMode;
+    public BoolVariable IsSemiAutoMode;
+    public BoolVariable IsManualMode;
 
     private string _startTime;   
     private bool _endGame;   
@@ -130,6 +134,8 @@ public class PlayerSaveData : MonoBehaviour
         text += "score;" + (Score.Value * 100)  + "\n";
         text += "Tir Actif;" + (EnableFire.Value ? "Oui" : "Non") + "\n";
         text += "Score Affiche;" + (ScoreDisplay.Value ? "Oui" : "Non") + "\n";
+        text += "Vitesse;" + Speed.Value + "\n";
+        text += "Mode deplacement;" + (IsAutoMode.Value ? "Auto" : (IsManualMode.Value ? "Manuel" : "Semi-Auto")) + "\n";
         text += "Personnage;" + gameObject.name + "\n";
         text += "\nNom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?\n";
         

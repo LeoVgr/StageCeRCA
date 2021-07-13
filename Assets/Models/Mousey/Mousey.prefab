@@ -1355,6 +1355,10 @@ MonoBehaviour:
   ScoreDisplay: {fileID: 11400000, guid: 858691476eddd37479523f19b4fd1735, type: 2}
   EnableFire: {fileID: 11400000, guid: be80e8c6a3b5fe244b0b5d53bd4f9bf0, type: 2}
   TotalTimer: {fileID: 11400000, guid: f6974a4d68489614a9c5fb133fc24882, type: 2}
+  Speed: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2, type: 2}
+  IsAutoMode: {fileID: 11400000, guid: 9be0cf80078b3f442b5b07660f12bb8a, type: 2}
+  IsSemiAutoMode: {fileID: 11400000, guid: e3c59c096728a5c499dd14fa94896890, type: 2}
+  IsManualMode: {fileID: 11400000, guid: e1d9061d3fc21824ea90d032409d1f2d, type: 2}
 --- !u!114 &7471021675263835988
 MonoBehaviour:
   m_ObjectHideFlags: 0
