@@ -138,7 +138,7 @@ public class PlayerSaveData : MonoBehaviour
         {
             text += o.GetComponent<Target>().Sprite.name + ";" +
                 o.GetComponent<Target>().TargetPosition + ";" +
-                (o.GetComponent<Target>().ShowTime.Value - o.GetComponent<Target>().GetTimeToShoot()) + ";" +
+                (o.GetComponent<Target>().GetTimeToShoot()) + ";" +
                 (o.GetComponent<Target>().HasToBeShot ? "Oui" : "Non") + ";" +
                 (o.GetComponent<Target>().GetIsHit() ? "Oui" : "Non") + ";" +
                 ((o.GetComponent<Target>().HasToBeShot && o.GetComponent<Target>().GetIsHit()) || (!o.GetComponent<Target>().HasToBeShot && !o.GetComponent<Target>().GetIsHit()) ? "Oui" : "Non") + ";" +

@@ -234,8 +234,7 @@ public class Target : MonoBehaviour
         //Update target's status
         _isShown = false;
         _isHit = false;
-        _time = 0.0f;
-        _endTimeValue = 0.0f;  
+        _endTimeValue = _time;
 
         //Register some stats for further purpose (save data of player)
         TimeToShootList.Add(_time);       
@@ -282,8 +281,7 @@ public class Target : MonoBehaviour
 
         //Update target's status
         _isShown = false;
-        _time = 0.0f;
-        _endTimeValue = 0.0f;
+        _endTimeValue = _time;
 
         //Register some stats for further purpose (save data of player)
         TimeToShootList.Add(_time);
