@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         //Move the plyer if he is not locked
         if (!IsPlayerLock.Value)
         {
-            //If the player doesn't reach the end hide UI
+            //If the player reach the end show UI
             if (CheckTheEnd())
             {
                 DisplayScreen(false);
@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_victoryScreenScript == null)
             _victoryScreenScript = FindObjectOfType<VictoryScreen>();
-        _victoryScreenScript.ShowScreen();
+        _victoryScreenScript.ShowScreen(isLosse);
         _playerSaveData.EndGame();
     }
     private void MovePlayer()

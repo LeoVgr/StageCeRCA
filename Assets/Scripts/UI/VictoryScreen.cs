@@ -47,8 +47,8 @@ public class VictoryScreen : MonoBehaviour
         //Unlock cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
-        MessageText.text = isLoose ? "Victoire !" : "Temps écoulé";     
+ 
+        MessageText.text = isLoose ? "Temps écoulé" : "Victoire !";     
         SetAll();
         FillText();
     }
@@ -93,6 +93,7 @@ public class VictoryScreen : MonoBehaviour
     public void SetAll()
     {
         CheckList();
+
         foreach (Image image in _baseImageList)
         {
             var color = image.color;
