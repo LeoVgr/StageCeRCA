@@ -41,35 +41,14 @@ public class CharacterSelectionGroup : MonoBehaviour
 
     private void SetMeganAsCharacter(bool isMeganCharacter)
     {
-        MeganCharacterPreview.SetActive(isMeganCharacter);
-
-        //Do not allow multiple true value for characters
-        if (isMeganCharacter)
-        {
-            IsRemySelected.SetValue(false);
-            IsMouseySelected.SetValue(false);
-        }
+        MeganCharacterPreview.SetActive(isMeganCharacter);     
     }
     private void SetRemyAsCharacter(bool isRemyCharacter)
     {
-        RemyCharacterPreview.SetActive(isRemyCharacter);
-
-        //Do not allow multiple true value for characters
-        if (isRemyCharacter)
-        {
-            IsMeganSelected.SetValue(false);
-            IsMouseySelected.SetValue(false);
-        }
+        RemyCharacterPreview.SetActive(isRemyCharacter);       
     }
     private void SetMouseyAsCharacter(bool isMouseyCharacter)
     {
-        MouseyCharacterPreview.SetActive(isMouseyCharacter);
-
-        //Do not allow multiple true value for characters
-        if (isMouseyCharacter)
-        {
-            IsRemySelected.SetValue(false);
-            IsMeganSelected.SetValue(false);
-        }
+        MouseyCharacterPreview.SetActive(isMouseyCharacter);        
     }
 }

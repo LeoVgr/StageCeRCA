@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     #region "Attributs"
     //TODO add to settings
     public FloatVariable Speed;
+    public BoolVariable IsAutoMode;
+    public BoolVariable IsSemiAutoMode;
+    public BoolVariable IsManualMode;
     public IntVariable WaypointIndex;
     public BoolEvent IsGameStartEvent;
     public BoolVariable IsPlayerLock;
@@ -65,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //Move the plyer if he is not locked
+        //Move the player if he is not locked
         if (!IsPlayerLock.Value)
         {
             //If the player reach the end show UI
@@ -74,8 +77,15 @@ public class PlayerMovement : MonoBehaviour
                 DisplayScreen(false);
             }
 
-            //Move the player
-            MovePlayer();
+            //Move the player depending the mode
+            if(IsManualMode.Value)
+                MovePlayerManualMode();
+
+            if (IsSemiAutoMode.Value)
+                MovePlayerSemiAutoMode();
+
+            if (IsAutoMode.Value)
+                MovePlayerAutoMode();
         }
     }
     private void StopMovement(InputAction.CallbackContext callbackContext)
@@ -95,6 +105,10 @@ public class PlayerMovement : MonoBehaviour
         _currentSpeed = -Speed.Value * ratio;
         DOVirtual.Float(0, ratio, 0.3f, SetAnimatorSpeed);
     }
+    private void Break(InputAction.CallbackContext callbackContext)
+    {
+        DOVirtual.Float(1.0f, .0f, 0.3f, SetAnimatorSpeed);
+    }
     private void PauseMenu(InputAction.CallbackContext obj)
     {
         if (CurrentPlayerGameObject.Value == gameObject)
@@ -110,6 +124,9 @@ public class PlayerMovement : MonoBehaviour
 
         _inputActions["MovingBackward"].performed -= MoveBackward;
         _inputActions["MovingBackward"].canceled -= StopMovement;
+
+        _inputActions["Break"].performed -= Break;
+        _inputActions["Break"].canceled -= Break;
 
         _inputActions["Escape"].performed -= PauseMenu;
     }
@@ -133,6 +150,9 @@ public class PlayerMovement : MonoBehaviour
 
         _inputActions["MovingBackward"].performed += MoveBackward;
         _inputActions["MovingBackward"].canceled += StopMovement;
+
+        _inputActions["Break"].performed += Break;
+        _inputActions["Break"].canceled += Break;
 
         _inputActions["Escape"].performed += PauseMenu;
     }
@@ -173,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         _victoryScreenScript.ShowScreen(isLosse);
         _playerSaveData.EndGame();
     }
-    private void MovePlayer()
+    private void MovePlayerManualMode()
     {
         if (_dollyCartInfo)
         {
@@ -193,6 +213,64 @@ public class PlayerMovement : MonoBehaviour
 
                 //Update the position of the player on the track
                 SetWayPointIndex();           
+            }
+            else
+            {
+                //Stop animation
+                _animator.SetFloat(_directionX, 0);
+                _animator.SetFloat(_directionZ, 0);
+            }
+        }
+    }
+    private void MovePlayerSemiAutoMode()
+    {
+        if (_dollyCartInfo)
+        {
+            //Check if we got any speed
+            if (Mathf.Abs(_currentSpeed) > 0.2f)
+            {
+                //Move the player
+                _dollyCartInfo.m_Position += _currentSpeed * Time.fixedDeltaTime;
+
+                Vector3 deltaPosition = _dollyCartInfo.transform.position - transform.position;
+                transform.position += deltaPosition;
+
+                //Play animation with the right speed
+                Vector3 animatorValue = Vector3.forward * _animatorSpeed;
+                _animator.SetFloat(_directionX, animatorValue.x);
+                _animator.SetFloat(_directionZ, animatorValue.z);
+
+                //Update the position of the player on the track
+                SetWayPointIndex();
+            }
+            else
+            {
+                //Stop animation
+                _animator.SetFloat(_directionX, 0);
+                _animator.SetFloat(_directionZ, 0);
+            }
+        }
+    }
+    private void MovePlayerAutoMode()
+    {
+        if (_dollyCartInfo)
+        {
+            //Check if we got any speed
+            if (Mathf.Abs(_currentSpeed) > 0.2f)
+            {
+                //Move the player
+                _dollyCartInfo.m_Position += _currentSpeed * Time.fixedDeltaTime;
+
+                Vector3 deltaPosition = _dollyCartInfo.transform.position - transform.position;
+                transform.position += deltaPosition;
+
+                //Play animation with the right speed
+                Vector3 animatorValue = Vector3.forward * _animatorSpeed;
+                _animator.SetFloat(_directionX, animatorValue.x);
+                _animator.SetFloat(_directionZ, animatorValue.z);
+
+                //Update the position of the player on the track
+                SetWayPointIndex();
             }
             else
             {

@@ -1276,6 +1276,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 180dcf6d-0f32-4ca8-ada9-22d44e3ff193
     m_ActionName: Player/Escape[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5f5fb270-14a6-4db2-9a1c-b643cf3aece1
+    m_ActionName: Player/Break[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1308,7 +1312,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0dc32c7cc4ad942b2849992d5ab6b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.75
+  Speed: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2, type: 2}
+  IsAutoMode: {fileID: 11400000, guid: 9be0cf80078b3f442b5b07660f12bb8a, type: 2}
+  IsSemiAutoMode: {fileID: 11400000, guid: e3c59c096728a5c499dd14fa94896890, type: 2}
+  IsManualMode: {fileID: 11400000, guid: e1d9061d3fc21824ea90d032409d1f2d, type: 2}
   WaypointIndex: {fileID: 11400000, guid: bce1e3eec14fdbe48b9eb6e5ac0fc20b, type: 2}
   IsGameStartEvent: {fileID: 11400000, guid: 57e115642a492e041a07f8db69d823b6, type: 2}
   IsPlayerLock: {fileID: 11400000, guid: 1538f65da10b16d4fbf4f809e87e902c, type: 2}

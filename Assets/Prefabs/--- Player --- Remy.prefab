@@ -783,17 +783,17 @@ PrefabInstance:
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.10085764
+      value: 0.100857645
       objectReference: {fileID: 0}
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.104807556
+      value: 0.10480756
       objectReference: {fileID: 0}
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.010684893
+      value: -0.010684894
       objectReference: {fileID: 0}
     - target: {fileID: 4254418905649881805, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
@@ -1155,12 +1155,6 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 6245439813692511919}
-    - target: {fileID: 3867281004840389894, guid: 2ba72a1e94e974d43a910dbb35f3acab,
-        type: 3}
-      propertyPath: Speed
-      value: 
-      objectReference: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2,
-        type: 2}
     - target: {fileID: 3867281004840389894, guid: 2ba72a1e94e974d43a910dbb35f3acab,
         type: 3}
       propertyPath: PauseMenuGameObject

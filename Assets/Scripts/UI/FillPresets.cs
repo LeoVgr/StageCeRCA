@@ -33,8 +33,11 @@ public class FillPresets : MonoBehaviour
     public FloatVariable Speed;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
-    public BoolVariable IsMouseySelected;  
-    
+    public BoolVariable IsMouseySelected;
+    public BoolVariable IsAutoMode;
+    public BoolVariable IsSemiAutoMode;
+    public BoolVariable IsManualMode;
+
     private Dropdown _tmpDropdown;
     private Dictionary<string, Dictionary<ColumnNames, float>> _presets;
 
@@ -56,7 +59,10 @@ public class FillPresets : MonoBehaviour
         Speed,
         Remy,
         Megan,
-        Mousey
+        Mousey,
+        AutoMode,
+        SemiAutoMode,
+        ManualMode
     }    
 
     private void Start()
@@ -145,6 +151,15 @@ public class FillPresets : MonoBehaviour
                     case ColumnNames.Mousey:
                         IsMouseySelected.SetValue(keyValuePair.Value >= 0.5f);
                         break;
+                    case ColumnNames.AutoMode:
+                        IsAutoMode.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.SemiAutoMode:
+                        IsSemiAutoMode.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.ManualMode:
+                        IsManualMode.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
                 }
             }
         }
@@ -230,8 +245,17 @@ public class FillPresets : MonoBehaviour
                             f = CheckStringLength(value[16]);
                             _presets[selection][(ColumnNames.Megan)] = f;
 
-                            f = CheckStringLength(value[11]);
+                            f = CheckStringLength(value[17]);
                             _presets[selection][(ColumnNames.Mousey)] = f;
+
+                            f = CheckStringLength(value[18]);
+                            _presets[selection][(ColumnNames.AutoMode)] = f;
+
+                            f = CheckStringLength(value[19]);
+                            _presets[selection][(ColumnNames.SemiAutoMode)] = f;
+
+                            f = CheckStringLength(value[20]);
+                            _presets[selection][(ColumnNames.ManualMode)] = f;
                         }
                     }
                     i++;

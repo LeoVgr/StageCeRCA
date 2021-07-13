@@ -30,6 +30,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Break",
+                    "type": "Button",
+                    "id": "5f5fb270-14a6-4db2-9a1c-b643cf3aece1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "RestartScene",
                     "type": "Button",
                     "id": "d35a9149-dbc3-4311-9b13-6c23ae64515b",
@@ -206,6 +214,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "MovingForward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7449301-c100-4e6f-a630-cc5786622cbc",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Break",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c38ffb6b-a2fd-41ea-85bd-119bb4c7170a",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Break",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

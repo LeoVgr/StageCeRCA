@@ -29,8 +29,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583923401263682636}
-  m_LocalRotation: {x: 0.21870287, y: 0.13527675, z: -0.030630415, w: 0.96588355}
-  m_LocalPosition: {x: -0.019437542, y: 2.0999846, z: -1.4680314}
+  m_LocalRotation: {x: 0.2187029, y: 0.13527678, z: -0.030630426, w: 0.96588355}
+  m_LocalPosition: {x: -0.01943754, y: 2.0999846, z: -1.4680314}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7811167799543547206}
@@ -616,17 +616,17 @@ PrefabInstance:
     - target: {fileID: 5515529169596894058, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.21870288
+      value: 0.2187029
       objectReference: {fileID: 0}
     - target: {fileID: 5515529169596894058, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.13527675
+      value: 0.13527676
       objectReference: {fileID: 0}
     - target: {fileID: 5515529169596894058, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.030630413
+      value: -0.030630425
       objectReference: {fileID: 0}
     - target: {fileID: 6780149654607712921, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
@@ -1050,12 +1050,6 @@ PrefabInstance:
       propertyPath: GunObjectFirstPerson
       value: 
       objectReference: {fileID: 7811167799543547205}
-    - target: {fileID: 7471021675263835986, guid: 53bc9d56048ed7e47b5d9f67a393b2c6,
-        type: 3}
-      propertyPath: Speed
-      value: 
-      objectReference: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2,
-        type: 2}
     - target: {fileID: 7471021675263835986, guid: 53bc9d56048ed7e47b5d9f67a393b2c6,
         type: 3}
       propertyPath: PauseMenuGameObject

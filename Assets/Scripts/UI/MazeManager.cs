@@ -31,6 +31,9 @@ public class MazeManager : MonoBehaviour
     public GameObject IsRemySelectedToggle;
     public GameObject IsMeganSelectedToggle;
     public GameObject IsMouseySelectedToggle;
+    public GameObject IsAutoModeToggle;
+    public GameObject IsSemiAutoModeToggle;
+    public GameObject IsManualModeToggle;
     public GameObject IdPlayerField;   
     //player selection ?
     //preset input filed ?
@@ -54,6 +57,9 @@ public class MazeManager : MonoBehaviour
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
     public BoolVariable IsMouseySelected;
+    public BoolVariable IsAutoMode;
+    public BoolVariable IsSemiAutoMode;
+    public BoolVariable IsManualMode;
     public StringVariable IdPlayer;
 
     [Header("Min max")]
@@ -94,7 +100,10 @@ public class MazeManager : MonoBehaviour
             TimerField.GetComponent<UIDataManager>(),
             IsRemySelectedToggle.GetComponent<UIDataManager>(),
             IsMeganSelectedToggle.GetComponent<UIDataManager>(),
-            IsMouseySelectedToggle.GetComponent<UIDataManager>()
+            IsMouseySelectedToggle.GetComponent<UIDataManager>(),
+            IsAutoModeToggle.GetComponent<UIDataManager>(),
+            IsSemiAutoModeToggle.GetComponent<UIDataManager>(),
+            IsManualModeToggle.GetComponent<UIDataManager>()
         };
 
         //Corridor Length
@@ -198,7 +207,25 @@ public class MazeManager : MonoBehaviour
         IsMouseySelectedToggle.GetComponent<UIDataManager>().maxInt = 0;
         IsMouseySelectedToggle.GetComponent<UIDataManager>().AtomVariableBool = IsMouseySelected;
         IsMouseySelectedToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
-        
+
+        //Toggle auto mode
+        IsAutoModeToggle.GetComponent<UIDataManager>().minInt = 0;
+        IsAutoModeToggle.GetComponent<UIDataManager>().maxInt = 0;
+        IsAutoModeToggle.GetComponent<UIDataManager>().AtomVariableBool = IsAutoMode;
+        IsAutoModeToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
+
+        //Toggle semi auto mode
+        IsSemiAutoModeToggle.GetComponent<UIDataManager>().minInt = 0;
+        IsSemiAutoModeToggle.GetComponent<UIDataManager>().maxInt = 0;
+        IsSemiAutoModeToggle.GetComponent<UIDataManager>().AtomVariableBool = IsSemiAutoMode;
+        IsSemiAutoModeToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
+
+        //Toggle manual mode
+        IsManualModeToggle.GetComponent<UIDataManager>().minInt = 0;
+        IsManualModeToggle.GetComponent<UIDataManager>().maxInt = 0;
+        IsManualModeToggle.GetComponent<UIDataManager>().AtomVariableBool = IsManualMode;
+        IsManualModeToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
+
         IdPlayerField.GetComponent<InputUIManager>().atomVariableString = IdPlayer;       
         
         ResetVariable();
@@ -243,6 +270,9 @@ public class MazeManager : MonoBehaviour
         IsRemySelected.Reset();
         IsMeganSelected.Reset();
         IsMouseySelected.Reset();
-}
+        IsAutoMode.Reset();
+        IsSemiAutoMode.Reset();
+        IsManualMode.Reset();
+    }
     #endregion
 }

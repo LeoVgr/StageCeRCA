@@ -15,7 +15,7 @@ using UnityEngine.UI;
  */
 public class SavePreset : MonoBehaviour
 {
-
+    #region "Attributs"
     [Header("Data")]
     public IntVariable seed;
     public IntVariable longueur;
@@ -34,6 +34,9 @@ public class SavePreset : MonoBehaviour
     public BoolVariable isRemySelected;
     public BoolVariable isMeganSelected;
     public BoolVariable isMouseySelected;
+    public BoolVariable IsAutoMode;
+    public BoolVariable IsSemiAutoMode;
+    public BoolVariable IsManualMode;
 
     public Image saveImage;
     public Image deleteImage;
@@ -48,15 +51,18 @@ public class SavePreset : MonoBehaviour
     private bool delete;
 
     private Dictionary<string, Dictionary<FillPresets.ColumnNames, float>> dico;
+    #endregion
 
+    #region "Events"
     private void Start()
     {
         _Input = GetComponentInChildren<InputField>();
         if(fillPresetObject.Value)
             fillPresets = fillPresetObject.Value.GetComponent<FillPresets>();
     }
+    #endregion
 
-
+    #region "Methods"
     public void AddItemThenSave()
     {
         if (_Input.text != "")
@@ -88,6 +94,9 @@ public class SavePreset : MonoBehaviour
             dico[inputTextName][(FillPresets.ColumnNames.Remy)] = isRemySelected.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Megan)] = isMeganSelected.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = isMouseySelected.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.AutoMode)] = IsAutoMode.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.SemiAutoMode)] = IsSemiAutoMode.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.ManualMode)] = IsManualMode.Value ? 1 : 0;
             delete = false;
             
             DOVirtual.DelayedCall(Time.deltaTime, (() => presetName?.SetValue(inputTextName)));
@@ -180,8 +189,15 @@ public class SavePreset : MonoBehaviour
                 return "Megan";
             case FillPresets.ColumnNames.Mousey:
                 return "Mousey";
+            case FillPresets.ColumnNames.AutoMode:
+                return "AutoMode";
+            case FillPresets.ColumnNames.SemiAutoMode:
+                return "SemiAutoMode";
+            case FillPresets.ColumnNames.ManualMode:
+                return "ManualMode";
             default:
                 return "";
         }
     }
+    #endregion
 }
