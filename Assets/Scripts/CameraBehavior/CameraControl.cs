@@ -38,7 +38,7 @@ namespace CameraBehavior
             //Check if is gamepad input
             if (context.control.device == Gamepad.current)
             {
-                _lookMovement *= 300f;
+                _lookMovement *= 20f;
                 _isLookMoving = true;
             }
             else

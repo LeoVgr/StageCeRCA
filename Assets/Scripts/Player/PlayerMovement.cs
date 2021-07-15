@@ -200,7 +200,7 @@ public class PlayerMovement : MonoBehaviour
         if (_dollyCartInfo)
         {
             //Check if the player is breaking (semi auto mode)
-            if (_isBreaking)
+            if (_isBreaking && IsSemiAutoMode.Value)
             {
                 _dollyCartInfo.m_Speed = 0;
             }
