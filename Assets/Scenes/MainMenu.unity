@@ -546,7 +546,12 @@ PrefabInstance:
     - target: {fileID: 3864938119041986277, guid: d252c5f466ad1ab46b0a3672d8462aa4,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4187401754753015801, guid: d252c5f466ad1ab46b0a3672d8462aa4,
+        type: 3}
+      propertyPath: m_text
+      value: ARMEL MORVAN
       objectReference: {fileID: 0}
     - target: {fileID: 4260378849952313699, guid: d252c5f466ad1ab46b0a3672d8462aa4,
         type: 3}
