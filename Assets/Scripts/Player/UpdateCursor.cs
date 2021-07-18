@@ -1,42 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpdateCursor : MonoBehaviour
+namespace Player
 {
-    public Image CrossHair;
-    public LayerMask TargetLayer;
-
-    // Update is called once per frame
-    void Update()
+    public class UpdateCursor : MonoBehaviour
     {
-        //Change the color of the crosshair if the target aimed has to be shot or not
-        Ray ray = Camera.main.ScreenPointToRay(CrossHair.gameObject.transform.position);
-        RaycastHit hit;
+        public Image CrossHair;
+        public LayerMask TargetLayer;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, TargetLayer))
+        // Update is called once per frame
+        void Update()
         {
-            if (hit.collider.gameObject.GetComponent<Target>())
+            //Change the color of the crosshair if the target aimed has to be shot or not
+            Ray ray = Camera.main.ScreenPointToRay(CrossHair.gameObject.transform.position);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, TargetLayer))
             {
-                if (hit.collider.gameObject.GetComponent<Target>().HasToBeShot)
-                {                  
-                    CrossHair.color = Color.green;
+                Target target = hit.collider.gameObject.GetComponent<Target>();
+                if (target)
+                {
+                    CrossHair.color = target.HasToBeShot ? Color.green : Color.red;
                 }
                 else
-                {                
-                    CrossHair.color = Color.red;
+                {
+                    CrossHair.color = Color.white;
                 }
-                
             }
             else
             {
                 CrossHair.color = Color.white;
             }
-        }
-        else
-        {
-            CrossHair.color = Color.white;
         }
     }
 }

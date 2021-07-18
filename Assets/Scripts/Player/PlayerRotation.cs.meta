@@ -3,7 +3,9 @@ guid: e57b12eb8e17b7747bd45c4f750ce392
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - isPlayerFPS: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0, type: 2}
+  - isPlayerLock: {fileID: 11400000, guid: 1538f65da10b16d4fbf4f809e87e902c, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

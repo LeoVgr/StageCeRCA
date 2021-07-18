@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityAtoms.BaseAtoms;
+﻿using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
-public class SetGameObjectData : MonoBehaviour
+namespace Data
 {
-
-    public GameObjectVariable gameObjectToSet;
-
-    private void Awake()
+    public class SetGameObjectData : MonoBehaviour
     {
-        gameObjectToSet.SetValue(gameObject);
+
+        public GameObjectVariable gameObjectToSet;
+
+        private void Awake()
+        {
+            gameObjectToSet.SetValue(gameObject);
+        }
     }
 }

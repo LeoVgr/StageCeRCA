@@ -783,17 +783,17 @@ PrefabInstance:
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.10085764
+      value: 0.10085765
       objectReference: {fileID: 0}
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.104807556
+      value: 0.10480758
       objectReference: {fileID: 0}
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.010684893
+      value: -0.010684897
       objectReference: {fileID: 0}
     - target: {fileID: 4254418905649881805, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
@@ -973,18 +973,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2151074286496547224}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8280424957456536703 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8012990098576725479, guid: 91721ced08d3ad744aa1147e903a2993,
-    type: 3}
-  m_PrefabInstance: {fileID: 2151074286496547224}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9143cdd40f9751448e09f784a2cbb95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7050909288038692032 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8936261003488195928, guid: 91721ced08d3ad744aa1147e903a2993,
@@ -1095,18 +1083,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b105e78de99501b49b98ee222e998e4f, type: 3}
---- !u!114 &6245439813692511919 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2151074286649951842, guid: b105e78de99501b49b98ee222e998e4f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5437644380389642445}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0acd7a4f39699546a94d3d9c8f54046, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2151074287670843000 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6245439814848399029, guid: b105e78de99501b49b98ee222e998e4f,
@@ -1145,16 +1121,6 @@ PrefabInstance:
       propertyPath: GunObjectFirstPerson
       value: 
       objectReference: {fileID: 8763422456151200988}
-    - target: {fileID: 3867281004840389889, guid: 2ba72a1e94e974d43a910dbb35f3acab,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 8280424957456536703}
-    - target: {fileID: 3867281004840389889, guid: 2ba72a1e94e974d43a910dbb35f3acab,
-        type: 3}
-      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 6245439813692511919}
     - target: {fileID: 3867281004840389894, guid: 2ba72a1e94e974d43a910dbb35f3acab,
         type: 3}
       propertyPath: PauseMenuGameObject

@@ -1,0 +1,182 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def9bd09bace12b4aae032c146955105, type: 3}
+  m_Name: PlayerInputSettings
+  m_EditorClassIdentifier: 
+  LookJoystick:
+    m_Name: Look Joystick
+    m_Type: 0
+    m_ExpectedControlType: Stick
+    m_Id: 921093c9-8a96-427e-911f-f1ad30a71209
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 18ab1e60-6cf5-4b49-9267-58e79114e7ba
+      m_Path: <Gamepad>/rightStick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Look Joystick
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 32106ab0-f936-43f7-8233-4682a680aad2
+      m_Path: <Joystick>/stick
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Look Joystick
+      m_Flags: 0
+  LookPointer:
+    m_Name: Look Pointer
+    m_Type: 0
+    m_ExpectedControlType: Vector2
+    m_Id: 12c5c2c2-9594-4a62-b202-159de75499ce
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: a57542fd-bc3a-4147-9c1a-4df1e62f0903
+      m_Path: <Pointer>/delta
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Look Pointer
+      m_Flags: 0
+  MovingForward:
+    m_Name: Moving Forward
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: cfddc167-918c-4ccd-ba65-ef46ce4b6129
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: ee95a5a1-43c2-4e55-a52f-4ab5b9189fb8
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Moving Forward
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 36647113-e396-44e1-a742-4fcb26473a93
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Moving Forward
+      m_Flags: 0
+    - m_Name: 
+      m_Id: c2523a45-2fdb-4558-8b45-4b0de1af3f3c
+      m_Path: <Gamepad>/dpad/up
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Moving Forward
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 7c90000a-4623-425c-bfa8-3a535d4ea02d
+      m_Path: <Gamepad>/leftStick/up
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Moving Forward
+      m_Flags: 0
+  MovingBackward:
+    m_Name: Moving Backward
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 16b26620-709f-4e4e-8a87-9f36491d9f72
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 357fb370-8737-44c8-a88a-3aae46e51ec6
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Moving Backward
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 7619dddf-8a91-4189-bf44-59461d54af64
+      m_Path: <Keyboard>/downArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Moving Backward
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 986789aa-3a3f-48c3-96df-5db094afec2e
+      m_Path: <Gamepad>/dpad/down
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Moving Backward
+      m_Flags: 0
+    - m_Name: 
+      m_Id: de25cd3a-43b0-45b5-bc90-bbdf3eaab2be
+      m_Path: <Gamepad>/leftStick/down
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Moving Backward
+      m_Flags: 0
+  Break:
+    m_Name: Break
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 35125089-d21d-4787-b7bb-30cf1de51b79
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 719108da-2ad2-44fb-bd7d-1ebeb86e357b
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Break
+      m_Flags: 0
+    - m_Name: 
+      m_Id: e9c8c683-8d87-445e-a3e0-907f70b5338b
+      m_Path: <Gamepad>/buttonEast
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Break
+      m_Flags: 0
+  Fire:
+    m_Name: Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f946992e-5917-46e5-8e97-df45f84ea3b5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 48854238-6161-4e54-bb12-d3bea46b5e32
+      m_Path: <Gamepad>/rightShoulder
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Fire
+      m_Flags: 0
+    - m_Name: 
+      m_Id: c5beaf4c-4095-4002-89f1-fdfdf9d21196
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Fire
+      m_Flags: 0

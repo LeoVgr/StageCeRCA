@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Cinemachine;
 using DG.Tweening;
+using Player;
 using UnityAtoms.BaseAtoms ;
 using UnityEngine;
 using UnityEngine.Networking;

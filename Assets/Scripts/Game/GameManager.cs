@@ -1,146 +1,114 @@
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
+using Player;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    #region "Attributs"
+    #region Attributs
+
     public VictoryScreen VictoryScreen;
     public IntVariable Score;
     public BoolVariable IsGameStart;
     public BoolVariable FpsCamera;
     public BoolVariable IsPlayerLock;
     public BoolVariable IsGameStarted;
-    public GameObjectVariable Player;
+    public GameObjectVariable PlayerVariable;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
     public BoolVariable IsMouseySelected;
 
-    public GameObject Remy;
-    public CinemachineVirtualCamera RemyFPSCamera;
-    public CinemachineFreeLook RemyTPSCamera;
-    public GameObject Megan;
-    public CinemachineVirtualCamera MeganFPSCamera;
-    public CinemachineFreeLook MeganTPSCamera;
-    public GameObject Mousey;
-    public CinemachineVirtualCamera MouseyFPSCamera;
-    public CinemachineFreeLook MouseyTPSCamera;
+    public PlayerMovement Player;
 
-    private MazeGenerator _mazeGenerator;
+    public GameObject Remy;
+    public GameObject Megan;
+    public GameObject Mousey;
+
+    public CinemachineVirtualCamera FPSCamera;
+    public CinemachineVirtualCamera TPSCamera;
+
+    public MazeGenerator MazeGenerator;
     private bool _isMazeGenerated = false;
+
     #endregion
 
-    #region "Events"
+    #region Events
+
     void Start()
     {
-        //Get references to other components
-        _mazeGenerator = this.GetComponent<MazeGenerator>();
-
         //Lock the cursor to the game window
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
-        //Enable the right character
-        Remy.SetActive(IsRemySelected.Value);
-        Megan.SetActive(IsMeganSelected.Value);
-        Mousey.SetActive(IsMouseySelected.Value);
 
-        if (IsRemySelected.Value)
+        PlayerVariable.SetValue(Player.gameObject);
+
+        //Activate the right camera
+        if (FpsCamera.Value)
         {
-            Player.SetValue(Remy.GetComponentInChildren<PlayerMovement>().gameObject);
-
-            //Activate the right camera
-            if (FpsCamera.Value)
-            {
-                RemyFPSCamera.Priority = 1;
-                RemyTPSCamera.Priority = 0;
-            }
-            else
-            {
-                RemyFPSCamera.Priority = 0;
-                RemyTPSCamera.Priority = 1;
-            }
+            Remy.SetActive(false);
+            Megan.SetActive(false);
+            Mousey.SetActive(false);
             
+            FPSCamera.Priority = 1;
+            TPSCamera.Priority = 0;
         }
-
-        if (IsMeganSelected.Value)
+        else
         {
-            Player.SetValue(Megan.GetComponentInChildren<PlayerMovement>().gameObject);
-
-            //Activate the right camera
-            if (FpsCamera.Value)
-            {
-                MeganFPSCamera.Priority = 1;
-                MeganTPSCamera.Priority = 0;
-            }
-            else
-            {
-                MeganFPSCamera.Priority = 0;
-                MeganTPSCamera.Priority = 1;
-            }
+            //Enable the right character
+            Remy.SetActive(IsRemySelected.Value);
+            Megan.SetActive(IsMeganSelected.Value);
+            Mousey.SetActive(IsMouseySelected.Value);
+            
+            FPSCamera.Priority = 0;
+            TPSCamera.Priority = 1;
         }
-
-        if (IsMouseySelected.Value)
-        {
-            Player.SetValue(Mousey.GetComponentInChildren<PlayerMovement>().gameObject);
-
-            //Activate the right camera
-            if (FpsCamera.Value)
-            {
-                MeganFPSCamera.Priority = 1;
-                MeganTPSCamera.Priority = 0;
-            }
-            else
-            {
-                MeganFPSCamera.Priority = 0;
-                MeganTPSCamera.Priority = 1;
-            }
-        }
-
     }
+
     private void Update()
     {
         //While the maze isn't generated (due to loading image before generate the maze) just try to generate again
         if (!_isMazeGenerated)
         {
-            _isMazeGenerated = _mazeGenerator.GenerateMaze();
+            _isMazeGenerated = MazeGenerator.GenerateMaze();
 
             IsGameStarted.SetValue(true);
             IsPlayerLock.SetValue(false);
         }
     }
+
     #endregion
 
-    #region "Methods"
+    #region Methods
+
     public void RestartGame()
     {
-        
         if (VictoryScreen)
         {
             VictoryScreen.HideScreen();
         }
         else
         {
-            Player.Value.GetComponent<PlayerMovement>().ShowMenu();
+            Player.ShowMenu();
         }
 
         //Lock the player because he don't need to move when he is in menu
         IsPlayerLock.Value = true;
-    
+
         //Reset values of scriptable objects
         Score.Reset(true);
         IsGameStart.Reset(true);
-        Player.Value.GetComponent<PlayerMovement>().Restart();
+        Player.Restart();
 
         //Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
+
     public void Exit()
     {
         Application.Quit();
     }
+
     #endregion
 }

@@ -1,4 +1,5 @@
-﻿using UnityAtoms.BaseAtoms;
+﻿using Player;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

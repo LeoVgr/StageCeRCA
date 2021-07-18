@@ -3,7 +3,20 @@ guid: 1a0dc32c7cc4ad942b2849992d5ab6b3
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Speed: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2, type: 2}
+  - IsAutoMode: {fileID: 11400000, guid: 9be0cf80078b3f442b5b07660f12bb8a, type: 2}
+  - IsSemiAutoMode: {fileID: 11400000, guid: e3c59c096728a5c499dd14fa94896890, type: 2}
+  - IsManualMode: {fileID: 11400000, guid: e1d9061d3fc21824ea90d032409d1f2d, type: 2}
+  - WaypointIndex: {fileID: 11400000, guid: bce1e3eec14fdbe48b9eb6e5ac0fc20b, type: 2}
+  - IsGameStartEvent: {fileID: 11400000, guid: 57e115642a492e041a07f8db69d823b6, type: 2}
+  - IsPlayerLock: {fileID: 11400000, guid: 1538f65da10b16d4fbf4f809e87e902c, type: 2}
+  - CurrentPlayerGameObject: {fileID: 11400000, guid: 568a051a508ce914588e3e41642586b7,
+      type: 2}
+  - PauseMenuGameObject: {instanceID: 0}
+  - TargetCount: {fileID: 11400000, guid: c4d80aeec2a5caf448224d260d301704, type: 2}
+  - TargetHit: {fileID: 11400000, guid: 0bf3203a3ed23d643b809180df1979e3, type: 2}
+  - TargetList: {fileID: 11400000, guid: 26a3e23c8a051fd4fb496d204fcdb5f3, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
