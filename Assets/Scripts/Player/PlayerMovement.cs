@@ -208,7 +208,7 @@ namespace Player
             if (DollyCartInfo)
             {
                 //Check if the player is breaking (semi auto mode)
-                if (_isBreaking)
+                if (_isBreaking && IsSemiAutoMode.Value)
                 {
                     DollyCartInfo.m_Speed = 0;
                 }
