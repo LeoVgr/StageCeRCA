@@ -12,6 +12,9 @@ namespace Player
         public float MaxRotation = 90;
         public float MinRotation = -90;
 
+        private float _xAngle = 0;
+        private float _yAngle = 0;
+
         private CinemachineDollyCart _dolly;
 
         private void Start()
@@ -24,11 +27,26 @@ namespace Player
         {
             if (isPlayerLock.Value) return;
 
-
+            //Input
             InputManager inputManager = Player.InputManager.Instance;
             Vector3 input = inputManager.lookRotation;
-            Vector3 inputCorrected = new Vector3(input.y, input.x * (inputManager.Settings.InverseY ? -1 : 1));
-            Vector3 newRotation = transform.rotation.normalized.eulerAngles + inputCorrected;
+            //Reset the value to indicate this is used
+            inputManager.lookRotation = Vector2.zero;
+
+            //move mouse on Y rotate around X axis
+            _xAngle += input.y * (inputManager.Settings.InverseY ? 1 : -1);
+            if (_xAngle > MaxRotation)
+                _xAngle = MaxRotation;
+            else if (_xAngle < MinRotation)
+                _xAngle = MinRotation;
+            //move mouse on X rotate around Y axis
+            _yAngle += input.x;
+            if (_yAngle > MaxRotation)
+                _yAngle = MaxRotation;
+            else if (_yAngle < MinRotation)
+                _yAngle = MinRotation;
+
+            //Get forward direction with dolly reference
             if (!_dolly.m_Path)
             {
                 //TODO _dolly.m_Path is null when isPlayerLock is false : player can move before the maze finished to be generated
@@ -36,30 +54,11 @@ namespace Player
                 return;
             }
 
-            var forward = _dolly.m_Path.EvaluateOrientation(_dolly.m_Position).normalized.eulerAngles;
-            var xDelta = Quaternion.Angle(Quaternion.Euler(newRotation.x, 0, 0).normalized,
-                Quaternion.Euler(forward.x, 0, 0).normalized);
-            var yDelta = Quaternion.Angle(Quaternion.Euler(0, newRotation.y, 0).normalized,
-                Quaternion.Euler(0, forward.y, 0).normalized);
+            var forward = _dolly.m_Path.EvaluateOrientationAtUnit(_dolly.m_Position,_dolly.m_PositionUnits).eulerAngles;
 
-            //TODO Block the teleportation to Min at Max or to Max at Min
-            if (xDelta > MaxRotation)
-            {
-                if (forward.x > newRotation.x)
-                    newRotation.x = forward.x + MinRotation;
-                else
-                    newRotation.x = forward.x + MaxRotation;
-            }
+            var newRotation = new Vector3(forward.x + _xAngle, forward.y + _yAngle, 0);
 
-            if (yDelta > MaxRotation)
-            {
-                if (forward.y > newRotation.y)
-                    newRotation.y = forward.y + MinRotation;
-                else
-                    newRotation.y = forward.y + MaxRotation;
-            }
-
-            Quaternion look = Quaternion.Euler(newRotation).normalized;
+            Quaternion look = Quaternion.Euler(newRotation);
 
             transform.rotation = look;
         }
