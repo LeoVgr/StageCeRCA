@@ -40,7 +40,7 @@ public class GameFunction : MonoBehaviour
             _player.Value.GetComponent<PlayerMovement>().ShowMenu();
         }
         
-        _player.Value.GetComponent<PlayerMovement>().Restart();
+        //TODO _player.Value.GetComponent<PlayerMovement>().Restart();
         a_mazeGeneratorObject.Value.SetActive(true);
         a_IsPlayerLock.Value = true;
         Cursor.lockState = CursorLockMode.None;

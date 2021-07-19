@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2, type: 2}
+  BreakForce: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545, type: 2}
   IsAutoMode: {fileID: 11400000, guid: 9be0cf80078b3f442b5b07660f12bb8a, type: 2}
   IsSemiAutoMode: {fileID: 11400000, guid: e3c59c096728a5c499dd14fa94896890, type: 2}
   IsManualMode: {fileID: 11400000, guid: e1d9061d3fc21824ea90d032409d1f2d, type: 2}
@@ -81,9 +82,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57b12eb8e17b7747bd45c4f750ce392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 1
   isPlayerFPS: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0, type: 2}
   isPlayerLock: {fileID: 11400000, guid: 1538f65da10b16d4fbf4f809e87e902c, type: 2}
+  MaxRotation: 90
+  MinRotation: -90
 --- !u!114 &5401053777716401614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +272,9 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 1
   Source: {fileID: 1045425503}
+  MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  SfxVolume: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2, type: 2}
+  IsSfxSound: 1
 --- !u!1 &3950257435206851720
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,6 +370,7 @@ MonoBehaviour:
   EnableFire: {fileID: 11400000, guid: be80e8c6a3b5fe244b0b5d53bd4f9bf0, type: 2}
   TotalTimer: {fileID: 11400000, guid: f6974a4d68489614a9c5fb133fc24882, type: 2}
   Speed: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2, type: 2}
+  BreakForce: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545, type: 2}
   IsAutoMode: {fileID: 11400000, guid: 9be0cf80078b3f442b5b07660f12bb8a, type: 2}
   IsSemiAutoMode: {fileID: 11400000, guid: e3c59c096728a5c499dd14fa94896890, type: 2}
   IsManualMode: {fileID: 11400000, guid: e1d9061d3fc21824ea90d032409d1f2d, type: 2}

@@ -18,6 +18,7 @@ namespace Player
         #region Attributs
 
         public FloatVariable Speed;
+        public FloatVariable BreakForce;
         public BoolVariable IsAutoMode;
         public BoolVariable IsSemiAutoMode;
         public BoolVariable IsManualMode;
@@ -27,16 +28,17 @@ namespace Player
         public GameObjectVariable CurrentPlayerGameObject;
         public GameObject PauseMenuGameObject;
         public CinemachineDollyCart DollyCartInfo;
-
         public Animator[] Animators = new Animator[3];
         private int _modelIndex = -1;
 
-        [Header("Restart var")] public IntVariable TargetCount;
+        [Header("Restart var")] 
+        public IntVariable TargetCount;
         public IntVariable TargetHit;
         public GameObjectValueList TargetList;
 
+
         private PlayerSaveData _playerSaveData;
-        private bool _isBreaking => InputManager.Instance.isBreaking;
+        private bool _isPlayerBreaking = false;
         private float _currentSpeed;
         private CinemachineSmoothPath _playerPath;
         private float _waypointsDelta;
@@ -48,6 +50,7 @@ namespace Player
         private static readonly int _directionZ = Animator.StringToHash("DirectionZ");
 
         #endregion
+
 
         #region Events
 
@@ -89,6 +92,20 @@ namespace Player
         {
             _currentSpeed = 0.0f;
             DOVirtual.Float(1.0f, .0f, 0.3f, SetAnimatorSpeed);
+        }
+
+        private void Break(InputAction.CallbackContext callbackContext)
+        {
+            if (callbackContext.performed)
+            {
+                _isPlayerBreaking = true;
+            }
+
+
+            if (callbackContext.canceled)
+            {
+                _isPlayerBreaking = false;
+            }
         }
 
         public void MoveForward(InputAction.CallbackContext callbackContext)
@@ -208,9 +225,9 @@ namespace Player
             if (DollyCartInfo)
             {
                 //Check if the player is breaking (semi auto mode)
-                if (_isBreaking && IsSemiAutoMode.Value)
+                if (_isPlayerBreaking && IsSemiAutoMode.Value)
                 {
-                    DollyCartInfo.m_Speed = 0;
+                    DollyCartInfo.m_Speed = Mathf.Max(0, DollyCartInfo.m_Speed - BreakForce.Value * Time.deltaTime);
                 }
                 else
                 {
@@ -221,7 +238,9 @@ namespace Player
                     }
                     else
                     {
-                        DollyCartInfo.m_Speed = Speed.Value;
+                        //We assume here that the break force is also the start force
+                        DollyCartInfo.m_Speed = Mathf.Min(Speed.Value,
+                            DollyCartInfo.m_Speed + BreakForce.Value * Time.deltaTime);
                     }
                 }
 
@@ -278,29 +297,23 @@ namespace Player
         public void SetPath(CinemachineSmoothPath smoothPath)
         {
             _playerPath = smoothPath;
-            if (!DollyCartInfo)
+            if (DollyCartInfo)
             {
-                DollyCartInfo = gameObject.AddComponent<CinemachineDollyCart>();
+                DollyCartInfo.m_Path = _playerPath;
+                DollyCartInfo.m_Position = 0.0f;
+                //transform.position = _dollyCartInfo.transform.position;
+                _waypointsDelta = 1.0f;
+                _currentPosition = 0.0f;
+                WaypointIndex.SetValue(0);
+                TargetCount.SetValue(0);
+                TargetHit.SetValue(0);
+                TargetList.Clear();
             }
-
-            DollyCartInfo.m_Path = _playerPath;
-            DollyCartInfo.m_Position = 0.0f;
-            //transform.position = _dollyCartInfo.transform.position;
-            _waypointsDelta = 1.0f;
-            _currentPosition = 0.0f;
-            _currentSpeed = 0.0f;
         }
 
-        public void Restart()
+        private void SetDollyCartSpeed(float f)
         {
-            DollyCartInfo.m_Position = 0.0f;
-            //transform.position = _dollyCartInfo.transform.position;
-            _waypointsDelta = 1.0f;
-            _currentPosition = 0.0f;
-            WaypointIndex.SetValue(0);
-            TargetCount.SetValue(0);
-            TargetHit.SetValue(0);
-            TargetList.Clear();
+            DollyCartInfo.m_Speed = f;
         }
 
         #endregion

@@ -29,8 +29,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583923401263682636}
-  m_LocalRotation: {x: 0.21870287, y: 0.13527675, z: -0.030630415, w: 0.96588355}
-  m_LocalPosition: {x: -0.019437542, y: 2.0999846, z: -1.4680314}
+  m_LocalRotation: {x: 0.13236046, y: 0.13745686, z: -0.018537741, w: 0.9814493}
+  m_LocalPosition: {x: -0.028819695, y: 2.084377, z: -1.5008688}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7811167799543547206}
@@ -68,7 +68,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1335
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -546,6 +546,9 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 1
   Source: {fileID: 282030724775578181}
+  MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  SfxVolume: {fileID: 11400000, guid: 0ffa6401be7bed041b38ace6b1418bcf, type: 2}
+  IsSfxSound: 1
 --- !u!1001 &585783905648054273
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1052,9 +1055,33 @@ PrefabInstance:
       objectReference: {fileID: 7811167799543547205}
     - target: {fileID: 7471021675263835986, guid: 53bc9d56048ed7e47b5d9f67a393b2c6,
         type: 3}
+      propertyPath: BreakTime
+      value: 
+      objectReference: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545,
+        type: 2}
+    - target: {fileID: 7471021675263835986, guid: 53bc9d56048ed7e47b5d9f67a393b2c6,
+        type: 3}
+      propertyPath: BreakForce
+      value: 
+      objectReference: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545,
+        type: 2}
+    - target: {fileID: 7471021675263835986, guid: 53bc9d56048ed7e47b5d9f67a393b2c6,
+        type: 3}
       propertyPath: PauseMenuGameObject
       value: 
       objectReference: {fileID: 8895800251389782302}
+    - target: {fileID: 7471021675263835987, guid: 53bc9d56048ed7e47b5d9f67a393b2c6,
+        type: 3}
+      propertyPath: BreakTime
+      value: 
+      objectReference: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545,
+        type: 2}
+    - target: {fileID: 7471021675263835987, guid: 53bc9d56048ed7e47b5d9f67a393b2c6,
+        type: 3}
+      propertyPath: BreakForce
+      value: 
+      objectReference: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53bc9d56048ed7e47b5d9f67a393b2c6, type: 3}
 --- !u!4 &8957008680836791123 stripped
@@ -1100,6 +1127,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6937654617920472960}
     m_Modifications:
+    - target: {fileID: 6453390907071143303, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907071143303, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907591689181, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907591689181, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907591689181, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7004830066922649221, guid: 9550eb20008dea945a6631fc696ed51c,
         type: 3}
       propertyPath: m_MinValue

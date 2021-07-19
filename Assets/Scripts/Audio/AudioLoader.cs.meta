@@ -5,6 +5,9 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
+  - Source: {instanceID: 0}
+  - MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  - SfxVolume: {fileID: 11400000, guid: 0ffa6401be7bed041b38ace6b1418bcf, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

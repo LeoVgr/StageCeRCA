@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
         //Reset values of scriptable objects
         Score.Reset(true);
         IsGameStart.Reset(true);
-        Player.Restart();
+        //TODO Player.Restart();
 
         //Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);

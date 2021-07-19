@@ -1667,18 +1667,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7611196703722403259, guid: da1504a6709f15b458b35ff748516339,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 4e313c071e9b0d146b96f21868c5bab9,
-        type: 2}
-    - target: {fileID: 7611196703722403259, guid: da1504a6709f15b458b35ff748516339,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 7227906266053572843, guid: 4e313c071e9b0d146b96f21868c5bab9,
-        type: 2}
     - target: {fileID: 7611196704202461427, guid: da1504a6709f15b458b35ff748516339,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1788,11 +1776,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: --- Score ---
-      objectReference: {fileID: 0}
-    - target: {fileID: 7611196704202461439, guid: da1504a6709f15b458b35ff748516339,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da1504a6709f15b458b35ff748516339, type: 3}

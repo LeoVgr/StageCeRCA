@@ -31,12 +31,15 @@ public class FillPresets : MonoBehaviour
     public BoolVariable IsShootActivated;
     public BoolVariable ShowEndTime;
     public FloatVariable Speed;
+    public FloatVariable BreakForce;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
     public BoolVariable IsMouseySelected;
     public BoolVariable IsAutoMode;
     public BoolVariable IsSemiAutoMode;
     public BoolVariable IsManualMode;
+    public FloatVariable MusicVolume;
+    public FloatVariable SfxVolume;
 
     private Dropdown _tmpDropdown;
     private Dictionary<string, Dictionary<ColumnNames, float>> _presets;
@@ -57,12 +60,15 @@ public class FillPresets : MonoBehaviour
         Shoot,
         ShowEndTime,
         Speed,
+        BreakForce,
         Remy,
         Megan,
         Mousey,
         AutoMode,
         SemiAutoMode,
-        ManualMode
+        ManualMode,
+        MusicVolume,
+        SfxVolume
     }    
 
     private void Start()
@@ -142,6 +148,9 @@ public class FillPresets : MonoBehaviour
                     case ColumnNames.Speed:
                         Speed.SetValue(keyValuePair.Value);
                         break;
+                    case ColumnNames.BreakForce:
+                        BreakForce.SetValue(keyValuePair.Value);
+                        break;
                     case ColumnNames.Remy:
                         IsRemySelected.SetValue(keyValuePair.Value >= 0.5f);
                         break;
@@ -159,6 +168,12 @@ public class FillPresets : MonoBehaviour
                         break;
                     case ColumnNames.ManualMode:
                         IsManualMode.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
+                    case ColumnNames.MusicVolume:
+                        MusicVolume.SetValue(keyValuePair.Value);
+                        break;
+                    case ColumnNames.SfxVolume:
+                        SfxVolume.SetValue(keyValuePair.Value);
                         break;
                 }
             }
@@ -240,22 +255,31 @@ public class FillPresets : MonoBehaviour
                             _presets[selection][(ColumnNames.Speed)] = f;
 
                             f = CheckStringLength(value[15]);
-                            _presets[selection][(ColumnNames.Remy)] = f;
+                            _presets[selection][(ColumnNames.BreakForce)] = f;
 
                             f = CheckStringLength(value[16]);
-                            _presets[selection][(ColumnNames.Megan)] = f;
+                            _presets[selection][(ColumnNames.Remy)] = f;
 
                             f = CheckStringLength(value[17]);
-                            _presets[selection][(ColumnNames.Mousey)] = f;
+                            _presets[selection][(ColumnNames.Megan)] = f;
 
                             f = CheckStringLength(value[18]);
-                            _presets[selection][(ColumnNames.AutoMode)] = f;
+                            _presets[selection][(ColumnNames.Mousey)] = f;
 
                             f = CheckStringLength(value[19]);
-                            _presets[selection][(ColumnNames.SemiAutoMode)] = f;
+                            _presets[selection][(ColumnNames.AutoMode)] = f;
 
                             f = CheckStringLength(value[20]);
+                            _presets[selection][(ColumnNames.SemiAutoMode)] = f;
+
+                            f = CheckStringLength(value[21]);
                             _presets[selection][(ColumnNames.ManualMode)] = f;
+
+                            f = CheckStringLength(value[22]);
+                            _presets[selection][(ColumnNames.MusicVolume)] = f;
+
+                            f = CheckStringLength(value[23]);
+                            _presets[selection][(ColumnNames.SfxVolume)] = f;
                         }
                     }
                     i++;

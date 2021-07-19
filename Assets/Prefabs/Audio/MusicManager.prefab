@@ -144,6 +144,8 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 0
   Source: {fileID: 1668592289934015458}
+  MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  IsSfxSound: 0
 --- !u!114 &2799197357612251614
 MonoBehaviour:
   m_ObjectHideFlags: 0

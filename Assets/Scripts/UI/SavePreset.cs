@@ -31,12 +31,15 @@ public class SavePreset : MonoBehaviour
     public BoolVariable isShootActivated;
     public BoolVariable ShowEndTime;
     public FloatVariable Speed;
+    public FloatVariable BreakForce;
     public BoolVariable isRemySelected;
     public BoolVariable isMeganSelected;
     public BoolVariable isMouseySelected;
     public BoolVariable IsAutoMode;
     public BoolVariable IsSemiAutoMode;
     public BoolVariable IsManualMode;
+    public FloatVariable MusicVolume;
+    public FloatVariable SfxVolume;
 
     public Image saveImage;
     public Image deleteImage;
@@ -91,12 +94,15 @@ public class SavePreset : MonoBehaviour
             dico[inputTextName][(FillPresets.ColumnNames.Shoot)] = isShootActivated.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.ShowEndTime)] = ShowEndTime.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Speed)] = Speed.Value;
+            dico[inputTextName][(FillPresets.ColumnNames.BreakForce)] = BreakForce.Value;
             dico[inputTextName][(FillPresets.ColumnNames.Remy)] = isRemySelected.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Megan)] = isMeganSelected.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = isMouseySelected.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.AutoMode)] = IsAutoMode.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.SemiAutoMode)] = IsSemiAutoMode.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.ManualMode)] = IsManualMode.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.MusicVolume)] = MusicVolume.Value;
+            dico[inputTextName][(FillPresets.ColumnNames.SfxVolume)] = SfxVolume.Value;
             delete = false;
             
             DOVirtual.DelayedCall(Time.deltaTime, (() => presetName?.SetValue(inputTextName)));
@@ -183,6 +189,8 @@ public class SavePreset : MonoBehaviour
                 return "ShowEndTime";
             case FillPresets.ColumnNames.Speed:
                 return "Speed";
+            case FillPresets.ColumnNames.BreakForce:
+                return "BreakForce";
             case FillPresets.ColumnNames.Remy:
                 return "Remy";
             case FillPresets.ColumnNames.Megan:
@@ -195,6 +203,10 @@ public class SavePreset : MonoBehaviour
                 return "SemiAutoMode";
             case FillPresets.ColumnNames.ManualMode:
                 return "ManualMode";
+            case FillPresets.ColumnNames.MusicVolume:
+                return "MusicVolume";
+            case FillPresets.ColumnNames.SfxVolume:
+                return "SfxVolume";
             default:
                 return "";
         }

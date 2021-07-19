@@ -10,6 +10,7 @@ namespace Data
     public class PlayerSaveData : MonoBehaviour
     {
         #region Attributs
+
         public BoolVariable IsPlayerLock;
         public IntVariable TargetCount;
         public IntVariable TargetHit;
@@ -29,18 +30,18 @@ namespace Data
         public BoolVariable EnableFire;
         public FloatVariable TotalTimer;
         public FloatVariable Speed;
+        public FloatVariable BreakForce;
         public BoolVariable IsAutoMode;
         public BoolVariable IsSemiAutoMode;
         public BoolVariable IsManualMode;
-    
         public BoolVariable IsRemy;
         public BoolVariable IsMegan;
         public BoolVariable IsMousey;
 
-        private string _startTime;   
-        private bool _endGame;   
+        private string _startTime;
+        private bool _endGame;
         private DirectoryInfo _directoryInfo;
-    
+
         internal int _modelIndex
         {
             get
@@ -55,30 +56,36 @@ namespace Data
                 }
             }
         }
-        #endregion Attributs
 
-        #region "Events"
+        #endregion
+
+        #region Events
+
         private void Awake()
         {
             //Define where we will save our file
             _directoryInfo = new DirectoryInfo(Application.streamingAssetsPath);
             TargetList.Clear();
         }
+
         private void Start()
         {
             _startTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
         }
+
         private void Update()
         {
             //Increment timer value while the game is running
             if (!IsPlayerLock.Value && !_endGame)
             {
-                TotalTimer.Value += Time.deltaTime;        
+                TotalTimer.Value += Time.deltaTime;
             }
         }
+
         #endregion
 
-        #region "Methods"
+        #region Methods
+
         public void EndGame()
         {
             _endGame = true;
@@ -90,6 +97,7 @@ namespace Data
             //Reset the timer
             TotalTimer.SetValue(.0f);
         }
+
         private void FillCsv()
         {
             //the line that we want to add to the csv file
@@ -129,11 +137,12 @@ namespace Data
                        "personnage;" +
                        "preset\n";
 
-                text = AppendString(text);          
+                text = AppendString(text);
             }
-        
+
             File.WriteAllText(_directoryInfo + "/PlayersData.csv", text);
         }
+        
         private void CreateNewPlayerFile()
         {
             // Add data to our specific player file
@@ -149,16 +158,19 @@ namespace Data
             text += "Images Random;" + (ImageRandom.Value ? "Oui" : "Non") + "\n";
             text += "Taille images;" + ImageSize.Value + "\n";
             text += "Temps images;" + ImageTime.Value + "\n";
-            text += "seed;" + SeedNumber.Value  + "\n";
-            text += "preset;" + PresetName.Value  + "\n";
-            text += "score;" + (Score.Value * 100)  + "\n";
+            text += "Seed;" + SeedNumber.Value + "\n";
+            text += "Preset;" + PresetName.Value + "\n";
+            text += "Score;" + (Score.Value * 100) + "\n";
             text += "Tir Actif;" + (EnableFire.Value ? "Oui" : "Non") + "\n";
             text += "Score Affiche;" + (ScoreDisplay.Value ? "Oui" : "Non") + "\n";
             text += "Vitesse;" + Speed.Value + "\n";
-            text += "Mode deplacement;" + (IsAutoMode.Value ? "Auto" : (IsManualMode.Value ? "Manuel" : "Semi-Auto")) + "\n";
+            text += "Force frein;" + BreakForce.Value + "\n";
+            text += "Mode deplacement;" + (IsAutoMode.Value ? "Auto" : (IsManualMode.Value ? "Manuel" : "Semi-Auto")) +
+                    "\n";
             text += "Personnage;" + gameObject.name + "\n";
-            text += "\nNom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?\n";
-        
+            text +=
+                "\nNom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?\n";
+
             //For each target in the level, add data
             foreach (GameObject o in TargetList.List)
             {
@@ -167,7 +179,10 @@ namespace Data
                         (o.GetComponent<Target>().GetTimeToShoot()) + ";" +
                         (o.GetComponent<Target>().HasToBeShot ? "Oui" : "Non") + ";" +
                         (o.GetComponent<Target>().GetIsHit() ? "Oui" : "Non") + ";" +
-                        ((o.GetComponent<Target>().HasToBeShot && o.GetComponent<Target>().GetIsHit()) || (!o.GetComponent<Target>().HasToBeShot && !o.GetComponent<Target>().GetIsHit()) ? "Oui" : "Non") + ";" +
+                        ((o.GetComponent<Target>().HasToBeShot && o.GetComponent<Target>().GetIsHit()) ||
+                         (!o.GetComponent<Target>().HasToBeShot && !o.GetComponent<Target>().GetIsHit())
+                            ? "Oui"
+                            : "Non") + ";" +
                         "\n";
             }
 
@@ -186,7 +201,8 @@ namespace Data
             if (index > 0)
                 playerUniqueId = "_" + index;
 
-            string fullPath = _directoryInfo + "/Players/" + path + IdPlayer.Value + playerUniqueId /*+ "(" + DateTime.Now.ToString("hhmm_ss") */+ ".csv";
+            string fullPath = _directoryInfo + "/Players/" + path + IdPlayer.Value +
+                              playerUniqueId /*+ "(" + DateTime.Now.ToString("hhmm_ss") */ + ".csv";
 
             FileStream fs = File.Create(fullPath);
             var sr = new StreamWriter(fs);
@@ -194,14 +210,14 @@ namespace Data
             sr.Close();
 
             _endGame = false;
+        }
 
-        }    
         private string AppendString(string text)
         {
             //Use to add data into the string in parameter
 
             float average = 0.0f;
-        
+
             foreach (float f in TimeToShootList.List)
             {
                 average += f;
@@ -225,8 +241,7 @@ namespace Data
             text += PresetName.Value + ";\n";
             return text;
         }
+
         #endregion
     }
 }
-
-

@@ -335,6 +335,9 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 3
   Source: {fileID: 0}
+  MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  SfxVolume: {fileID: 11400000, guid: 0ffa6401be7bed041b38ace6b1418bcf, type: 2}
+  IsSfxSound: 1
 --- !u!1 &2362303332352277619
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +481,9 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 4
   Source: {fileID: 0}
+  MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  SfxVolume: {fileID: 11400000, guid: 0ffa6401be7bed041b38ace6b1418bcf, type: 2}
+  IsSfxSound: 1
 --- !u!1 &7246851261278487832
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,6 +603,7 @@ MonoBehaviour:
   WayPointIndex: 0
   IsNegateImage: 0
   HasToBeShot: 0
+  TargetPosition: 0
 --- !u!65 &2017004084669965757
 BoxCollider:
   m_ObjectHideFlags: 0
