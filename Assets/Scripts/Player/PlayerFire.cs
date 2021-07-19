@@ -15,8 +15,6 @@ namespace Player
     {
         #region Attributs
         [Header("Atom variables")]
-        public GameObject FireStartPositonFPS;
-        public GameObject FireStartPositonTPS;
         public BoolVariable IsPlayerLock;
         public BoolVariable PlayerCanFire;
         public BoolVariable CameraInfps;
@@ -84,8 +82,9 @@ namespace Player
         private void UpdateGun(bool isFPS)
         {
             _gunObject = isFPS ? GunObjectFirstPerson : GunObjectThirdPerson[_modelIndex];
-            _fireStartPositon = isFPS ? FireStartPositonFPS : FireStartPositonTPS;
-        }      
+            _fireStartPositon = _gunObject;
+        }
+        
         private void CreatePooledObjectList()
         {
             _pooledObjects = new List<Bullet>();
@@ -135,9 +134,9 @@ namespace Player
 
                 if (Physics.Raycast(ray, out hit, 100.0f, ~LayerMask.GetMask("Player")))
                 {              
-                    Target t = hit.collider.GetComponentInChildren<Target>();
-                    if(t != null)
-                        t.Hit();
+                    Target target = hit.collider.GetComponentInChildren<Target>();
+                    if(target != null)
+                        target.Hit();
                     endPoint = hit.point;
                     hitSomething = true;
                     normal = hit.normal;
@@ -150,7 +149,7 @@ namespace Player
 
                 //Fire the bullet
                 if (bullet)
-                    bullet.GetComponentInChildren<Bullet>().Fire(_fireStartPositon.transform.position,  endPoint, hitSomething, normal);
+                    bullet.Fire(_fireStartPositon.transform.position,  endPoint, hitSomething, normal);
 
             }
         }
