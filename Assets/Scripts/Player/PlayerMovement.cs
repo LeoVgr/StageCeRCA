@@ -16,7 +16,6 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         #region Attributs
-
         public FloatVariable Speed;
         public FloatVariable BreakForce;
         public BoolVariable IsAutoMode;
@@ -45,15 +44,11 @@ namespace Player
         private bool _isMenuOn;
         private VictoryScreen _victoryScreenScript;
         private float _animatorSpeed;
-        private float _currentPosition;
         private static readonly int _directionX = Animator.StringToHash("DirectionX");
         private static readonly int _directionZ = Animator.StringToHash("DirectionZ");
-
         #endregion
 
-
         #region Events
-
         void Start()
         {
             //Get references
@@ -61,7 +56,6 @@ namespace Player
             _modelIndex = _playerSaveData._modelIndex;
             IsGameStartEvent.Register(IsGameStart);
         }
-
         private void OnDestroy()
         {
             //Unregister events
@@ -71,7 +65,6 @@ namespace Player
             //Set the cursor up
             Cursor.visible = true;
         }
-
         private void Update()
         {
             //Move the player if he is not locked
@@ -87,13 +80,11 @@ namespace Player
                 MovePlayer();
             }
         }
-
         private void StopMovement(InputAction.CallbackContext callbackContext)
         {
             _currentSpeed = 0.0f;
             DOVirtual.Float(1.0f, .0f, 0.3f, SetAnimatorSpeed);
         }
-
         private void Break(InputAction.CallbackContext callbackContext)
         {
             if (callbackContext.performed)
@@ -107,7 +98,6 @@ namespace Player
                 _isPlayerBreaking = false;
             }
         }
-
         public void MoveForward(InputAction.CallbackContext callbackContext)
         {
             if (IsManualMode)
@@ -117,7 +107,6 @@ namespace Player
                 DOVirtual.Float(0, ratio, 0.3f, SetAnimatorSpeed);
             }
         }
-
         public void MoveBackward(InputAction.CallbackContext callbackContext)
         {
             if (IsManualMode)
@@ -127,17 +116,14 @@ namespace Player
                 DOVirtual.Float(0, ratio, 0.3f, SetAnimatorSpeed);
             }
         }
-
         private void PauseMenu(InputAction.CallbackContext obj)
         {
             if (CurrentPlayerGameObject.Value == gameObject)
                 ShowMenu();
         }
-
         #endregion
 
         #region Methods
-
         private void AddListeners()
         {
             var inputSettings = InputManager.Instance.Settings;
@@ -149,7 +135,6 @@ namespace Player
 
             inputSettings.Escape.performed += PauseMenu;
         }
-
         private void RemoveListener()
         {
             var inputManager = InputManager.Instance;
@@ -165,7 +150,6 @@ namespace Player
 
             inputSettings.Escape.performed -= PauseMenu;
         }
-
         private void IsGameStart(bool b)
         {
             //TODO RENAME THIS PARAMETER
@@ -180,7 +164,6 @@ namespace Player
                 RemoveListener();
             }
         }
-
         public void ShowMenu()
         {
             _isMenuOn = !_isMenuOn;
@@ -209,7 +192,6 @@ namespace Player
 
             IsPlayerLock.SetValue(PauseMenuGameObject.activeSelf);
         }
-
         public void DisplayScreen(bool isLosse)
         {
             IsPlayerLock.SetValue(true);
@@ -219,7 +201,6 @@ namespace Player
             _victoryScreenScript.ShowScreen(isLosse);
             _playerSaveData.EndGame();
         }
-
         private void MovePlayer()
         {
             if (DollyCartInfo)
@@ -266,34 +247,23 @@ namespace Player
                 }
             }
         }
-
         private bool CheckTheEnd()
         {
             if (DollyCartInfo && DollyCartInfo.m_Path)
                 return Math.Abs(DollyCartInfo.m_Position - DollyCartInfo.m_Path.PathLength) < 0.5f;
             return false;
         }
-
         private void SetWayPointIndex()
-        {
-            if (DollyCartInfo.m_Position >= _currentPosition + _waypointsDelta)
+        {           
+            if(Vector3.Distance(this.transform.position, DollyCartInfo.m_Path.GetComponent<CinemachineSmoothPath>().m_Waypoints[WaypointIndex.Value + 1].position) <= 0.5f)
             {
                 WaypointIndex.SetValue(WaypointIndex.Value + 1);
-                _currentPosition += _waypointsDelta;
-            }
-
-            if (DollyCartInfo.m_Position <= _currentPosition - _waypointsDelta)
-            {
-                WaypointIndex.SetValue(WaypointIndex.Value - 1);
-                _currentPosition -= _waypointsDelta;
             }
         }
-
         private void SetAnimatorSpeed(float f)
         {
             _animatorSpeed = f;
         }
-
         public void SetPath(CinemachineSmoothPath smoothPath)
         {
             _playerPath = smoothPath;
@@ -303,19 +273,12 @@ namespace Player
                 DollyCartInfo.m_Position = 0.0f;
                 //transform.position = _dollyCartInfo.transform.position;
                 _waypointsDelta = 1.0f;
-                _currentPosition = 0.0f;
                 WaypointIndex.SetValue(0);
                 TargetCount.SetValue(0);
                 TargetHit.SetValue(0);
                 TargetList.Clear();
             }
         }
-
-        private void SetDollyCartSpeed(float f)
-        {
-            DollyCartInfo.m_Speed = f;
-        }
-
         #endregion
     }
 }
