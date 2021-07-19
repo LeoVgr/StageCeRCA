@@ -35,8 +35,10 @@ public class MazeManager : MonoBehaviour
     public GameObject IsAutoModeToggle;
     public GameObject IsSemiAutoModeToggle;
     public GameObject IsManualModeToggle;
-    public GameObject IdPlayerField;   
-    
+    public GameObject IdPlayerField;
+    public GameObject MusicVolumeSlider;
+    public GameObject SfxVolumeSlider;
+
 
     [Header("Scriptable object references")]
     public IntVariable Seed;
@@ -61,6 +63,8 @@ public class MazeManager : MonoBehaviour
     public BoolVariable IsSemiAutoMode;
     public BoolVariable IsManualMode;
     public StringVariable IdPlayer;
+    public FloatVariable MusicVolume;
+    public FloatVariable SfxVolume;
 
     [Header("Min max")]
     public Vector2Constant MinMaxLength;
@@ -69,6 +73,7 @@ public class MazeManager : MonoBehaviour
     public Vector2Constant MinMaxHeightSlider;
     public Vector2Variable MinMaxTurnSlider;
     public Vector2Constant MinMaxImagesTime;
+    public Vector2Constant MinMaxMusicVolume;
 
     private List<UIDataManager> _dataManagers;
     
@@ -104,7 +109,9 @@ public class MazeManager : MonoBehaviour
             IsMouseySelectedToggle.GetComponent<UIDataManager>(),
             IsAutoModeToggle.GetComponent<UIDataManager>(),
             IsSemiAutoModeToggle.GetComponent<UIDataManager>(),
-            IsManualModeToggle.GetComponent<UIDataManager>()
+            IsManualModeToggle.GetComponent<UIDataManager>(),
+            MusicVolumeSlider.GetComponent<UIDataManager>(),
+            SfxVolumeSlider.GetComponent<UIDataManager>()
         };
 
         //Corridor Length
@@ -233,6 +240,18 @@ public class MazeManager : MonoBehaviour
         IsManualModeToggle.GetComponent<UIDataManager>().AtomVariableBool = IsManualMode;
         IsManualModeToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
 
+        //Music volume
+        MusicVolumeSlider.GetComponent<UIDataManager>().minInt = (int)MinMaxMusicVolume.Value.x;
+        MusicVolumeSlider.GetComponent<UIDataManager>().maxInt = (int)MinMaxMusicVolume.Value.y;
+        MusicVolumeSlider.GetComponent<UIDataManager>().AtomVariableFloat = MusicVolume;
+        MusicVolumeSlider.GetComponent<UIDataManager>().RegisterThisEvent = true;
+
+        //Music volume
+        SfxVolumeSlider.GetComponent<UIDataManager>().minInt = (int)MinMaxMusicVolume.Value.x;
+        SfxVolumeSlider.GetComponent<UIDataManager>().maxInt = (int)MinMaxMusicVolume.Value.y;
+        SfxVolumeSlider.GetComponent<UIDataManager>().AtomVariableFloat = SfxVolume;
+        SfxVolumeSlider.GetComponent<UIDataManager>().RegisterThisEvent = true;
+
         IdPlayerField.GetComponent<InputUIManager>().atomVariableString = IdPlayer;       
         
         ResetVariable();
@@ -281,6 +300,8 @@ public class MazeManager : MonoBehaviour
         IsAutoMode.Reset();
         IsSemiAutoMode.Reset();
         IsManualMode.Reset();
+        MusicVolume.Reset();
+        SfxVolume.Reset();
     }
     #endregion
 }

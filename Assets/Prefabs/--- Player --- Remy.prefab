@@ -29,8 +29,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.1509336, y: 0.13708086, z: -0.021138998, w: 0.9787651}
-  m_LocalPosition: {x: -0.026879724, y: 2.0882196, z: -1.4940791}
+  m_LocalRotation: {x: 0.21870287, y: 0.13527675, z: -0.030630415, w: 0.96588355}
+  m_LocalPosition: {x: -0.019437542, y: 2.0999846, z: -1.4680314}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8763422456151200991}
@@ -68,7 +68,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1335
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -509,6 +509,9 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 1
   Source: {fileID: 6671090347555211135}
+  MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  SfxVolume: {fileID: 11400000, guid: 0ffa6401be7bed041b38ace6b1418bcf, type: 2}
+  IsSfxSound: 1
 --- !u!1 &6907365829811195218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,7 +1190,7 @@ PrefabInstance:
     - target: {fileID: 6918845872537768899, guid: 2ba72a1e94e974d43a910dbb35f3acab,
         type: 3}
       propertyPath: m_Name
-      value: remy
+      value: Remy
       objectReference: {fileID: 0}
     - target: {fileID: 7732536546770471289, guid: 2ba72a1e94e974d43a910dbb35f3acab,
         type: 3}
@@ -1294,6 +1297,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6453390907071143303, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907071143303, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6453390907126368762, guid: 9550eb20008dea945a6631fc696ed51c,
         type: 3}
       propertyPath: m_text
@@ -1328,6 +1341,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.characterCount
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907591689181, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907591689181, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907591689181, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6453390907825968441, guid: 9550eb20008dea945a6631fc696ed51c,
         type: 3}

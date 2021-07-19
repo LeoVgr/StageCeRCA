@@ -143,6 +143,9 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 1
   Source: {fileID: 5429027074234967111}
+  MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  SfxVolume: {fileID: 11400000, guid: 0ffa6401be7bed041b38ace6b1418bcf, type: 2}
+  IsSfxSound: 1
 --- !u!1 &1979237130315152421
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,8 +242,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6994025889189372457}
-  m_LocalRotation: {x: 0.13236046, y: 0.13745686, z: -0.018537741, w: 0.9814493}
-  m_LocalPosition: {x: -0.028819695, y: 2.084377, z: -1.5008688}
+  m_LocalRotation: {x: 0.1509336, y: 0.13708086, z: -0.021138998, w: 0.9787651}
+  m_LocalPosition: {x: -0.026879724, y: 2.0882196, z: -1.4940791}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7127588412370732808}
@@ -803,7 +806,7 @@ PrefabInstance:
     - target: {fileID: 2151074287355720296, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
       propertyPath: m_FollowOffset.y
-      value: 1.4
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 2151074287355720296, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
@@ -833,7 +836,7 @@ PrefabInstance:
     - target: {fileID: 6245439813154963381, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.19999993
       objectReference: {fileID: 0}
     - target: {fileID: 6245439813154963381, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
@@ -848,7 +851,7 @@ PrefabInstance:
     - target: {fileID: 6245439813469527669, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.19999993
       objectReference: {fileID: 0}
     - target: {fileID: 6245439813469527669, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
@@ -868,7 +871,7 @@ PrefabInstance:
     - target: {fileID: 6245439814449564269, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.19999993
       objectReference: {fileID: 0}
     - target: {fileID: 6245439814449564269, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
@@ -903,7 +906,7 @@ PrefabInstance:
     - target: {fileID: 6245439814848399029, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.4
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 6245439814848399029, guid: b105e78de99501b49b98ee222e998e4f,
         type: 3}
@@ -1050,6 +1053,16 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6453390907071143303, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907071143303, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6453390907126368762, guid: 9550eb20008dea945a6631fc696ed51c,
         type: 3}
       propertyPath: m_textAlignment
@@ -1109,6 +1122,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -135.37991
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907591689181, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907591689181, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453390907591689181, guid: 9550eb20008dea945a6631fc696ed51c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6453390907825968438, guid: 9550eb20008dea945a6631fc696ed51c,
         type: 3}
@@ -1691,7 +1719,7 @@ PrefabInstance:
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.08584448
+      value: 0.08584449
       objectReference: {fileID: 0}
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}

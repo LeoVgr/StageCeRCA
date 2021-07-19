@@ -38,6 +38,8 @@ public class SavePreset : MonoBehaviour
     public BoolVariable IsAutoMode;
     public BoolVariable IsSemiAutoMode;
     public BoolVariable IsManualMode;
+    public FloatVariable MusicVolume;
+    public FloatVariable SfxVolume;
 
     public Image saveImage;
     public Image deleteImage;
@@ -99,6 +101,8 @@ public class SavePreset : MonoBehaviour
             dico[inputTextName][(FillPresets.ColumnNames.AutoMode)] = IsAutoMode.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.SemiAutoMode)] = IsSemiAutoMode.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.ManualMode)] = IsManualMode.Value ? 1 : 0;
+            dico[inputTextName][(FillPresets.ColumnNames.MusicVolume)] = MusicVolume.Value;
+            dico[inputTextName][(FillPresets.ColumnNames.SfxVolume)] = SfxVolume.Value;
             delete = false;
             
             DOVirtual.DelayedCall(Time.deltaTime, (() => presetName?.SetValue(inputTextName)));
@@ -199,6 +203,10 @@ public class SavePreset : MonoBehaviour
                 return "SemiAutoMode";
             case FillPresets.ColumnNames.ManualMode:
                 return "ManualMode";
+            case FillPresets.ColumnNames.MusicVolume:
+                return "MusicVolume";
+            case FillPresets.ColumnNames.SfxVolume:
+                return "SfxVolume";
             default:
                 return "";
         }

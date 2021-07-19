@@ -38,6 +38,8 @@ public class FillPresets : MonoBehaviour
     public BoolVariable IsAutoMode;
     public BoolVariable IsSemiAutoMode;
     public BoolVariable IsManualMode;
+    public FloatVariable MusicVolume;
+    public FloatVariable SfxVolume;
 
     private Dropdown _tmpDropdown;
     private Dictionary<string, Dictionary<ColumnNames, float>> _presets;
@@ -64,7 +66,9 @@ public class FillPresets : MonoBehaviour
         Mousey,
         AutoMode,
         SemiAutoMode,
-        ManualMode
+        ManualMode,
+        MusicVolume,
+        SfxVolume
     }    
 
     private void Start()
@@ -165,6 +169,12 @@ public class FillPresets : MonoBehaviour
                     case ColumnNames.ManualMode:
                         IsManualMode.SetValue(keyValuePair.Value >= 0.5f);
                         break;
+                    case ColumnNames.MusicVolume:
+                        MusicVolume.SetValue(keyValuePair.Value);
+                        break;
+                    case ColumnNames.SfxVolume:
+                        SfxVolume.SetValue(keyValuePair.Value);
+                        break;
                 }
             }
         }
@@ -264,6 +274,12 @@ public class FillPresets : MonoBehaviour
 
                             f = CheckStringLength(value[21]);
                             _presets[selection][(ColumnNames.ManualMode)] = f;
+
+                            f = CheckStringLength(value[22]);
+                            _presets[selection][(ColumnNames.MusicVolume)] = f;
+
+                            f = CheckStringLength(value[23]);
+                            _presets[selection][(ColumnNames.SfxVolume)] = f;
                         }
                     }
                     i++;

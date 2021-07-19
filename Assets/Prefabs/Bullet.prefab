@@ -143,6 +143,9 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 1
   Source: {fileID: 6027783267658052014}
+  MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  SfxVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  IsSfxSound: 1
 --- !u!1 &4297792672992218393
 GameObject:
   m_ObjectHideFlags: 0

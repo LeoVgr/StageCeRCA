@@ -148,6 +148,9 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 6
   Source: {fileID: 2074938946761558035}
+  MusicVolume: {fileID: 0}
+  SfxVolume: {fileID: 0}
+  IsSfxSound: 0
 --- !u!1 &7576377271389038555
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,6 +299,9 @@ MonoBehaviour:
   References: {fileID: 11400000, guid: 3a4b157d113085a4583824f7a1bc55fc, type: 2}
   SoundIndex: 6
   Source: {fileID: 407596860097048126}
+  MusicVolume: {fileID: 0}
+  SfxVolume: {fileID: 0}
+  IsSfxSound: 0
 --- !u!1 &7611196703722403256
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,8 +373,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Score : 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4e313c071e9b0d146b96f21868c5bab9, type: 2}
+  m_sharedMaterial: {fileID: 7227906266053572843, guid: 4e313c071e9b0d146b96f21868c5bab9,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
