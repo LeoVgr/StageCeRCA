@@ -31,6 +31,7 @@ public class SavePreset : MonoBehaviour
     public BoolVariable isShootActivated;
     public BoolVariable ShowEndTime;
     public FloatVariable Speed;
+    public FloatVariable BreakForce;
     public BoolVariable isRemySelected;
     public BoolVariable isMeganSelected;
     public BoolVariable isMouseySelected;
@@ -91,6 +92,7 @@ public class SavePreset : MonoBehaviour
             dico[inputTextName][(FillPresets.ColumnNames.Shoot)] = isShootActivated.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.ShowEndTime)] = ShowEndTime.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Speed)] = Speed.Value;
+            dico[inputTextName][(FillPresets.ColumnNames.BreakForce)] = BreakForce.Value;
             dico[inputTextName][(FillPresets.ColumnNames.Remy)] = isRemySelected.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Megan)] = isMeganSelected.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = isMouseySelected.Value ? 1 : 0;
@@ -183,6 +185,8 @@ public class SavePreset : MonoBehaviour
                 return "ShowEndTime";
             case FillPresets.ColumnNames.Speed:
                 return "Speed";
+            case FillPresets.ColumnNames.BreakForce:
+                return "BreakForce";
             case FillPresets.ColumnNames.Remy:
                 return "Remy";
             case FillPresets.ColumnNames.Megan:

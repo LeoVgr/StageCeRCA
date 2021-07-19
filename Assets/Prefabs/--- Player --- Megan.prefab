@@ -1566,6 +1566,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6799215683161827949, guid: fe54268d93d74e64a8ec91ca8e76fff1,
         type: 3}
+      propertyPath: BreakTime
+      value: 
+      objectReference: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545,
+        type: 2}
+    - target: {fileID: 6799215683161827949, guid: fe54268d93d74e64a8ec91ca8e76fff1,
+        type: 3}
+      propertyPath: BreakForce
+      value: 
+      objectReference: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545,
+        type: 2}
+    - target: {fileID: 6799215683161827949, guid: fe54268d93d74e64a8ec91ca8e76fff1,
+        type: 3}
       propertyPath: PauseMenuGameObject
       value: 
       objectReference: {fileID: 1117112330072596347}
@@ -1589,6 +1601,18 @@ PrefabInstance:
       propertyPath: GunObjectFirstPerson
       value: 
       objectReference: {fileID: 7127588412370732811}
+    - target: {fileID: 6799215683161827954, guid: fe54268d93d74e64a8ec91ca8e76fff1,
+        type: 3}
+      propertyPath: BreakTime
+      value: 
+      objectReference: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545,
+        type: 2}
+    - target: {fileID: 6799215683161827954, guid: fe54268d93d74e64a8ec91ca8e76fff1,
+        type: 3}
+      propertyPath: BreakForce
+      value: 
+      objectReference: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545,
+        type: 2}
     - target: {fileID: 7291628292996098016, guid: fe54268d93d74e64a8ec91ca8e76fff1,
         type: 3}
       propertyPath: CrossHair
@@ -1667,7 +1691,7 @@ PrefabInstance:
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.085844465
+      value: 0.08584448
       objectReference: {fileID: 0}
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
@@ -1677,7 +1701,7 @@ PrefabInstance:
     - target: {fileID: 2738085621713412301, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.009094394
+      value: -0.009094397
       objectReference: {fileID: 0}
     - target: {fileID: 4254418905649881805, guid: 91721ced08d3ad744aa1147e903a2993,
         type: 3}

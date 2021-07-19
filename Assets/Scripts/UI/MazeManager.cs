@@ -28,6 +28,7 @@ public class MazeManager : MonoBehaviour
     public GameObject PlayerCanFireToggle;
     public GameObject ShowEndTimeToggle;
     public GameObject SpeedField;
+    public GameObject BreakForceField;
     public GameObject IsRemySelectedToggle;
     public GameObject IsMeganSelectedToggle;
     public GameObject IsMouseySelectedToggle;
@@ -35,9 +36,7 @@ public class MazeManager : MonoBehaviour
     public GameObject IsSemiAutoModeToggle;
     public GameObject IsManualModeToggle;
     public GameObject IdPlayerField;   
-    //player selection ?
-    //preset input filed ?
-    //pour lui size = largeur
+    
 
     [Header("Scriptable object references")]
     public IntVariable Seed;
@@ -54,6 +53,7 @@ public class MazeManager : MonoBehaviour
     public BoolVariable IsShootActivated;
     public BoolVariable ShowEndTime;
     public FloatVariable Speed;
+    public FloatVariable BreakForce;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
     public BoolVariable IsMouseySelected;
@@ -96,6 +96,7 @@ public class MazeManager : MonoBehaviour
             PlayerCanFireToggle.GetComponent<UIDataManager>(),
             ShowEndTimeToggle.GetComponent<UIDataManager>(),
             SpeedField.GetComponent<UIDataManager>(),
+            BreakForceField.GetComponent<UIDataManager>(),
             FpsCameraToggle.GetComponent<UIDataManager>(),
             TimerField.GetComponent<UIDataManager>(),
             IsRemySelectedToggle.GetComponent<UIDataManager>(),
@@ -159,6 +160,12 @@ public class MazeManager : MonoBehaviour
         SpeedField.GetComponent<UIDataManager>().maxInt = 0;
         SpeedField.GetComponent<UIDataManager>().AtomVariableFloat = Speed;
         SpeedField.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
+
+        //Break force
+        BreakForceField.GetComponent<UIDataManager>().minInt = 0;
+        BreakForceField.GetComponent<UIDataManager>().maxInt = 0;
+        BreakForceField.GetComponent<UIDataManager>().AtomVariableFloat = BreakForce;
+        BreakForceField.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
 
         //Display Score
         DisplayScoreToggle.GetComponent<UIDataManager>().minInt = 0;
@@ -254,6 +261,7 @@ public class MazeManager : MonoBehaviour
     {
         Seed.Reset();
         Speed.Reset();
+        BreakForce.Reset();
         ShowEndTime.Reset();
         CorridorLength.Reset();
         TurnNumber.Reset();

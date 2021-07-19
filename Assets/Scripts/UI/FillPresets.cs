@@ -31,6 +31,7 @@ public class FillPresets : MonoBehaviour
     public BoolVariable IsShootActivated;
     public BoolVariable ShowEndTime;
     public FloatVariable Speed;
+    public FloatVariable BreakForce;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
     public BoolVariable IsMouseySelected;
@@ -57,6 +58,7 @@ public class FillPresets : MonoBehaviour
         Shoot,
         ShowEndTime,
         Speed,
+        BreakForce,
         Remy,
         Megan,
         Mousey,
@@ -141,6 +143,9 @@ public class FillPresets : MonoBehaviour
                         break;
                     case ColumnNames.Speed:
                         Speed.SetValue(keyValuePair.Value);
+                        break;
+                    case ColumnNames.BreakForce:
+                        BreakForce.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.Remy:
                         IsRemySelected.SetValue(keyValuePair.Value >= 0.5f);
@@ -240,21 +245,24 @@ public class FillPresets : MonoBehaviour
                             _presets[selection][(ColumnNames.Speed)] = f;
 
                             f = CheckStringLength(value[15]);
-                            _presets[selection][(ColumnNames.Remy)] = f;
+                            _presets[selection][(ColumnNames.BreakForce)] = f;
 
                             f = CheckStringLength(value[16]);
-                            _presets[selection][(ColumnNames.Megan)] = f;
+                            _presets[selection][(ColumnNames.Remy)] = f;
 
                             f = CheckStringLength(value[17]);
-                            _presets[selection][(ColumnNames.Mousey)] = f;
+                            _presets[selection][(ColumnNames.Megan)] = f;
 
                             f = CheckStringLength(value[18]);
-                            _presets[selection][(ColumnNames.AutoMode)] = f;
+                            _presets[selection][(ColumnNames.Mousey)] = f;
 
                             f = CheckStringLength(value[19]);
-                            _presets[selection][(ColumnNames.SemiAutoMode)] = f;
+                            _presets[selection][(ColumnNames.AutoMode)] = f;
 
                             f = CheckStringLength(value[20]);
+                            _presets[selection][(ColumnNames.SemiAutoMode)] = f;
+
+                            f = CheckStringLength(value[21]);
                             _presets[selection][(ColumnNames.ManualMode)] = f;
                         }
                     }

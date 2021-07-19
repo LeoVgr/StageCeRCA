@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 {
     #region "Attributs"
     public FloatVariable Speed;
+    public FloatVariable BreakForce;
     public BoolVariable IsAutoMode;
     public BoolVariable IsSemiAutoMode;
     public BoolVariable IsManualMode;
@@ -34,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private InputActionMap _inputActions;
     private PlayerInput _input;
     private CinemachineDollyCart _dollyCartInfo;
-    private bool _isBreaking = false;
+    private bool _isPlayerBreaking = false;
     private float _currentSpeed;
     private CinemachineSmoothPath _playerPath;
     private float _waypointsDelta;
@@ -88,10 +89,16 @@ public class PlayerMovement : MonoBehaviour
     private void Break(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.performed)
-            _isBreaking = true;
+        {
+            _isPlayerBreaking = true;
+        }
+            
 
         if (callbackContext.canceled)
-            _isBreaking = false;
+        {
+            _isPlayerBreaking = false;
+        }
+            
     }
     public void MoveForward(InputAction.CallbackContext callbackContext)
     {
@@ -200,9 +207,11 @@ public class PlayerMovement : MonoBehaviour
         if (_dollyCartInfo)
         {
             //Check if the player is breaking (semi auto mode)
-            if (_isBreaking && IsSemiAutoMode.Value)
+            if (_isPlayerBreaking && IsSemiAutoMode.Value)
             {
-                _dollyCartInfo.m_Speed = 0;
+
+                _dollyCartInfo.m_Speed = Mathf.Max(0, _dollyCartInfo.m_Speed - BreakForce.Value * Time.deltaTime);
+
             }
             else
             {
@@ -212,8 +221,9 @@ public class PlayerMovement : MonoBehaviour
                     _dollyCartInfo.m_Speed = _currentSpeed;
                 }
                 else
-                {
-                    _dollyCartInfo.m_Speed = Speed.Value;
+                {            
+                    //We assume here that the break force is also the start force
+                    _dollyCartInfo.m_Speed = Mathf.Min(Speed.Value, _dollyCartInfo.m_Speed + BreakForce.Value * Time.deltaTime);
                 }
                 
             }
@@ -260,6 +270,10 @@ public class PlayerMovement : MonoBehaviour
     private void SetAnimatorSpeed(float f)
     {
         _animatorSpeed = f;
+    }
+    private void SetDollyCartSpeed(float f)
+    {
+        _dollyCartInfo.m_Speed = f;
     }
     public void SetPath(CinemachineSmoothPath smoothPath)
     {

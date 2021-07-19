@@ -28,6 +28,7 @@ public class PlayerSaveData : MonoBehaviour
     public BoolVariable EnableFire;
     public FloatVariable TotalTimer;
     public FloatVariable Speed;
+    public FloatVariable BreakForce;
     public BoolVariable IsAutoMode;
     public BoolVariable IsSemiAutoMode;
     public BoolVariable IsManualMode;
@@ -129,12 +130,13 @@ public class PlayerSaveData : MonoBehaviour
         text += "Images Random;" + (ImageRandom.Value ? "Oui" : "Non") + "\n";
         text += "Taille images;" + ImageSize.Value + "\n";
         text += "Temps images;" + ImageTime.Value + "\n";
-        text += "seed;" + SeedNumber.Value  + "\n";
-        text += "preset;" + PresetName.Value  + "\n";
-        text += "score;" + (Score.Value * 100)  + "\n";
+        text += "Seed;" + SeedNumber.Value  + "\n";
+        text += "Preset;" + PresetName.Value  + "\n";
+        text += "Score;" + (Score.Value * 100)  + "\n";
         text += "Tir Actif;" + (EnableFire.Value ? "Oui" : "Non") + "\n";
         text += "Score Affiche;" + (ScoreDisplay.Value ? "Oui" : "Non") + "\n";
         text += "Vitesse;" + Speed.Value + "\n";
+        text += "Force frein;" + BreakForce.Value + "\n";
         text += "Mode deplacement;" + (IsAutoMode.Value ? "Auto" : (IsManualMode.Value ? "Manuel" : "Semi-Auto")) + "\n";
         text += "Personnage;" + gameObject.name + "\n";
         text += "\nNom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?\n";

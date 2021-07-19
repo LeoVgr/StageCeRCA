@@ -1,3 +1,4 @@
-Preset;Seed;Longueur;Largeur;Hauteur;Nbr Virages;Temps Image;Randomize Image;Taille des images;Timer;Score;FpsCamera;Shoot;ShowEndTime;Speed;Remy;Megan;Mousey;AutoMode;SemiAutoMode;ManualMode;
-ee;1;10;10;4;2;2;0;1.5;60;1;0;1;1;0.75;0;1;0;1;1;1;
-za;1;10;10;4;2;2;0;1.5;60;1;0;1;1;0.75;0;1;0;1;1;1;
+Preset;Seed;Longueur;Largeur;Hauteur;Nbr Virages;Temps Image;Randomize Image;Taille des images;Timer;Score;FpsCamera;Shoot;ShowEndTime;Speed;BreakTime;Remy;Megan;Mousey;AutoMode;SemiAutoMode;ManualMode;
+ee;1;10;10;4;2;2;0;1.5;60;1;0;1;1;0.75;0;1;0;1;1;1;0;
+za;1;10;10;4;2;2;0;1.5;60;1;0;1;1;0.75;0;1;0;1;1;1;0;
+break;1;10;10;4;0;2;0;1.5;60;1;0;1;1;10;15;0;1;0;0;0;1;
