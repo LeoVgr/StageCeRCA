@@ -44,14 +44,13 @@ namespace Player
         private void UpdateCameraRotation()
         {
             //Input
-            InputManager inputManager = Player.InputManager.Instance;
-            Vector3 input = inputManager.lookRotation;
+            InputManager inputManager = InputManager.instance;
+            Vector3 input = inputManager.GetInputAimVector();
 
             //Reset the value to indicate this is used
-            inputManager.lookRotation = Vector2.zero;
-
+            //inputManager.lookRotation = Vector2.zero;
             //move mouse on Y rotate around X axis
-            _xAngle += input.y * (inputManager.Settings.InverseY ? 1 : -1);
+            _xAngle += input.y * -1/** (inputManager.Settings.InverseY ? 1 : -1)*/;
             if (_xAngle > MaxRotationX)
                 _xAngle = MaxRotationX;
             else if (_xAngle < MinRotationX)

@@ -59,7 +59,7 @@ namespace Player
             _timer += Time.deltaTime;
 
             //Check if the fire action has been done by the player
-            if (InputManager.Instance.isFiring)
+            if (InputManager.instance.IsFireAction())
             {
                 if (_timer > _cooldownFire)
                 {

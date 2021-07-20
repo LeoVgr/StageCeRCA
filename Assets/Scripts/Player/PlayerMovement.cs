@@ -37,7 +37,6 @@ namespace Player
 
 
         private PlayerSaveData _playerSaveData;
-        private bool _isPlayerBreaking = false;
         private float _currentSpeed;
         private CinemachineSmoothPath _playerPath;
         private float _waypointsDelta;
@@ -60,7 +59,6 @@ namespace Player
         {
             //Unregister events
             IsGameStartEvent.UnregisterAll();
-            RemoveListener();
 
             //Set the cursor up
             Cursor.visible = true;
@@ -80,76 +78,50 @@ namespace Player
                 MovePlayer();
             }
         }
-        private void StopMovement(InputAction.CallbackContext callbackContext)
-        {
-            _currentSpeed = 0.0f;
-            DOVirtual.Float(1.0f, .0f, 0.3f, SetAnimatorSpeed);
-        }
-        private void Break(InputAction.CallbackContext callbackContext)
-        {
-            if (callbackContext.performed)
-            {
-                _isPlayerBreaking = true;
-            }
+        //private void StopMovement(InputAction.CallbackContext callbackContext)
+        //{
+        //    _currentSpeed = 0.0f;
+        //    DOVirtual.Float(1.0f, .0f, 0.3f, SetAnimatorSpeed);
+        //}
+        //private void Break(InputAction.CallbackContext callbackContext)
+        //{
+        //    if (callbackContext.performed)
+        //    {
+        //        _isPlayerBreaking = true;
+        //    }
 
 
-            if (callbackContext.canceled)
-            {
-                _isPlayerBreaking = false;
-            }
-        }
-        public void MoveForward(InputAction.CallbackContext callbackContext)
-        {
-            if (IsManualMode)
-            {
-                float ratio = callbackContext.ReadValue<float>();
-                _currentSpeed = Speed.Value * ratio;
-                DOVirtual.Float(0, ratio, 0.3f, SetAnimatorSpeed);
-            }
-        }
-        public void MoveBackward(InputAction.CallbackContext callbackContext)
-        {
-            if (IsManualMode)
-            {
-                float ratio = callbackContext.ReadValue<float>();
-                _currentSpeed = -Speed.Value * ratio;
-                DOVirtual.Float(0, ratio, 0.3f, SetAnimatorSpeed);
-            }
-        }
-        private void PauseMenu(InputAction.CallbackContext obj)
-        {
-            if (CurrentPlayerGameObject.Value == gameObject)
-                ShowMenu();
-        }
+        //    if (callbackContext.canceled)
+        //    {
+        //        _isPlayerBreaking = false;
+        //    }
+        //}
+        //public void MoveForward(InputAction.CallbackContext callbackContext)
+        //{
+        //    if (IsManualMode)
+        //    {
+        //        float ratio = callbackContext.ReadValue<float>();
+        //        _currentSpeed = Speed.Value * ratio;
+        //        DOVirtual.Float(0, ratio, 0.3f, SetAnimatorSpeed);
+        //    }
+        //}
+        //public void MoveBackward(InputAction.CallbackContext callbackContext)
+        //{
+        //    if (IsManualMode)
+        //    {
+        //        float ratio = callbackContext.ReadValue<float>();
+        //        _currentSpeed = -Speed.Value * ratio;
+        //        DOVirtual.Float(0, ratio, 0.3f, SetAnimatorSpeed);
+        //    }
+        //}
+        //private void PauseMenu(InputAction.CallbackContext obj)
+        //{
+        //    if (CurrentPlayerGameObject.Value == gameObject)
+        //        ShowMenu();
+        //}
         #endregion
 
         #region Methods
-        private void AddListeners()
-        {
-            var inputSettings = InputManager.Instance.Settings;
-            inputSettings.MovingForward.performed += MoveForward;
-            inputSettings.MovingForward.canceled += StopMovement;
-
-            inputSettings.MovingBackward.performed += MoveBackward;
-            inputSettings.MovingBackward.canceled += StopMovement;
-
-            inputSettings.Escape.performed += PauseMenu;
-        }
-        private void RemoveListener()
-        {
-            var inputManager = InputManager.Instance;
-            if (inputManager == null)
-                return;
-
-            var inputSettings = inputManager.Settings;
-            inputSettings.MovingForward.performed -= MoveForward;
-            inputSettings.MovingForward.canceled -= StopMovement;
-
-            inputSettings.MovingBackward.performed -= MoveBackward;
-            inputSettings.MovingBackward.canceled -= StopMovement;
-
-            inputSettings.Escape.performed -= PauseMenu;
-        }
         private void IsGameStart(bool b)
         {
             //TODO RENAME THIS PARAMETER
@@ -157,11 +129,11 @@ namespace Player
             {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                AddListeners();
+                //AddListeners();
             }
             else
             {
-                RemoveListener();
+                //RemoveListener();
             }
         }
         public void ShowMenu()
@@ -206,7 +178,7 @@ namespace Player
             if (DollyCartInfo)
             {
                 //Check if the player is breaking (semi auto mode)
-                if (_isPlayerBreaking && IsSemiAutoMode.Value)
+                if (InputManager.instance.IsBreakAction() && IsSemiAutoMode.Value)
                 {
                     DollyCartInfo.m_Speed = Mathf.Max(0, DollyCartInfo.m_Speed - BreakForce.Value * Time.deltaTime);
                 }
@@ -215,6 +187,7 @@ namespace Player
                     //Check if we're in manual mode
                     if (IsManualMode.Value)
                     {
+                        _currentSpeed = Speed.Value * InputManager.instance.GetInputMovementVector().y;
                         DollyCartInfo.m_Speed = _currentSpeed;
                     }
                     else
