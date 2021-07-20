@@ -180,3 +180,13 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Fire
       m_Flags: 0
+  Escape:
+    m_Name: Escape
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b59e2719-cd04-48e9-ba32-9545feb7c5b6
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+  JoystickPower: 300
+  InverseY: 0

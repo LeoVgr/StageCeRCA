@@ -4,47 +4,67 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerRotation : MonoBehaviour
+    public class PlayerCamera : MonoBehaviour
     {
+        #region "Attributs"
         public BoolVariable isPlayerFPS;
         public BoolVariable isPlayerLock;
 
-        public float MaxRotation = 90;
-        public float MinRotation = -90;
+        public GameObject FpsCamera;
+        public GameObject TpsCamera;
+
+        public float MaxRotationX = 90;
+        public float MinRotationX = -90;
+        public float MaxRotationY = 90;
+        public float MinRotationY = -90;
 
         private float _xAngle = 0;
         private float _yAngle = 0;
 
         private CinemachineDollyCart _dolly;
+        #endregion
 
+        #region "Events"
         private void Start()
         {
-            _dolly = GetComponent<CinemachineDollyCart>();
-        }
+            //Get references
+            _dolly = GetComponentInParent<CinemachineDollyCart>();
 
-        // Update is called once per frame
+            //Choose the right camera depending parameters
+            UpdateView();
+        }
         void Update()
         {
+            //Don't move anything if the player is lock
             if (isPlayerLock.Value) return;
 
+            //Update rotation of the camera
+            UpdateCameraRotation();
+        }
+        #endregion
+
+        #region "Methods"
+        private void UpdateCameraRotation()
+        {
             //Input
             InputManager inputManager = Player.InputManager.Instance;
             Vector3 input = inputManager.lookRotation;
+
             //Reset the value to indicate this is used
             inputManager.lookRotation = Vector2.zero;
 
             //move mouse on Y rotate around X axis
             _xAngle += input.y * (inputManager.Settings.InverseY ? 1 : -1);
-            if (_xAngle > MaxRotation)
-                _xAngle = MaxRotation;
-            else if (_xAngle < MinRotation)
-                _xAngle = MinRotation;
+            if (_xAngle > MaxRotationX)
+                _xAngle = MaxRotationX;
+            else if (_xAngle < MinRotationX)
+                _xAngle = MinRotationX;
             //move mouse on X rotate around Y axis
             _yAngle += input.x;
-            if (_yAngle > MaxRotation)
-                _yAngle = MaxRotation;
-            else if (_yAngle < MinRotation)
-                _yAngle = MinRotation;
+            if (_yAngle > MaxRotationY)
+                _yAngle = MaxRotationY;
+            else if (_yAngle < MinRotationY)
+                _yAngle = MinRotationY;
 
             //Get forward direction with dolly reference
             if (!_dolly.m_Path)
@@ -54,7 +74,7 @@ namespace Player
                 return;
             }
 
-            var forward = _dolly.m_Path.EvaluateOrientationAtUnit(_dolly.m_Position,_dolly.m_PositionUnits).eulerAngles;
+            var forward = _dolly.m_Path.EvaluateOrientationAtUnit(_dolly.m_Position, _dolly.m_PositionUnits).eulerAngles;
 
             var newRotation = new Vector3(forward.x + _xAngle, forward.y + _yAngle, 0);
 
@@ -62,5 +82,11 @@ namespace Player
 
             transform.rotation = look;
         }
+        private void UpdateView()
+        {
+            FpsCamera.SetActive(isPlayerFPS.Value);
+            TpsCamera.SetActive(!isPlayerFPS.Value);
+        }
+        #endregion
     }
 }
