@@ -254,7 +254,10 @@ namespace Player
             return false;
         }
         private void SetWayPointIndex()
-        {           
+        {
+            if (!DollyCartInfo.m_Path)
+                return;
+
             if(Vector3.Distance(this.transform.position, DollyCartInfo.m_Path.GetComponent<CinemachineSmoothPath>().m_Waypoints[WaypointIndex.Value + 1].position) <= 0.5f)
             {
                 WaypointIndex.SetValue(WaypointIndex.Value + 1);

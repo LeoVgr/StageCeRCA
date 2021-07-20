@@ -281,8 +281,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4434645828648297470}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.5249753, y: -1.074255, z: 1.862}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8518911218580143448}
@@ -305,13 +305,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 755d756d0c8d5db448fb88f5d464fe8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 4662008733687023426}
-  time: 0.3
-  intervalTime: 0.3
-  sparkle: {fileID: 6749646112660689737}
-  screenShakesValues: {fileID: 11400000, guid: 211d00b7c00e89345a44e7bb56f594ef, type: 2}
-  bulletImpact: {fileID: 3263634916120567656}
-  bulletSphere: {fileID: 524181476657660187}
+  LineRendererComponent: {fileID: 4662008733687023426}
+  Time: 0.3
+  IntervalTime: 0.5
+  Sparkle: {fileID: 6749646112660689737}
+  ScreenShakesValues: {fileID: 11400000, guid: 211d00b7c00e89345a44e7bb56f594ef, type: 2}
+  BulletImpact: {fileID: 3263634916120567656}
+  BulletSphere: {fileID: 4434645828648297470}
   ImpactSource: {fileID: 6027783267658052014}
 --- !u!114 &3609256549134128929
 MonoBehaviour:
@@ -664,12 +664,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a76acb0b9e9f0449b22cf76c74e1abe, type: 3}
---- !u!1 &524181476657660187 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5724617896475279583, guid: 6a76acb0b9e9f0449b22cf76c74e1abe,
-    type: 3}
-  m_PrefabInstance: {fileID: 5203814687279792580}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &524181476657660191 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5724617896475279579, guid: 6a76acb0b9e9f0449b22cf76c74e1abe,

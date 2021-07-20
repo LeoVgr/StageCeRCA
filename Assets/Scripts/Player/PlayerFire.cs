@@ -15,8 +15,7 @@ namespace Player
     {
         #region Attributs
         [Header("Atom variables")]
-        public GameObject FireStartPositonFPS;
-        public GameObject FireStartPositonTPS;
+        public GameObject FireStartPositon;
         public BoolVariable IsPlayerLock;
         public BoolVariable PlayerCanFire;
         public BoolVariable CameraInfps;
@@ -25,24 +24,20 @@ namespace Player
         private int _modelIndex => _playerData._modelIndex;
 
         [Header("FX")]
-        public GameObject GunObjectFirstPerson;
-        public GameObject[] GunObjectThirdPerson = new GameObject[3];
+        public GameObject GunObject;
     
         [Header("Audio")] public AudioSource FireAudio;
 
         [Header("Pool")]
         public GameObject ObjectToPool;
         private int _amountToPool;
-
         public GameObject Crosshair;
         private List<Bullet> _pooledObjects;
         private Camera _camera;
-        private GameObject _gunObject;
-        private GameObject _fireStartPositon;
+        
         private float _timer;
         private float _cooldownFire = 0.5f;
         #endregion
-
 
         #region Events
         void Start()
@@ -53,11 +48,7 @@ namespace Player
 
             //Create bullet pool
             _amountToPool = 3;
-            CreatePooledObjectList();
-        
-            //Update the origin of the shot depending if we are in fps or tps
-            CameraInfps.Changed.Register(UpdateGun);
-            UpdateGun(CameraInfps.Value);      
+            CreatePooledObjectList();          
         }
         private void Update()
         {
@@ -80,12 +71,7 @@ namespace Player
         }
         #endregion
 
-        #region Methods
-        private void UpdateGun(bool isFPS)
-        {
-            _gunObject = isFPS ? GunObjectFirstPerson : GunObjectThirdPerson[_modelIndex];
-            _fireStartPositon = isFPS ? FireStartPositonFPS : FireStartPositonTPS;
-        }      
+        #region Methods    
         private void CreatePooledObjectList()
         {
             _pooledObjects = new List<Bullet>();
@@ -117,8 +103,8 @@ namespace Player
                 FireAudio.Play();
 
                 //Shot animation
-                if (_gunObject)
-                    _gunObject.transform.DOPunchScale(_gunObject.transform.localScale * 0.1f, _cooldownFire * 0.75f);
+                if (GunObject)
+                    GunObject.transform.DOPunchScale(GunObject.transform.localScale * 0.1f, _cooldownFire * 0.75f);
 
                 //Prepare the bullet
                 Bullet bullet = GetFirstAvailablePooledObject();
@@ -150,7 +136,7 @@ namespace Player
 
                 //Fire the bullet
                 if (bullet)
-                    bullet.GetComponentInChildren<Bullet>().Fire(_fireStartPositon.transform.position,  endPoint, hitSomething, normal);
+                    bullet.GetComponent<Bullet>().Fire(FireStartPositon.transform.position,  endPoint, hitSomething, normal);
 
             }
         }

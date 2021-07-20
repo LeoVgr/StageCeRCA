@@ -15,14 +15,14 @@ using UnityEngine.VFX;
  */
 public class Bullet : MonoBehaviour
 {
-    
-    public LineRenderer lineRenderer;
-    public float time = 0.3f;
-    public float intervalTime = 0.5f;
-    public VisualEffect sparkle;
-    public Vector2Variable screenShakesValues;
-    public GameObject bulletImpact;
-    public GameObject bulletSphere;
+    #region "Attribut"
+    public LineRenderer LineRendererComponent;
+    public float Time = 0.3f;
+    public float IntervalTime = 0.5f;
+    public VisualEffect Sparkle;
+    public Vector2Variable ScreenShakesValues;
+    public GameObject BulletImpact;
+    public GameObject BulletSphere;
     
     [Header("Audio")] public AudioSource ImpactSource;
     
@@ -30,25 +30,27 @@ public class Bullet : MonoBehaviour
     private Vector3 _startPosition;
     private Vector3 _endPosition;
     private Vector3 _hitNormal;
-    private Vector3 baseBulletScale;
-
+    private Vector3 _baseBulletScale;
     private WhiteBalance _whiteBalance;
+    private Color _baseLineRendererColor;   
+    private float _laserLength = 1.5f;
+    private static readonly int _color = Shader.PropertyToID("_Color");
+    private static readonly int _intensity = Shader.PropertyToID("_Intensity");
+    #endregion
 
-    private Color _baseLineRendererColor;
-    private static readonly int Color = Shader.PropertyToID("_Color");
-
-    private float laserLength = 1.5f;
-    private static readonly int Intensity = Shader.PropertyToID("_Intensity");
-
+    #region "Events"
     // Start is called before the first frame update
     void Awake()
     {
+        //Get references
         _impulseSource = GetComponentInChildren<CinemachineImpulseSource>();
-        _baseLineRendererColor = lineRenderer.material.GetColor(Color);
+        _baseLineRendererColor = LineRendererComponent.material.GetColor(_color);
 
-        baseBulletScale = bulletSphere.transform.localScale;
+        _baseBulletScale = BulletSphere.transform.localScale;
     }
+    #endregion
 
+    #region "Methods"
     public void Fire(Vector3 pos1, Vector3 pos2, bool hit, Vector3 normal)
     {
         SetPostProcess();
@@ -56,64 +58,57 @@ public class Bullet : MonoBehaviour
 
         _startPosition = pos1;
         _endPosition = pos2;
-        sparkle.transform.position = _endPosition;
+        Sparkle.transform.position = _endPosition;
         _hitNormal = normal;
-        bulletSphere.transform.localScale = baseBulletScale;
+        BulletSphere.transform.localScale = _baseBulletScale;
 
         Sequence fireSequence = DOTween.Sequence();
-        fireSequence.AppendCallback(() => lineRenderer.material.SetColor(Color, _baseLineRendererColor));
-        fireSequence.Append(lineRenderer.material.DOColor( new Color(0,0,0,0), "_Color", time));
-        fireSequence.Join(DOVirtual.Float(0.0f, 1.0f, time, DoMoveVector));
-        fireSequence.Join(DOVirtual.Float(0.0f, 2.0f, time, SetWhiteBalance));
+        fireSequence.AppendCallback(() => LineRendererComponent.material.SetColor(_color, _baseLineRendererColor));
+        fireSequence.Append(LineRendererComponent.material.DOColor( new Color(0,0,0,0), "_Color", Time));
+        fireSequence.Join(DOVirtual.Float(0.0f, 1.0f, Time, DoMoveVector));
+        fireSequence.Join(DOVirtual.Float(0.0f, 2.0f, Time, SetWhiteBalance));
         if (hit)
         {  
             fireSequence.AppendCallback(HitEvent);
-            fireSequence.Append(bulletSphere.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.OutBounce));
+            fireSequence.Append(BulletSphere.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.OutBounce));
         }
-        fireSequence.AppendInterval(intervalTime);
+        fireSequence.AppendInterval(IntervalTime);
         fireSequence.AppendCallback(() => gameObject.SetActive(false));
     }
-
     private void GenerateScreenShake()
     {
-        _impulseSource.m_ImpulseDefinition.m_AmplitudeGain = screenShakesValues.Value.x;
-        _impulseSource.m_ImpulseDefinition.m_FrequencyGain = screenShakesValues.Value.x;
+        _impulseSource.m_ImpulseDefinition.m_AmplitudeGain = ScreenShakesValues.Value.x;
+        _impulseSource.m_ImpulseDefinition.m_FrequencyGain = ScreenShakesValues.Value.x;
         _impulseSource.GenerateImpulse();
-        DOVirtual.DelayedCall(screenShakesValues.Value.y, ResetCiemachine);
-    }
-    
-    
-
+        DOVirtual.DelayedCall(ScreenShakesValues.Value.y, ResetCiemachine);
+    }      
     private void HitEvent()
     {
         //VFX
-        sparkle.SendEvent("OnFire");
-        sparkle.transform.position += _hitNormal * 0.1f;
+        Sparkle.SendEvent("OnFire");
+        Sparkle.transform.position += _hitNormal * 0.1f;
         //Impact Effect
-        MeshRenderer impactRenderer = bulletImpact.GetComponent<MeshRenderer>();
-        impactRenderer.material.SetFloat(Intensity, 1.0f);
-        impactRenderer.material.DOFloat(.0f, "_Intensity", intervalTime);
-        bulletImpact.transform.position = _endPosition + _hitNormal * 0.05f;
-        bulletImpact.transform.rotation = Quaternion.LookRotation(_hitNormal);
+        MeshRenderer impactRenderer = BulletImpact.GetComponent<MeshRenderer>();
+        impactRenderer.material.SetFloat(_intensity, 1.0f);
+        impactRenderer.material.DOFloat(.0f, "_Intensity", IntervalTime);
+        BulletImpact.transform.position = _endPosition + _hitNormal * 0.05f;
+        BulletImpact.transform.rotation = Quaternion.LookRotation(_hitNormal);
         //AUDIO
         ImpactSource.Play();
     }
-
     private void ResetCiemachine()
     {
         _impulseSource.m_ImpulseDefinition.m_AmplitudeGain = .0f;
         _impulseSource.m_ImpulseDefinition.m_FrequencyGain = .0f;
     }
-
     private void DoMoveVector(float f)
     {
         Vector3 heading = (_endPosition - _startPosition);
         Vector3 startPos = _startPosition + heading * f;
-        Vector3 endPos = _startPosition + heading.normalized * laserLength + heading * f;
-        bulletSphere.transform.position = endPos;
-        lineRenderer.SetPositions( new []{startPos, endPos});
+        Vector3 endPos = _startPosition + heading.normalized * _laserLength + heading * f;
+        BulletSphere.transform.position = endPos;
+        LineRendererComponent.SetPositions( new []{startPos, endPos});
     }
-
     private void SetWhiteBalance(float f)
     {
         float val = f;
@@ -123,9 +118,7 @@ public class Bullet : MonoBehaviour
 
         if (_whiteBalance)
             _whiteBalance.temperature.value = val * 15.0f;
-    }
-    
-
+    }   
     private void SetPostProcess()
     {
         if (_whiteBalance == null)
@@ -133,4 +126,5 @@ public class Bullet : MonoBehaviour
             FindObjectOfType<Volume>()?.profile.TryGet(out _whiteBalance);
         }
     }
+    #endregion
 }
