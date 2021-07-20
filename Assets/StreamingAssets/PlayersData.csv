@@ -1,0 +1,9 @@
+Date et heure;Type Camera; Temps de reaction moyen (s); Temps de jeu (s); Nombres d'images;Cibles manquees;Longueur;Nombre Virages;Temps images; Images Random; Taille images;seed;personnage;preset
+20/07/2021 16:01:30;TPS;1,024162;14,25885;12;10;10;2;2;Non;1,5;1;GameManager;;
+20/07/2021 16:09:53;TPS;0,9616205;14,10571;12;10;10;2;2;Non;1,5;1;GameManager;;
+20/07/2021 16:12:51;TPS;1,37814;21,94132;12;10;10;2;2;Non;1,5;1;GameManager;;
+20/07/2021 16:15:43;TPS;0,9679972;13,92811;5;3;10;2;2;Non;1,5;1;GameManager;;
+20/07/2021 16:16:33;TPS;NaN;2,003155;5;5;10;2;2;Non;1,5;1;GameManager;;
+20/07/2021 16:17:01;TPS;0,9557993;14,80185;5;3;10;2;2;Non;1,5;1;GameManager;;
+20/07/2021 16:19:58;TPS;NaN;2,00492;5;5;10;2;2;Non;1,5;1;GameManager;;
+20/07/2021 16:21:15;TPS;NaN;2,003508;5;5;10;2;2;Non;1,5;1;GameManager;;

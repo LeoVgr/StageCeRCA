@@ -16,7 +16,6 @@ namespace Player
         #region Attributs
         [Header("Atom variables")]
         public GameObject FireStartPositon;
-        public BoolVariable IsPlayerLock;
         public BoolVariable PlayerCanFire;
         public BoolVariable CameraInfps;
 
@@ -98,7 +97,7 @@ namespace Player
         }
         private void RapidFire()
         {
-            if(!IsPlayerLock.Value && PlayerCanFire.Value)
+            if(PlayerCanFire.Value)
             {
                 FireAudio.Play();
 
@@ -120,7 +119,7 @@ namespace Player
                 bool hitSomething = false;
 
                 if (Physics.Raycast(ray, out hit, 100.0f, ~LayerMask.GetMask("Player")))
-                {              
+                {
                     Target t = hit.collider.GetComponentInChildren<Target>();
                     if(t != null)
                         t.Hit();

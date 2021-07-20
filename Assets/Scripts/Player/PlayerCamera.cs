@@ -8,7 +8,6 @@ namespace Player
     {
         #region "Attributs"
         public BoolVariable isPlayerFPS;
-        public BoolVariable isPlayerLock;
 
         public GameObject FpsCamera;
         public GameObject TpsCamera;
@@ -31,10 +30,7 @@ namespace Player
             _dolly = GetComponentInParent<CinemachineDollyCart>();
         }
         void Update()
-        {
-            //Don't move anything if the player is lock
-            if (isPlayerLock.Value) return;
-
+        {          
             //Update rotation of the camera
             UpdateCameraRotation();
         }
@@ -48,7 +44,6 @@ namespace Player
             Vector3 input = inputManager.GetInputAimVector();
 
             //Reset the value to indicate this is used
-            //inputManager.lookRotation = Vector2.zero;
             //move mouse on Y rotate around X axis
             _xAngle += input.y * -1/** (inputManager.Settings.InverseY ? 1 : -1)*/;
             if (_xAngle > MaxRotationX)

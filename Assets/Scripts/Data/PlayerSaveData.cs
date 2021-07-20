@@ -10,8 +10,6 @@ namespace Data
     public class PlayerSaveData : MonoBehaviour
     {
         #region Attributs
-
-        public BoolVariable IsPlayerLock;
         public IntVariable TargetCount;
         public IntVariable TargetHit;
         public IntVariable CorridorLength;
@@ -60,32 +58,27 @@ namespace Data
         #endregion
 
         #region Events
-
         private void Awake()
         {
             //Define where we will save our file
             _directoryInfo = new DirectoryInfo(Application.streamingAssetsPath);
             TargetList.Clear();
         }
-
         private void Start()
         {
             _startTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
         }
-
         private void Update()
         {
             //Increment timer value while the game is running
-            if (!IsPlayerLock.Value && !_endGame)
+            if (InputManager.instance.IsInputEnabled() && !_endGame)
             {
                 TotalTimer.Value += Time.deltaTime;
             }
         }
-
         #endregion
 
         #region Methods
-
         public void EndGame()
         {
             _endGame = true;
@@ -97,7 +90,6 @@ namespace Data
             //Reset the timer
             TotalTimer.SetValue(.0f);
         }
-
         private void FillCsv()
         {
             //the line that we want to add to the csv file
@@ -141,8 +133,7 @@ namespace Data
             }
 
             File.WriteAllText(_directoryInfo + "/PlayersData.csv", text);
-        }
-        
+        }     
         private void CreateNewPlayerFile()
         {
             // Add data to our specific player file
@@ -167,7 +158,7 @@ namespace Data
             text += "Force frein;" + BreakForce.Value + "\n";
             text += "Mode deplacement;" + (IsAutoMode.Value ? "Auto" : (IsManualMode.Value ? "Manuel" : "Semi-Auto")) +
                     "\n";
-            text += "Personnage;" + gameObject.name + "\n";
+            text += "Personnage;" + (GameManager.instance.IsRemySelected.Value ? "Remy" : GameManager.instance.IsMeganSelected.Value ? "Megan" : "Mousey") + "\n";
             text +=
                 "\nNom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?\n";
 
@@ -211,7 +202,6 @@ namespace Data
 
             _endGame = false;
         }
-
         private string AppendString(string text)
         {
             //Use to add data into the string in parameter
@@ -241,7 +231,6 @@ namespace Data
             text += PresetName.Value + ";\n";
             return text;
         }
-
         #endregion
     }
 }

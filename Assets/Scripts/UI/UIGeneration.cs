@@ -20,7 +20,6 @@ public class UIGeneration : MonoBehaviour
 
     public StringVariable atomIdentifiant;
     public BoolVariable isGameStart;
-    public BoolVariable a_isPlayerLock;
     public bool hideOnGenerate;
 
     private Vector3 idBaseScale;
@@ -28,8 +27,6 @@ public class UIGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //can remove that since main menu is now in another scene
-        a_isPlayerLock.SetValue(true);
         idBaseScale = inputIdentfiant.transform.localScale;
     }
 
@@ -44,19 +41,6 @@ public class UIGeneration : MonoBehaviour
         else
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            //if (_mazeGenerator.GenerateMaze())
-            //{
-            //    isGameStart.SetValue(true);
-            //    if(hideOnGenerate)
-            //        mazeUI.SetActive(false);
-
-            //    a_isPlayerLock.SetValue(false);
-            //}
         }
-    }
-
-    private void OnDestroy()
-    {
-        isGameStart.SetValue(false);
     }
 }

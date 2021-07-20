@@ -6,26 +6,24 @@ using UnityEngine.UI;
 
 public class PlayerTimer : MonoBehaviour
 {
-
+    #region "Attributs"
     public FloatVariable timerMax;
     public Image timerSprite;
-    public BoolVariable a_IsGameStart;
     public PlayerMovement playerMovement;
     
     private float _initialValue;
     private bool _once;
+    #endregion
 
+    #region "Events"
     private void Start()
     {
-        a_IsGameStart.Changed.Register(IsGameStart);
-        _initialValue = float.MaxValue;
+        _initialValue = timerMax.Value;
+        gameObject.SetActive(timerMax.Value > 1);
     }
-
-
-    // Update is called once per frame
     void Update()
     {
-        if (a_IsGameStart.Value)
+        if (GameManager.instance.IsGameRunning())
         {
             if (timerMax.Value > 0)
             {
@@ -37,23 +35,16 @@ public class PlayerTimer : MonoBehaviour
                 if (!_once)
                 {
                     _once = true;
-                    playerMovement.DisplayScreen(true);
+                    GameManager.instance.EndGame(true);
                 }   
             }
+
             timerSprite.fillAmount = timerMax.Value / _initialValue;
         }
     }
+    #endregion
 
-    private void IsGameStart(bool b)
-    {
-        if (b)
-        {
-            _initialValue = timerMax.Value;
-            gameObject.SetActive(timerMax.Value > 1);
-        }
-    }
-
-
+    #region "Methods"
     private string timeParser(float seconds)
     {
         string s = "";
@@ -68,7 +59,6 @@ public class PlayerTimer : MonoBehaviour
 
         return s;
     }
-
     private string CheckUnderTen(int number)
     {
         string stringValue = number + "";
@@ -78,4 +68,5 @@ public class PlayerTimer : MonoBehaviour
 
         return stringValue;
     }
+    #endregion
 }

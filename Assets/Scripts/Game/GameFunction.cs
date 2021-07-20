@@ -12,7 +12,6 @@ public class GameFunction : MonoBehaviour
 {
 
     public GameObjectVariable a_mazeGeneratorObject;
-    public BoolVariable a_IsPlayerLock;
     public IntVariable score;
     public BoolVariable isGameStart;
 
@@ -37,12 +36,12 @@ public class GameFunction : MonoBehaviour
         }
         else
         {
-            _player.Value.GetComponent<PlayerMovement>().ShowMenu();
+            //_player.Value.GetComponent<PlayerMovement>().ShowMenu();
         }
         
         //TODO _player.Value.GetComponent<PlayerMovement>().Restart();
         a_mazeGeneratorObject.Value.SetActive(true);
-        a_IsPlayerLock.Value = true;
+        InputManager.instance.EnableInputs();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         
