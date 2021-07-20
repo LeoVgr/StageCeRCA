@@ -6,8 +6,8 @@ namespace Player
 {
     public class InputManager : MonoBehaviour
     {
+        #region "Attributs"
         private static InputManager _instance;
-
         public static InputManager Instance
         {
             get
@@ -20,18 +20,16 @@ namespace Player
                 return _instance;
             }
         }
-
         public PlayerInputSettings Settings;
 
         internal bool isBreaking = false;
-
         internal bool isFiring = false;
 
         internal Vector2 lookRotation = Vector2.zero;
         private Vector2 _lookJoystickValue = Vector2.zero;
+        #endregion"
 
-
-        // Start is called before the first frame update
+        #region "Events"
         void Start()
         {
             DontDestroyOnLoad(this.gameObject);
@@ -65,21 +63,21 @@ namespace Player
 
             #endregion
         }
+        private void Update()
+        {
+            lookRotation += _lookJoystickValue * Settings.JoystickPower * Time.deltaTime;          
+        }
+        #endregion
 
+        #region "Methods"
         private void OnLookJoystick(Vector2 value)
         {
             _lookJoystickValue = value;
         }
-
         private void OnLookMouse(Vector2 value)
         {
             lookRotation += value;
         }
-
-        private void Update()
-        {
-            lookRotation += _lookJoystickValue * Settings.JoystickPower * Time.deltaTime;
-            //Debug.Log(lookMovement);
-        }
+        #endregion"
     }
 }

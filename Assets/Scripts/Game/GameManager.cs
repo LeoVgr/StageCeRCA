@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Events
-
     void Start()
     {
         //Lock the cursor to the game window
@@ -65,7 +64,6 @@ public class GameManager : MonoBehaviour
             TPSCamera.Priority = 1;
         }
     }
-
     private void Update()
     {
         //While the maze isn't generated (due to loading image before generate the maze) just try to generate again
@@ -77,11 +75,9 @@ public class GameManager : MonoBehaviour
             IsPlayerLock.SetValue(false);
         }
     }
-
     #endregion
 
     #region Methods
-
     public void RestartGame()
     {
         if (VictoryScreen)
@@ -104,11 +100,9 @@ public class GameManager : MonoBehaviour
         //Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
-
     public void Exit()
     {
         Application.Quit();
     }
-
     #endregion
 }

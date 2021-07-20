@@ -29,9 +29,6 @@ namespace Player
         {
             //Get references
             _dolly = GetComponentInParent<CinemachineDollyCart>();
-
-            //Choose the right camera depending parameters
-            UpdateView();
         }
         void Update()
         {
@@ -81,11 +78,6 @@ namespace Player
             Quaternion look = Quaternion.Euler(newRotation);
 
             transform.rotation = look;
-        }
-        private void UpdateView()
-        {
-            FpsCamera.SetActive(isPlayerFPS.Value);
-            TpsCamera.SetActive(!isPlayerFPS.Value);
         }
         #endregion
     }
