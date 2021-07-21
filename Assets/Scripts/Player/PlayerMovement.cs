@@ -87,7 +87,8 @@ namespace Player
             if (!DollyCartInfo.m_Path)
                 return;
 
-            if(WaypointIndex.Value + 1 < DollyCartInfo.m_Path.GetComponent<CinemachineSmoothPath>().m_Waypoints.Length && Vector3.Distance(this.transform.position, DollyCartInfo.m_Path.GetComponent<CinemachineSmoothPath>().m_Waypoints[WaypointIndex.Value + 1].position) <= 0.5f)
+            var waypoints = DollyCartInfo.m_Path.GetComponent<CinemachineSmoothPath>().m_Waypoints;
+            if(WaypointIndex.Value + 1 < waypoints.Length && Vector3.Distance(this.transform.position, waypoints[WaypointIndex.Value + 1].position) <= 0.5f)
             {
                 WaypointIndex.SetValue(WaypointIndex.Value + 1);
             }
