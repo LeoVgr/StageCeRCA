@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
@@ -12,25 +13,29 @@ namespace Player
         public GameObject FpsCamera;
         public GameObject TpsCamera;
 
+        public Transform RotatorX;
         public float MaxRotationX = 90;
         public float MinRotationX = -90;
+        public Transform RotatorY;
         public float MaxRotationY = 90;
         public float MinRotationY = -90;
 
+        private Vector3 _forwardX;
+        private Vector3 _forwardY;
         private float _xAngle = 0;
         private float _yAngle = 0;
-
-        private CinemachineDollyCart _dolly;
         #endregion
 
         #region "Events"
+
         private void Start()
         {
-            //Get references
-            _dolly = GetComponentInParent<CinemachineDollyCart>();
+            _forwardX = RotatorX.localRotation.eulerAngles;
+            _forwardY = RotatorY.localRotation.eulerAngles;
         }
+
         void Update()
-        {          
+        {
             //Update rotation of the camera
             UpdateCameraRotation();
         }
@@ -57,21 +62,15 @@ namespace Player
             else if (_yAngle < MinRotationY)
                 _yAngle = MinRotationY;
 
-            //Get forward direction with dolly reference
-            if (!_dolly.m_Path)
-            {
-                //TODO _dolly.m_Path is null when isPlayerLock is false : player can move before the maze finished to be generated
-                Debug.LogWarning("Maze not yet generated");
-                return;
-            }
 
-            var forward = _dolly.m_Path.EvaluateOrientationAtUnit(_dolly.m_Position, _dolly.m_PositionUnits).eulerAngles;
+            var newRotationX = new Vector3(_forwardX.x + _xAngle,  _forwardX.y);
+            var newRotationY = new Vector3(_forwardY.x, _forwardY.y + _yAngle);
 
-            var newRotation = new Vector3(forward.x + _xAngle, forward.y + _yAngle, 0);
+            Quaternion lookX = Quaternion.Euler(newRotationX);
+            Quaternion lookY = Quaternion.Euler(newRotationY);
 
-            Quaternion look = Quaternion.Euler(newRotation);
-
-            transform.rotation = look;
+            RotatorX.localRotation = lookX;
+            RotatorY.localRotation = lookY;
         }
         #endregion
     }
