@@ -42,8 +42,8 @@ public class GameFunction : MonoBehaviour
         //TODO _player.Value.GetComponent<PlayerMovement>().Restart();
         a_mazeGeneratorObject.Value.SetActive(true);
         InputManager.instance.EnableInputs();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.None;
+        //Cursor.visible = true;
         
         score.Reset(true);
         isGameStart.Reset(true);

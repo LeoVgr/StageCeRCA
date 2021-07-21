@@ -45,13 +45,13 @@ namespace Player
 
             //Reset the value to indicate this is used
             //move mouse on Y rotate around X axis
-            _xAngle += input.y * -1/** (inputManager.Settings.InverseY ? 1 : -1)*/;
+            _xAngle += input.y * -1 * InputManager.instance.GetSensibility()/** (inputManager.Settings.InverseY ? 1 : -1)*/;
             if (_xAngle > MaxRotationX)
                 _xAngle = MaxRotationX;
             else if (_xAngle < MinRotationX)
                 _xAngle = MinRotationX;
             //move mouse on X rotate around Y axis
-            _yAngle += input.x;
+            _yAngle += input.x * InputManager.instance.GetSensibility();
             if (_yAngle > MaxRotationY)
                 _yAngle = MaxRotationY;
             else if (_yAngle < MinRotationY)

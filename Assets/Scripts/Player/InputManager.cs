@@ -9,9 +9,11 @@ public class InputManager : Singleton<InputManager>
 {
     #region "Attributs"
     private PlayerControls _controls;
+    private float _sensibility;
     private bool _isUsingGamepad = false;
     private bool _isUsingKeyboardMouse = false;
     private bool _isInputEnabled = true;
+    private bool _isMovementInputEnabled = true;
 
     /* Inputs */
     private Vector2 _inputMovementVector = Vector2.zero;
@@ -41,6 +43,9 @@ public class InputManager : Singleton<InputManager>
         _controls.Gameplay.Break.canceled += UpdateBreak;
         _controls.Gameplay.Fire.canceled += UpdateFire;
         _controls.Gameplay.Cancel.canceled += UpdateCancel;
+
+        //Load player's pref options
+        _sensibility = PlayerPrefs.GetFloat("sensibility", 0.5f);
     }
     private void Update()
     {
@@ -72,6 +77,18 @@ public class InputManager : Singleton<InputManager>
     public bool IsInputEnabled()
     {
         return _isInputEnabled;
+    }
+    public void DisableMovementInputs()
+    {
+        _isMovementInputEnabled = false;
+    }
+    public void EnableMovementInputs()
+    {
+        _isMovementInputEnabled = true;
+    }
+    public bool IsInputMovementEnabled()
+    {
+        return _isMovementInputEnabled;
     }
 
     public void UpdateInputMovementVector(InputAction.CallbackContext context)
@@ -122,7 +139,7 @@ public class InputManager : Singleton<InputManager>
 
     public Vector2 GetInputMovementVector()
     {
-        if (!_isInputEnabled)
+        if (!_isInputEnabled || !_isMovementInputEnabled)
             return Vector2.zero;
 
         return _inputMovementVector;
@@ -154,6 +171,15 @@ public class InputManager : Singleton<InputManager>
             return false;
 
         return _isFireAction;
+    }
+    public void SetSensibility(float value)
+    {
+        _sensibility = value;
+        PlayerPrefs.SetFloat("sensibility", _sensibility);
+    }
+    public float GetSensibility()
+    {
+        return _sensibility;
     }
     public void AddControllerVibrations(float duration, float intensity)
     {

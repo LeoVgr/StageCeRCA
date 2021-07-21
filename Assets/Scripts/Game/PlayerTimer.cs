@@ -23,7 +23,7 @@ public class PlayerTimer : MonoBehaviour
     }
     void Update()
     {
-        if (GameManager.instance.IsGameRunning())
+        if (GameManager.instance.GetGameStatement() == GameManager.GameStatement.Running)
         {
             if (timerMax.Value > 0)
             {

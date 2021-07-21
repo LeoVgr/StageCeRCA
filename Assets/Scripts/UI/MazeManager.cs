@@ -82,10 +82,6 @@ public class MazeManager : MonoBehaviour
     #region "Events"
     private void Start()
     {
-        //Set the cursor available
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-
         _dataManagers = new List<UIDataManager>
         {
             LengthCorridorSlider.GetComponent<UIDataManager>(),

@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     #region Attributs
+    public enum GameStatement { Ready, Countdown, Running, Pause, End, None};
+
     public IntVariable Score;
     public BoolVariable FpsCamera;
     public IntVariable TargetCount;
@@ -29,36 +31,55 @@ public class GameManager : Singleton<GameManager>
 
     public MazeGenerator MazeGenerator;
     public PlayerSaveData PlayerSaveData;
+
+    private float _countdownDuration = 3.4f;
+    private float _countdownTimer = 3.4f;
+    private bool _isGameLost = false;
     private bool _isMazeGenerated = false;
-    private bool _isGameRunning = false;
+
+    private GameStatement _gameStatement;
+    private GameStatement _previousGameStatement;
 
     #endregion
 
     #region Events
-    void Start()
+    public void Start()
     {
-        //Reset some values
-        _isMazeGenerated = false;
-        _isGameRunning = false;
-
-        StartGame();
+        //Initialize the first state
+        _gameStatement = GameStatement.Ready;
+        _previousGameStatement = GameStatement.None;
+        EnterReadyStatement();
     }
     private void Update()
     {
-        //While the maze isn't generated (due to loading image before generate the maze) just try to generate again
-        if (!_isMazeGenerated)
+        switch (_gameStatement)
         {
-            _isMazeGenerated = MazeGenerator.GenerateMaze();
-
-            _isGameRunning = true;
-            InputManager.instance.EnableInputs();
+            case GameStatement.Ready:
+                ReadyStatement();
+                break;
+            case GameStatement.Countdown:
+                CountdownStatement();
+                break;
+            case GameStatement.Running:
+                RunningStatement();
+                break;
+            case GameStatement.Pause:
+                PauseStatement();
+                break;
+            case GameStatement.End:
+                EndStatement();
+                break;
         }
 
-        //Check if player press pause button
-        if (InputManager.instance.IsCancelAction() && _isGameRunning)
-        {
-            Pause();
-        }
+        
+
+        ////Check if player press pause button
+        //if (InputManager.instance.IsCancelAction() && _isGameRunning)
+        //{
+        //    Pause();
+        //}
+
+        
 
     }
     private void OnDestroy()
@@ -68,116 +89,323 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     #region Methods
-    public void StartGame()
+    /*Statements methods */
+    public GameStatement GetGameStatement()
     {
-        if (!_isGameRunning)
+        return _gameStatement;
+    }
+    private void CallExitPreviousState(GameStatement previousGameState)
+    {
+        switch (previousGameState)
         {
-            //Lock the cursor to the game window
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Confined;
+            case GameStatement.Ready:
+                ExitReadyStatement();
+                break;
 
-            //Get the references of the player
-            PlayerVariable.SetValue(Player.gameObject);
+            case GameStatement.Countdown:
+                ExitCountdownStatement();
+                break;
 
-            //Activate the right camera
-            if (FpsCamera.Value)
-            {
-                Remy.SetActive(false);
-                Megan.SetActive(false);
-                Mousey.SetActive(false);
+            case GameStatement.Running:
+                ExitRunningStatement();
+                break;
 
-                FPSCamera.Priority = 1;
-                TPSCamera.Priority = 0;
-            }
-            else
-            {
-                //Enable the right character
-                Remy.SetActive(IsRemySelected.Value);
-                Megan.SetActive(IsMeganSelected.Value);
-                Mousey.SetActive(IsMouseySelected.Value);
+            case GameStatement.Pause:
+                ExitPauseStatement();
+                break;
 
-                FPSCamera.Priority = 0;
-                TPSCamera.Priority = 1;
-            }
-
-            //Reset values
-            TargetCount.SetValue(0);
-            TargetHit.SetValue(0);
-            TargetList.Clear();
+            case GameStatement.End:
+                ExitEndStatement();
+                break;
         }
     }
-    public void RestartGame()
+    public void SetReadyStatement()
+    {     
+        _previousGameStatement = _gameStatement;
+        CallExitPreviousState(_previousGameStatement);
+        _gameStatement = GameStatement.Ready;
+        EnterReadyStatement();
+    }
+    public void SetCountdownStatement()
+    {        
+        _previousGameStatement = _gameStatement;
+        CallExitPreviousState(_previousGameStatement);
+        _gameStatement = GameStatement.Countdown;
+        EnterCountdownStatement();
+    }
+    public void SetRunningStatement()
+    {       
+        _previousGameStatement = _gameStatement;
+        CallExitPreviousState(_previousGameStatement);
+        _gameStatement = GameStatement.Running;
+        EnterRunningStatement();
+    }
+    public void SetPauseStatement()
+    {     
+        _previousGameStatement = _gameStatement;
+        CallExitPreviousState(_previousGameStatement);
+        _gameStatement = GameStatement.Pause;
+        EnterPauseStatement();
+    }
+    public void SetEndStatement()
+    {     
+        _previousGameStatement = _gameStatement;
+        CallExitPreviousState(_previousGameStatement);
+        _gameStatement = GameStatement.End;
+        EnterEndStatement();
+    }
+    public void NextState()
     {
-        //Hide UI
-        UIManager.instance.HideEndGameScreen();
-        UIManager.instance.HidePauseScreen();
+        switch (_gameStatement)
+        {
+            case GameStatement.Ready:
+                SetCountdownStatement();
+                break;
+
+            case GameStatement.Countdown:
+                SetRunningStatement();
+                break;
+
+            case GameStatement.Running:
+                SetPauseStatement();
+                break;
+
+            case GameStatement.Pause:
+                SetEndStatement();
+                break;
+
+            case GameStatement.End:
+                SetReadyStatement();
+                break;
+        }
+    }
+    
+    public void EnterReadyStatement()
+    {
+        //Reset time scale
+        Time.timeScale = 1f;
+
+        //Display ready UI
+        UIManager.instance.ShowReadyUI(true);
 
         //Lock the player because he don't need to move when he is in menu
-        InputManager.instance.DisableInputs();
+        InputManager.instance.DisableMovementInputs();
 
         //Reset values of scriptable objects
         Score.Reset(true);
-
-        //Reload the scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-
-        //Reset values
         TargetCount.SetValue(0);
         TargetHit.SetValue(0);
-        TargetList.Clear();
+        TargetList.Clear();       
+
+        //Get the references of the player
+        PlayerVariable.SetValue(Player.gameObject);
+
+        //Activate the right camera
+        if (FpsCamera.Value)
+        {
+            Remy.SetActive(false);
+            Megan.SetActive(false);
+            Mousey.SetActive(false);
+
+            FPSCamera.Priority = 1;
+            TPSCamera.Priority = 0;
+        }
+        else
+        {
+            //Enable the right character
+            Remy.SetActive(IsRemySelected.Value);
+            Megan.SetActive(IsMeganSelected.Value);
+            Mousey.SetActive(IsMouseySelected.Value);
+
+            FPSCamera.Priority = 0;
+            TPSCamera.Priority = 1;
+        }
+
+        //Reset some values
+        _isMazeGenerated = false;
+        _isGameLost = false;
+    }
+    public void EnterCountdownStatement()
+    {
+        //Reset timer
+        _countdownTimer = _countdownDuration;
+
+        //Show the good UI
+        UIManager.instance.ShowReadyUI(true);
+        UIManager.instance.StartCountDown();
+    }
+    public void EnterRunningStatement()
+    {
+        //Display ready UI
+        UIManager.instance.ShowInGameUI(true);
+
+        //Alow the player to move
+        InputManager.instance.EnableInputs();
+        InputManager.instance.EnableMovementInputs();
+    }
+    public void EnterPauseStatement()
+    {
+        //Change timescale
+        Time.timeScale = 0f;
+
+        //Display ready UI
+        UIManager.instance.ShowOptionsPauseUI(false);
+        UIManager.instance.ShowPauseUI(true);
+
+        //Alow the player to move
+        InputManager.instance.DisableInputs();
+    }
+    public void EnterEndStatement()
+    {
+        //Lock the player
+        InputManager.instance.DisableInputs();
+
+        //Display end game screen
+        UIManager.instance.ShowEndGameScreen(_isGameLost);
+
+        //Save player's data
+        PlayerSaveData.EndGame();
+    }
+
+    public void ReadyStatement()
+    {
+        //Lock the cursor to the game window
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+
+        //While the maze isn't generated (due to loading image before generate the maze) just try to generate again
+        if (!_isMazeGenerated)
+        {
+            _isMazeGenerated = MazeGenerator.GenerateMaze();
+        }
+
+        //Check if the player is ready
+        if (_isMazeGenerated && InputManager.instance.IsFireAction())
+        {
+            SetCountdownStatement();
+        }
+
+        //Check if the player want to pause the game
+        if (InputManager.instance.IsCancelAction())
+        {
+            SetPauseStatement();
+        }
+    }
+    public void CountdownStatement()
+    {
+        //Lock the cursor to the game window
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+
+        //Update Timer countdown
+        _countdownTimer -= Time.deltaTime;
+
+        //Update UI
+        UIManager.instance.UpdateCountDown(_countdownTimer.ToString("0"));
+
+        if (_countdownTimer < 0)
+            SetRunningStatement();
+
+    }
+    public void RunningStatement()
+    {
+        //Lock the cursor to the game window
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+
+        //Check if the player want to pause the game
+        if (InputManager.instance.IsCancelAction())
+        {
+            SetPauseStatement();
+        }
+    }
+    public void PauseStatement()
+    {     
+
+        //Lock the cursor to the game window
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    public void EndStatement()
+    {
+        //Lock the cursor to the game window
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void ExitReadyStatement()
+    {
+        //Hide the UI
+        UIManager.instance.ShowReadyUI(false);
+    }
+    public void ExitCountdownStatement()
+    {
+        //Hide the UI
+        UIManager.instance.ShowReadyUI(false);
+    }
+    public void ExitRunningStatement()
+    {
+        //Hide the UI
+        UIManager.instance.ShowInGameUI(false);
+    }
+    public void ExitPauseStatement()
+    {
+        //Change timescale
+        Time.timeScale = 1f;
+
+        //Hide UI
+        UIManager.instance.ShowPauseUI(false);
+
+        //Enbale inputs
+        InputManager.instance.EnableInputs();
+    }
+    public void ExitEndStatement()
+    {
+        //Hide the UI
+        UIManager.instance.ShowEndGameUI(false);
+    }
+
+
+    /* Other methods */
+    public void RestartGame()
+    {
+        //Exit the state machine 
+        _previousGameStatement = _gameStatement;
+        CallExitPreviousState(_previousGameStatement);
+
+        //Reload the scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);  
     }
     public void Exit()
     {
         Application.Quit();
     }
-    public void Pause()
-    {       
-        //Stop game
-        _isGameRunning = false;
-        Time.timeScale = 0;
-        InputManager.instance.DisableInputs();
-
-        //Show Cursor
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-
-        //Show UI
-        UIManager.instance.ShowPauseUI();
-    }
     public void Resume()
     {
-        //Play game
-        _isGameRunning = true;
-        Time.timeScale = 1;
-        InputManager.instance.EnableInputs();
+        //Reset TimeScale
+        Time.timeScale = 1f;
 
-        //Show Cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
-
-        //Show UI
-        UIManager.instance.HidePauseUI();
+        //Change Game Statement (we got a switch here because we might want to handle more than 2 cases)
+        switch (_previousGameStatement)
+        {
+            case GameStatement.Ready:
+                SetReadyStatement();
+                break;
+            case GameStatement.Running:
+                SetRunningStatement();
+                break;
+        }
     }
     public void EndGame(bool isLost)
     {
-        if (_isGameRunning)
+        if(GetGameStatement() != GameStatement.End)
         {
-            _isGameRunning = false;
+            //Update game status
+            _isGameLost = isLost;
 
-            //Lock the player
-            InputManager.instance.DisableInputs();
-
-            //Display end game screen
-            UIManager.instance.DisplayEndGameScreen(isLost);
-
-            //Save player's data
-            PlayerSaveData.EndGame();
+            //Change state
+            SetEndStatement();
         }
-        
-    }
-    public bool IsGameRunning()
-    {
-        return _isGameRunning;
     }
     #endregion
 }
