@@ -69,14 +69,10 @@ MonoBehaviour:
   IsSemiAutoMode: {fileID: 11400000, guid: e3c59c096728a5c499dd14fa94896890, type: 2}
   IsManualMode: {fileID: 11400000, guid: e1d9061d3fc21824ea90d032409d1f2d, type: 2}
   WaypointIndex: {fileID: 11400000, guid: bce1e3eec14fdbe48b9eb6e5ac0fc20b, type: 2}
-  IsGameStartEvent: {fileID: 11400000, guid: 57e115642a492e041a07f8db69d823b6, type: 2}
   CurrentPlayerGameObject: {fileID: 11400000, guid: 568a051a508ce914588e3e41642586b7,
     type: 2}
   PauseMenuGameObject: {fileID: 0}
   DollyCartInfo: {fileID: 8276363351570009819}
-  TargetCount: {fileID: 11400000, guid: c4d80aeec2a5caf448224d260d301704, type: 2}
-  TargetHit: {fileID: 11400000, guid: 0bf3203a3ed23d643b809180df1979e3, type: 2}
-  TargetList: {fileID: 11400000, guid: 26a3e23c8a051fd4fb496d204fcdb5f3, type: 2}
 --- !u!114 &5401053777716401614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +295,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6343989392655682214}
-  - component: {fileID: 2862644912671381423}
   - component: {fileID: 2472941861418389924}
   m_Layer: 8
   m_Name: --- Player ---
@@ -323,43 +318,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2862644912671381423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7920986895614285181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a71527850ca5b6647a5f17d3e8cda8cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetCount: {fileID: 11400000, guid: bce1e3eec14fdbe48b9eb6e5ac0fc20b, type: 2}
-  TargetHit: {fileID: 11400000, guid: 0bf3203a3ed23d643b809180df1979e3, type: 2}
-  CorridorLength: {fileID: 11400000, guid: 2dc1943597174f84486651913eb770a1, type: 2}
-  TurnCount: {fileID: 11400000, guid: 40aef326c318a824b892d716ae64543a, type: 2}
-  ImageTime: {fileID: 11400000, guid: 1e797b68470377a4dabedfa80e7bbbeb, type: 2}
-  ImageSize: {fileID: 11400000, guid: e324e0a6612f28d4b99a46dc504a000f, type: 2}
-  ImageRandom: {fileID: 11400000, guid: a2165e6d4fa685946883ddbb84fa857c, type: 2}
-  IsFPSBool: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0, type: 2}
-  SeedNumber: {fileID: 11400000, guid: a2f15147b769162489a3b044f75ee289, type: 2}
-  PresetName: {fileID: 11400000, guid: efc805666c764a54e8c61b8dfe779195, type: 2}
-  TimeToShootList: {fileID: 11400000, guid: 1da2ab57a39258f4f95803b7908c839d, type: 2}
-  TargetList: {fileID: 11400000, guid: 26a3e23c8a051fd4fb496d204fcdb5f3, type: 2}
-  IdPlayer: {fileID: 11400000, guid: 6b40424f6d528704191880f7de751b65, type: 2}
-  Score: {fileID: 11400000, guid: 430167122483e4f4db623e61b74f5da2, type: 2}
-  ScoreDisplay: {fileID: 11400000, guid: 858691476eddd37479523f19b4fd1735, type: 2}
-  EnableFire: {fileID: 11400000, guid: be80e8c6a3b5fe244b0b5d53bd4f9bf0, type: 2}
-  TotalTimer: {fileID: 11400000, guid: f6974a4d68489614a9c5fb133fc24882, type: 2}
-  Speed: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2, type: 2}
-  BreakForce: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545, type: 2}
-  IsAutoMode: {fileID: 11400000, guid: 9be0cf80078b3f442b5b07660f12bb8a, type: 2}
-  IsSemiAutoMode: {fileID: 11400000, guid: e3c59c096728a5c499dd14fa94896890, type: 2}
-  IsManualMode: {fileID: 11400000, guid: e1d9061d3fc21824ea90d032409d1f2d, type: 2}
-  IsRemy: {fileID: 11400000, guid: 557e3dd6a7f645d4680d5f22cd7d93ce, type: 2}
-  IsMegan: {fileID: 11400000, guid: 4acb55f8e8d45794783f2bee59d95473, type: 2}
-  IsMousey: {fileID: 11400000, guid: 81aeeadf71bf55248a1b7ad8b43a96e0, type: 2}
 --- !u!114 &2472941861418389924
 MonoBehaviour:
   m_ObjectHideFlags: 0
