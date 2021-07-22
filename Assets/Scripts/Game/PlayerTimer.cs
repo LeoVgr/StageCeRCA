@@ -1,5 +1,7 @@
 ﻿using System;
+using DG.Tweening;
 using Player;
+using TMPro;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,10 +9,14 @@ using UnityEngine.UI;
 public class PlayerTimer : MonoBehaviour
 {
     #region "Attributs"
-    public FloatVariable timerMax;
-    public Image timerSprite;
-    public PlayerMovement playerMovement;
-    
+    public FloatVariable TimerMax;
+
+    /* Timer representation (text or image) */
+    public TextMeshProUGUI TimerText;
+    public GameObject TimerTextBackground;
+    public Image TimerSprite;
+
+    private float _lastCountDown;
     private float _initialValue;
     private bool _once;
     #endregion
@@ -18,20 +24,30 @@ public class PlayerTimer : MonoBehaviour
     #region "Events"
     private void Start()
     {
-        _initialValue = timerMax.Value;
-        gameObject.SetActive(timerMax.Value > 1);
+        _initialValue = TimerMax.Value;
+        _lastCountDown = 10f;
+        gameObject.SetActive(TimerMax.Value > 1);
     }
     void Update()
     {
         if (GameManager.instance.GetGameStatement() == GameManager.GameStatement.Running)
         {
-            if (timerMax.Value > 0)
+            if (TimerMax.Value > 0)
             {
-                timerMax.Value -= Time.deltaTime;
+                TimerMax.Value -= Time.deltaTime;
+
+                //Animate timer text under 10 seconds
+                if (TimerMax.Value < _lastCountDown && TimerMax.Value != 0)
+                {
+                    _lastCountDown -= 1;
+                   
+                    TimerTextBackground.transform.DOPunchScale(TimerText.transform.localScale * 0.2f, 0.3f);
+                    TimerText.DOColor(Color.red, 0.3f).OnComplete(()=> TimerText.DOColor(Color.white, 0.3f));
+                }
             }
             else
             {
-                timerMax.Value = 0.0f;
+                TimerMax.Value = 0.0f;
                 if (!_once)
                 {
                     _once = true;
@@ -39,13 +55,17 @@ public class PlayerTimer : MonoBehaviour
                 }   
             }
 
-            timerSprite.fillAmount = timerMax.Value / _initialValue;
+            //Update timer image
+            TimerSprite.fillAmount = TimerMax.Value / _initialValue;
+
+            //Update timer text
+            TimerText.SetText(TimerParser(TimerMax.Value));
         }
     }
     #endregion
 
     #region "Methods"
-    private string timeParser(float seconds)
+    private string TimerParser(float seconds)
     {
         string s = "";
 
@@ -55,7 +75,7 @@ public class PlayerTimer : MonoBehaviour
         int miliSeconds =  (int)((seconds - secondsInt - (minutesInt * 60)) * 100);
         
 
-        s = CheckUnderTen(minutesInt) + " : " + CheckUnderTen(secondsInt) + "." + CheckUnderTen(miliSeconds);
+        s = CheckUnderTen(minutesInt) + ":" + CheckUnderTen(secondsInt) /*+ "." + CheckUnderTen(miliSeconds)*/;
 
         return s;
     }
