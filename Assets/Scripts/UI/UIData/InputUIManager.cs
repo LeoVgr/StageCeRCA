@@ -15,7 +15,7 @@ public class InputUIManager : UIDataManager
     private InputField _tmpInputField;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _tmpInputField = GetComponentInChildren<InputField>();
         _tmpInputField.onValueChanged.AddListener (delegate {ValueChangeCheck ();});

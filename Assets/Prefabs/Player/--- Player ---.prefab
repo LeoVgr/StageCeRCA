@@ -341,6 +341,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 860392111}
     m_Modifications:
+    - target: {fileID: 450799311805474570, guid: d399645252734234e8e427e993dc314e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 492592298790128745, guid: d399645252734234e8e427e993dc314e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3432827419272895643, guid: d399645252734234e8e427e993dc314e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3479234748231494321, guid: d399645252734234e8e427e993dc314e,
         type: 3}
       propertyPath: m_RootOrder
@@ -396,10 +411,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7408862670960049414, guid: d399645252734234e8e427e993dc314e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7465327860362663572, guid: d399645252734234e8e427e993dc314e,
         type: 3}
       propertyPath: m_Name
       value: Dolly
+      objectReference: {fileID: 0}
+    - target: {fileID: 7805316625446249864, guid: d399645252734234e8e427e993dc314e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5927867432799052475, guid: d399645252734234e8e427e993dc314e, type: 3}

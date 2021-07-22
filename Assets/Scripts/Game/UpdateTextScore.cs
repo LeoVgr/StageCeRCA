@@ -34,17 +34,12 @@ public class UpdateTextScore : MonoBehaviour
         _textMeshProUi = GetComponent<TextMeshProUGUI>();
         _text = GetComponent<Text>();
         updateEvent.Register(UpdateText);
-        if (isCameraFps)
-        {
-            isCameraFps.Changed.Register(ShowText);
-            ShowText(isCameraFps.Value);
-        }
+        ShowText(isScoreShow);
     }
 
     private void ShowText(bool val)
     {
-        if (isScoreShow.Value)
-            gameObject.SetActive(val);
+        gameObject.SetActive(val);
     }
 
     private void OnDestroy()
@@ -92,8 +87,8 @@ public class UpdateTextScore : MonoBehaviour
     private void UpdateFloatText(float f)
     {
         if (_textMeshProUi)
-            _textMeshProUi.text = "Score : " + (int) f;
+            _textMeshProUi.text = "" + (int) f;
         if (_text)
-            _text.text = "Score : " + (int) f;
+            _text.text = "" + (int) f;
     }
 }
