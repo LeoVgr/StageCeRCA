@@ -17,6 +17,24 @@ namespace Audio
         public FloatVariable SfxVolume;
         public bool IsSfxSound;
 
+        private void Update()
+        {
+            if (!Source)
+                return;
+
+            //Adjust the sound of the clip depending options
+            if (!IsSfxSound)
+            {
+                if(MusicVolume)
+                    Source.volume = MusicVolume.Value;
+            }
+            else
+            {
+                if (SfxVolume)
+                    Source.volume = SfxVolume.Value;
+            }
+        }
+
         private void Start()
         {
             if (Source == null)
@@ -34,18 +52,9 @@ namespace Audio
             AudioClip referencesClip = References.clips[SoundIndex];
 
             Source.clip = referencesClip;
-            if (Source.playOnAwake)
-                Source.Play();
 
-            //Adjust the sound of the clip depending options
-            if (!IsSfxSound)
-            {
-                Source.volume = MusicVolume.Value;
-            }
-            else
-            {
-                Source.volume = SfxVolume.Value;
-            }
+            if (Source.playOnAwake)
+                Source.Play();         
         }
     }
 }

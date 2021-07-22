@@ -51,6 +51,14 @@ namespace Player
         {
             if (DollyCartInfo)
             {
+                //Fix the cart when the game is not running
+                if(!(GameManager.instance.GetGameStatement() == GameManager.GameStatement.Running))
+                {
+                    DollyCartInfo.m_Speed = 0;
+                    return;
+                }
+
+
                 //Check if the player is breaking (semi auto mode)
                 if (InputManager.instance.IsBreakAction() && IsSemiAutoMode.Value)
                 {
