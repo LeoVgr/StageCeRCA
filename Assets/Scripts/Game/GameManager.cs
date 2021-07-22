@@ -45,10 +45,18 @@ public class GameManager : Singleton<GameManager>
     #region Events
     public void Start()
     {
+        //Reset UI
+        UIManager.instance.ShowInGameUI(false);
+        UIManager.instance.ShowReadyUI(false);
+        UIManager.instance.ShowEndGameUI(false);
+        UIManager.instance.ShowPauseUI(false);
+        UIManager.instance.ShowLoadingUI(true);
+
         //Initialize the first state
         _gameStatement = GameStatement.Ready;
         _previousGameStatement = GameStatement.None;
-        EnterReadyStatement();
+        EnterReadyStatement();       
+
     }
     private void Update()
     {
@@ -277,6 +285,7 @@ public class GameManager : Singleton<GameManager>
         if (!_isMazeGenerated)
         {
             _isMazeGenerated = MazeGenerator.GenerateMaze();
+            UIManager.instance.ShowLoadingUI(!_isMazeGenerated);
         }
 
         //Check if the player is ready

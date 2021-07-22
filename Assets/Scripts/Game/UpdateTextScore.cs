@@ -87,8 +87,8 @@ public class UpdateTextScore : MonoBehaviour
     private void UpdateFloatText(float f)
     {
         if (_textMeshProUi)
-            _textMeshProUi.text = "Score : " + (int) f;
+            _textMeshProUi.text = "" + (int) f;
         if (_text)
-            _text.text = "Score : " + (int) f;
+            _text.text = "" + (int) f;
     }
 }

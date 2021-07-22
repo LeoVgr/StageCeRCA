@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,13 +14,16 @@ public class UIManager : Singleton<UIManager>
     public GameObject ScoreUI;
     public GameObject PauseUI;
     public GameObject CrosshairUI;
+    public GameObject LoadingUI;
 
     public GameObject ReadyAnswerText;
     public GameObject CountDownText;   
     public GameObject MainPauseUI;
     public GameObject OptionsPauseUI;
     public Slider SensibilitySlider;
-    
+
+    private float _lastFullSeconds = 4f;
+
     #endregion
 
     #region "Events"
@@ -35,6 +39,10 @@ public class UIManager : Singleton<UIManager>
 
     #region "Methods"
     /* Main UI elements */
+    public void ShowLoadingUI(bool displayUI)
+    {
+        LoadingUI.SetActive(displayUI);
+    }
     public void ShowInGameUI(bool displayUI)
     {
         CrosshairUI.SetActive(displayUI);
@@ -78,7 +86,15 @@ public class UIManager : Singleton<UIManager>
     }
     public void UpdateCountDown(string value)
     {
-        CountDownText.GetComponent<TextMeshProUGUI>().text = value;
+        if(float.Parse(value) < _lastFullSeconds)
+        {
+            _lastFullSeconds -= 1;
+
+            CountDownText.GetComponent<TextMeshProUGUI>().text = value;
+            CountDownText.transform.DOPunchScale(CountDownText.transform.localScale * 0.2f, 0.3f);
+            //CountDownText.DOColor(Color.red, 0.3f).OnComplete(() => TimerText.DOColor(Color.white, 0.3f));
+        }
+        
     }
     
     public void HideOptionsPauseUI()

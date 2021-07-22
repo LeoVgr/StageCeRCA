@@ -1,0 +1,27 @@
+Date et heure;22/07/2021 14:34:14
+Type Camera;TPS
+Identifiant;aze
+Temps de jeu (s);31,60934
+Nombres d'images;5
+Cibles manquees;3
+Longueur;10
+Nombre  Virages;2
+Images Random;Non
+Taille images;1,5
+Temps images;2
+Seed;1
+Preset;
+Score;100
+Tir Actif;Oui
+Score Affiche;Oui
+Vitesse;5
+Force frein;1
+Mode deplacement;Manuel
+Personnage;Megan
+
+Nom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?
+01_N_Diapositive01.jpg;2;1,610251;Non;Oui;Non;
+02_N_Diapositive02.jpg;1;1,628212;Non;Oui;Non;
+03Diapositive03.jpg;0;1,629723;Oui;Oui;Oui;
+04Diapositive04.jpg;0;1,327699;Oui;Oui;Oui;
+05_N_Diapositive05.jpg;3;1,079012;Non;Oui;Non;
