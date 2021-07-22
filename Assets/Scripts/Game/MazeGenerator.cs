@@ -8,27 +8,48 @@ using UnityAtoms.BaseAtoms ;
 using UnityEngine;
 using UnityEngine.Networking;
 using Random = UnityEngine.Random;
-    // ReSharper disable PossibleLossOfFraction
+// ReSharper disable PossibleLossOfFraction
 
-    /**
- * @author : Samuel BUSSON
- * @brief : Class MazeGenerator is used to generate the corridor based on the parameters
- * @date : 07/2020
- */
+/**
+* @author : Samuel BUSSON
+* @brief : Class MazeGenerator is used to generate the corridor based on the parameters
+* @date : 07/2020
+*/
+public struct NodePosition
+{
+    public int X;
+    public int Z;
+    public int ImagePositionInt;
+
+    public NodePosition(int xPos, int zPos)
+    {
+        X = xPos;
+        Z = zPos;
+        ImagePositionInt = -1;
+    }
+}
+public enum Direction
+{
+    North,
+    East,
+    South,
+    West,
+    Undefined
+}
+
 public class MazeGenerator : MonoBehaviour
 {
     [Header("Maze size")] 
     public IntReference mazeLength;
     public FloatReference cubeSize;
-    public FloatReference wallHeight;
-    
+    public FloatReference wallHeight;   
     
     [Header("Maze properties")]
     public IntReference turnNumber;
     public FloatReference imageSize;
 
     [Header("Random")]
-    public IntReference seed ;
+    public IntReference seed;
     public BoolVariable randomizeImage;
 
     [Header("Prefab, material,...")] 
@@ -82,9 +103,10 @@ public class MazeGenerator : MonoBehaviour
      */
     public bool GenerateMaze()
     {
+        //False if the all image hasn't been loaded
         if (_canCreate)
         {
-            //Destroy old maze
+            //Destroy old maze (can be removed since we reload the scene when we want to restart a game)
             if (_master)
             {
                 Destroy(_master);
@@ -117,7 +139,6 @@ public class MazeGenerator : MonoBehaviour
         }
         return false;
     }
-
 
 
     /**
@@ -636,6 +657,13 @@ public class MazeGenerator : MonoBehaviour
         
         wall.transform.SetParent(floorTransform);
         wall.GetComponent<MeshRenderer>().material = wallMaterial;
+
+        //Create ceiling
+        GameObject ceiling = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        ceiling.transform.position = new Vector3(basePosition.x, wallHeight + 0.5f, basePosition.z);
+        ceiling.transform.localScale = new Vector3(_cubeSizeX, 0.1f, _cubeSizeZ);
+        ceiling.transform.SetParent(floorTransform);
+        ceiling.GetComponent<MeshRenderer>().material = wallMaterial;
     }
 
     private NodePosition GetPosition(Direction testDirection, NodePosition tempPosition)
@@ -790,31 +818,6 @@ public class MazeGenerator : MonoBehaviour
 
         return Direction.East;
     }
-}
-
-
-public struct NodePosition
-{
-    public int X;
-    public int Z;
-    public int ImagePositionInt;
-
-    public NodePosition(int xPos, int zPos)
-    {
-        X = xPos;
-        Z = zPos;
-        ImagePositionInt = -1;
-    }
-}
-
-
-public enum Direction
-{
-    North,
-    East,
-    South,
-    West,
-    Undefined 
 }
 
 public class MazeNode
