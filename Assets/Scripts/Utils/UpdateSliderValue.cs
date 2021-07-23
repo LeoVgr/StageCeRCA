@@ -16,6 +16,6 @@ public class UpdateSliderValue : MonoBehaviour
     public void OnSliderValueChanged(float value)
     {
         if(ValueText)
-            ValueText.text = value.ToString("0.00");
+            ValueText.text = (value * 100).ToString("0");
     }
 }

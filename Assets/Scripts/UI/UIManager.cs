@@ -20,6 +20,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject CountDownText;   
     public GameObject MainPauseUI;
     public GameObject OptionsPauseUI;
+    public GameObject ParametersPauseUI;
     public Slider SensibilitySlider;
 
     private float _lastFullSeconds = 4f;
@@ -68,11 +69,18 @@ public class UIManager : Singleton<UIManager>
     }
     public void ShowOptionsPauseUI(bool displayUI)
     {
-        MainPauseUI.SetActive(!displayUI);
+        //MainPauseUI.SetActive(!displayUI);
         OptionsPauseUI.SetActive(displayUI);
+        ParametersPauseUI.SetActive(!displayUI);
 
         //Update slider's value
         SensibilitySlider.value = InputManager.instance.GetSensibility();
+    }
+    public void ShowParametersPauseUI(bool displayUI)
+    {
+        //MainPauseUI.SetActive(!displayUI);
+        OptionsPauseUI.SetActive(!displayUI);
+        ParametersPauseUI.SetActive(displayUI);
     }
 
     public void HideCountDownScreen()

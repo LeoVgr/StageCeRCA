@@ -257,7 +257,7 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 0f;
 
         //Display ready UI
-        UIManager.instance.ShowOptionsPauseUI(false);
+        UIManager.instance.ShowOptionsPauseUI(true);
         UIManager.instance.ShowPauseUI(true);
 
         //Alow the player to move
