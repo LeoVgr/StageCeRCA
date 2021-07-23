@@ -55,13 +55,18 @@ public class UpdateTextScore : MonoBehaviour
 
         //TODO Make audio event listener on score modification, now it's manage by score rendering who are actually duplicate on scene
         if (previousNumber < i && AudioIncreaseScore != null)
+        {
             AudioIncreaseScore.Play();
+            previousNumber = i;
+            DOVirtual.Float((i - 1) * 100, i * 100, 0.5f, UpdateFloatText);
+        }           
         else if (AudioDecreaseScore != null)
+        {
             AudioDecreaseScore.Play();
-
-
-        previousNumber = i;
-        DOVirtual.Float((i - 1) * 100, i * 100, 0.5f, UpdateFloatText);
+            previousNumber = i;
+            DOVirtual.Float((i + 1) * 100, i * 100, 0.5f, UpdateFloatText);
+        }      
+        
     }
 
     private void ScaleEvent()
