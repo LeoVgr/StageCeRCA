@@ -427,6 +427,7 @@ MonoBehaviour:
   IsManualMode: {fileID: 0}
   MusicVolume: {fileID: 0}
   SfxVolume: {fileID: 0}
+  IsCrosshairColorized: {fileID: 0}
   saveImage: {fileID: 877737068}
   deleteImage: {fileID: 0}
   fillPresetObject: {fileID: 11400000, guid: 460d6e92f14253341922ce5d7aa9b93a, type: 2}
@@ -3902,6 +3903,8 @@ MonoBehaviour:
   floorMaterial: {fileID: 2100000, guid: 5b5956096dabf4a44a49398f47f729d9, type: 2}
   imagePrefab: {fileID: 7246851261278487832, guid: eea72ecab5d9d7648a31a320e3f22978,
     type: 3}
+  TurretPrefab: {fileID: 9167860563194740769, guid: 2d48a6596886c7c4ea2fcd70440a7a9f,
+    type: 3}
   emptyTarget: {fileID: 7246851261278487832, guid: 22a09ce03acd45145ab8f12ef4821ee5,
     type: 3}
   raceEnd: {fileID: 8682514546319883426, guid: e19f7c76d07aff14086697072642d9f4, type: 3}
@@ -3971,6 +3974,8 @@ MonoBehaviour:
   IsRemy: {fileID: 11400000, guid: 557e3dd6a7f645d4680d5f22cd7d93ce, type: 2}
   IsMegan: {fileID: 11400000, guid: 4acb55f8e8d45794783f2bee59d95473, type: 2}
   IsMousey: {fileID: 11400000, guid: 81aeeadf71bf55248a1b7ad8b43a96e0, type: 2}
+  IsCrosshairColorized: {fileID: 11400000, guid: 2869ffac9f3a6f848931055bdca58792,
+    type: 2}
 --- !u!1 &833212887
 GameObject:
   m_ObjectHideFlags: 0
