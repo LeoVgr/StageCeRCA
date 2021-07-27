@@ -12,7 +12,6 @@ public class Turret : Target
     private float _shootTimer = 0;
     #endregion
 
-
     #region "Events"
     protected override void Update()
     {
@@ -52,6 +51,11 @@ public class Turret : Target
             bullet.gameObject.SetActive(true);
             bullet.GetComponent<Bullet>().Fire(transform.position, Player.Value.transform.position, false, Vector3.zero);
         }
+
+        //Do damage effect on the player
+        Player.Value.transform.DOPunchScale(transform.localScale * 0.1f, 0.5f);
+
+        Player.Value.GetComponentInChildren<PlayerLife>().GetHurt();
     }
 }       
     #endregion

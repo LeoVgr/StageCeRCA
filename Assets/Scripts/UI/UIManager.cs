@@ -15,7 +15,9 @@ public class UIManager : Singleton<UIManager>
     public GameObject PauseUI;
     public GameObject CrosshairUI;
     public GameObject LoadingUI;
+    public GameObject HurtScreen;
 
+    public Sprite SplashSprite;
     public GameObject ReadyAnswerText;
     public GameObject CountDownText;   
     public GameObject MainPauseUI;
@@ -28,14 +30,6 @@ public class UIManager : Singleton<UIManager>
     #endregion
 
     #region "Events"
-    private void Start()
-    {
-        //EndGameUI.SetActive(false);
-        //TimerUI.SetActive(true);
-        //ScoreUI.SetActive(false);
-        //PauseUI.SetActive(false);
-        //CrosshairUI.SetActive(true);
-    }
     #endregion"
 
     #region "Methods"
@@ -104,7 +98,24 @@ public class UIManager : Singleton<UIManager>
         }
         
     }
-    
+    public void AddImageToHurtScreen(int x, int y)
+    {
+        GameObject splash = new GameObject();
+        splash.AddComponent<CanvasRenderer>();
+        Image splashImage = splash.AddComponent<Image>();
+
+        splashImage.sprite = SplashSprite;
+
+        //Random color
+        Color[] colors = { Color.red, Color.blue, Color.green };
+        splashImage.color = colors[Random.Range(0, 3)];
+
+
+        splash.transform.localScale = new Vector3(2,2,2);
+        splash.transform.position = new Vector3(x, y, 0);
+        splash.transform.parent = HurtScreen.transform;
+    }
+
     public void HideOptionsPauseUI()
     {
         MainPauseUI.SetActive(true);
@@ -132,5 +143,6 @@ public class UIManager : Singleton<UIManager>
         TimerUI.SetActive(true);
         CrosshairUI.SetActive(true);
     }
+    
     #endregion
 }

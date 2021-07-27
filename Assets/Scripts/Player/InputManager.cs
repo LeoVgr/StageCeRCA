@@ -3,8 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-
 public class InputManager : Singleton<InputManager>
 {
     #region "Attributs"
