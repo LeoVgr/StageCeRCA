@@ -40,6 +40,7 @@ public class FillPresets : MonoBehaviour
     public BoolVariable IsManualMode;
     public FloatVariable MusicVolume;
     public FloatVariable SfxVolume;
+    public BoolVariable IsCrosshairColorized;
 
     private Dropdown _tmpDropdown;
     private Dictionary<string, Dictionary<ColumnNames, float>> _presets;
@@ -68,7 +69,8 @@ public class FillPresets : MonoBehaviour
         SemiAutoMode,
         ManualMode,
         MusicVolume,
-        SfxVolume
+        SfxVolume,
+        CrosshairColorized
     }    
 
     private void Start()
@@ -175,6 +177,9 @@ public class FillPresets : MonoBehaviour
                     case ColumnNames.SfxVolume:
                         SfxVolume.SetValue(keyValuePair.Value);
                         break;
+                    case ColumnNames.CrosshairColorized:
+                        IsCrosshairColorized.SetValue(keyValuePair.Value >= 0.5f);
+                        break;
                 }
             }
         }
@@ -280,6 +285,9 @@ public class FillPresets : MonoBehaviour
 
                             f = CheckStringLength(value[23]);
                             _presets[selection][(ColumnNames.SfxVolume)] = f;
+
+                            f = CheckStringLength(value[24]);
+                            _presets[selection][(ColumnNames.CrosshairColorized)] = f;
                         }
                     }
                     i++;

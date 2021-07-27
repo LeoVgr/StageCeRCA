@@ -334,6 +334,8 @@ MonoBehaviour:
   TargetLayer:
     serializedVersion: 2
     m_Bits: 1
+  IsCrosshairColorized: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0,
+    type: 2}
 --- !u!1001 &4991321827306260092
 PrefabInstance:
   m_ObjectHideFlags: 0
