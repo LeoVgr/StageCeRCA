@@ -38,6 +38,7 @@ public class MazeManager : MonoBehaviour
     public GameObject IdPlayerField;
     public GameObject MusicVolumeSlider;
     public GameObject SfxVolumeSlider;
+    public GameObject IsCrosshairColorizedToggle;
 
 
     [Header("Scriptable object references")]
@@ -65,6 +66,7 @@ public class MazeManager : MonoBehaviour
     public StringVariable IdPlayer;
     public FloatVariable MusicVolume;
     public FloatVariable SfxVolume;
+    public BoolVariable IsCrosshairColorized;
 
     [Header("Min max")]
     public Vector2Constant MinMaxLength;
@@ -107,7 +109,8 @@ public class MazeManager : MonoBehaviour
             IsSemiAutoModeToggle.GetComponent<UIDataManager>(),
             IsManualModeToggle.GetComponent<UIDataManager>(),
             MusicVolumeSlider.GetComponent<UIDataManager>(),
-            SfxVolumeSlider.GetComponent<UIDataManager>()
+            SfxVolumeSlider.GetComponent<UIDataManager>(),
+            IsCrosshairColorizedToggle.GetComponent<UIDataManager>()
         };
 
         //Corridor Length
@@ -248,6 +251,12 @@ public class MazeManager : MonoBehaviour
         SfxVolumeSlider.GetComponent<UIDataManager>().AtomVariableFloat = SfxVolume;
         SfxVolumeSlider.GetComponent<UIDataManager>().RegisterThisEvent = true;
 
+        //Is crosshair colorized
+        IsCrosshairColorizedToggle.GetComponent<UIDataManager>().minInt = 0;
+        IsCrosshairColorizedToggle.GetComponent<UIDataManager>().maxInt = 0;
+        IsCrosshairColorizedToggle.GetComponent<UIDataManager>().AtomVariableBool = IsCrosshairColorized;
+        IsCrosshairColorizedToggle.GetComponent<UIDataManager>().RegisterThisEvent = true; // false
+
         IdPlayerField.GetComponent<InputUIManager>().atomVariableString = IdPlayer;       
         
         ResetVariable();
@@ -298,6 +307,7 @@ public class MazeManager : MonoBehaviour
         IsManualMode.Reset();
         MusicVolume.Reset();
         SfxVolume.Reset();
+        IsCrosshairColorized.Reset();
     }
     #endregion
 }
