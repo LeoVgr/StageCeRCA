@@ -27,16 +27,32 @@ public class PlayerLife : MonoBehaviour
 
         //Find random pos
         int x,y;
-        do
-        {    
-            x = Random.Range(0, Screen.width);
-        } while (x > Screen.width/4f && x< Screen.width * 3f/4f);
 
-        do
+        //Allow us to first choose a position and juste random the other (ink has to be on screen's side)
+        int randomFirstChoice = Random.Range(0,2);
+
+        if (randomFirstChoice ==0)
         {
-            y = Random.Range(0, Screen.height);
-        } while (y > Screen.width / 4f && y < Screen.width * 3f / 4f);
+            do
+            {
+                x = (int)Random.Range(-UIManager.instance.Canvas.GetComponent<RectTransform>().rect.width / 2f, UIManager.instance.Canvas.GetComponent<RectTransform>().rect.width / 2f);
+            } while (!((x > (-UIManager.instance.Canvas.GetComponent<RectTransform>().rect.width / 2f) && x < (-UIManager.instance.Canvas.GetComponent<RectTransform>().rect.width / 2f) * 3f / 4f) || (x > (UIManager.instance.Canvas.GetComponent<RectTransform>().rect.width / 2f) * 3f / 4f) && x < (UIManager.instance.Canvas.GetComponent<RectTransform>().rect.width / 2f)));
+            
+            y = (int)Random.Range(-UIManager.instance.Canvas.GetComponent<RectTransform>().rect.height / 2f, UIManager.instance.Canvas.GetComponent<RectTransform>().rect.height / 2f);
+            
 
+        }
+        else
+        {
+            
+            x = (int)Random.Range(-UIManager.instance.Canvas.GetComponent<RectTransform>().rect.width / 2f, UIManager.instance.Canvas.GetComponent<RectTransform>().rect.width / 2f);
+           
+            do
+            {
+                y = (int)Random.Range(-UIManager.instance.Canvas.GetComponent<RectTransform>().rect.height / 2f, UIManager.instance.Canvas.GetComponent<RectTransform>().rect.height / 2f);
+            } while (!((y > (-UIManager.instance.Canvas.GetComponent<RectTransform>().rect.height / 2f) && y < (-UIManager.instance.Canvas.GetComponent<RectTransform>().rect.height / 2f) * 3f / 4f) || (y > (UIManager.instance.Canvas.GetComponent<RectTransform>().rect.height / 2f) * 3f / 4f) && y < (UIManager.instance.Canvas.GetComponent<RectTransform>().rect.height / 2f)));
+
+        }    
 
         //Add image hurt
         UIManager.instance.AddImageToHurtScreen(x,y);
