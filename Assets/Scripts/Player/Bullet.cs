@@ -19,9 +19,9 @@ public class Bullet : MonoBehaviour
     public LineRenderer LineRendererComponent;
     public float Time = 0.3f;
     public float IntervalTime = 0.5f;
-    public VisualEffect Sparkle;
     public Vector2Variable ScreenShakesValues;
     public GameObject BulletImpact;
+    public float ImpactLife = 10f;
     public GameObject BulletSphere;
     
     [Header("Audio")] public AudioSource ImpactSource;
@@ -58,7 +58,6 @@ public class Bullet : MonoBehaviour
 
         _startPosition = pos1;
         _endPosition = pos2;
-        Sparkle.transform.position = _endPosition;
         _hitNormal = normal;
         BulletSphere.transform.localScale = _baseBulletScale;
 
@@ -84,15 +83,10 @@ public class Bullet : MonoBehaviour
     }      
     private void HitEvent()
     {
-        //VFX
-        Sparkle.SendEvent("OnFire");
-        Sparkle.transform.position += _hitNormal * 0.1f;
         //Impact Effect
-        MeshRenderer impactRenderer = BulletImpact.GetComponent<MeshRenderer>();
-        impactRenderer.material.SetFloat(_intensity, 1.0f);
-        impactRenderer.material.DOFloat(.0f, "_Intensity", IntervalTime);
-        BulletImpact.transform.position = _endPosition + _hitNormal * 0.05f;
-        BulletImpact.transform.rotation = Quaternion.LookRotation(_hitNormal);
+        var bulletImpact = Instantiate(BulletImpact, _endPosition, Quaternion.LookRotation(_hitNormal));
+        //Life time of impact;
+        Destroy(bulletImpact,ImpactLife);
         //AUDIO
         ImpactSource.Play();
     }
