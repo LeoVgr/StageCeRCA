@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>
 {
     #region "Attributs"
+    public Canvas Canvas;
     public GameObject ReadyUI;
     public GameObject EndGameUI;
     public GameObject TimerUI;
@@ -103,6 +104,7 @@ public class UIManager : Singleton<UIManager>
         GameObject splash = new GameObject();
         splash.AddComponent<CanvasRenderer>();
         Image splashImage = splash.AddComponent<Image>();
+        splash.AddComponent<Ink>();
 
         splashImage.sprite = SplashSprite;
 
@@ -110,10 +112,14 @@ public class UIManager : Singleton<UIManager>
         Color[] colors = { Color.red, Color.blue, Color.green };
         splashImage.color = colors[Random.Range(0, 3)];
 
-
-        splash.transform.localScale = new Vector3(2,2,2);
-        splash.transform.position = new Vector3(x, y, 0);
         splash.transform.parent = HurtScreen.transform;
+        splash.transform.position = Vector3.zero;
+        splash.transform.rotation = Quaternion.identity;
+        splash.transform.localScale = Vector3.one;
+        splash.transform.localScale = new Vector3(5,5,5);
+        print("X : " + x + " Y : " + y);
+        splash.transform.localPosition = new Vector3(x, y, 0);
+        
     }
 
     public void HideOptionsPauseUI()
