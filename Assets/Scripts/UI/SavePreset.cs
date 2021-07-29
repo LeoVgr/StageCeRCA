@@ -40,6 +40,7 @@ public class SavePreset : MonoBehaviour
     public BoolVariable IsManualMode;
     public FloatVariable MusicVolume;
     public FloatVariable SfxVolume;
+    public BoolVariable IsCrosshairColorized;
 
     public Image saveImage;
     public Image deleteImage;
@@ -103,6 +104,7 @@ public class SavePreset : MonoBehaviour
             dico[inputTextName][(FillPresets.ColumnNames.ManualMode)] = IsManualMode.Value ? 1 : 0;
             dico[inputTextName][(FillPresets.ColumnNames.MusicVolume)] = MusicVolume.Value;
             dico[inputTextName][(FillPresets.ColumnNames.SfxVolume)] = SfxVolume.Value;
+            dico[inputTextName][(FillPresets.ColumnNames.CrosshairColorized)] = IsCrosshairColorized.Value ? 1 : 0;
             delete = false;
             
             DOVirtual.DelayedCall(Time.deltaTime, (() => presetName?.SetValue(inputTextName)));
@@ -207,6 +209,8 @@ public class SavePreset : MonoBehaviour
                 return "MusicVolume";
             case FillPresets.ColumnNames.SfxVolume:
                 return "SfxVolume";
+            case FillPresets.ColumnNames.CrosshairColorized:
+                return "CrosshairColorized";
             default:
                 return "";
         }

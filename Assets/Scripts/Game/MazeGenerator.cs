@@ -56,6 +56,7 @@ public class MazeGenerator : MonoBehaviour
     public Material wallMaterial;
     public Material floorMaterial;
     public GameObject imagePrefab;
+    public GameObject TurretPrefab;
     public GameObject emptyTarget;
     public GameObject raceEnd;
     
@@ -481,48 +482,94 @@ public class MazeGenerator : MonoBehaviour
             
             if (node.IsImage())
             {
-                GameObject image = Instantiate(imagePrefab, node.GetImagePosition(), Quaternion.identity);
-                Target target = image.GetComponent<Target>();
-                image.transform.SetParent(floor.transform);
-                
-                //If there is image on this node
-                if (target)
+                //Pick our future sprite
+                Sprite selectedSprite;
+
+                //True = Get Random image, False = get the images in alphabetical order
+                if (randomizeImage.Value)
                 {
-                    //Set target direction
-                    target.Direction = node.GetDirection();
-
-                    //True = Get Random image, False = get the images in alphabetical order
-                    if (randomizeImage.Value)
-                    {
-                        int random = Random.Range(0, _spriteList.Count);
-                        target.Sprite = _spriteList[random];
-                        _spriteList.RemoveAt(random);
-                    }
-                    else
-                    {
-                        target.Sprite = _spriteList[0];
-                        _spriteList.RemoveAt(0);
-                    }
-                    
-                    //Depending the target side left or right 
-                    target.IsNegateImage = node.IsNegateImagePosition();
-                    target.WayPointIndex = i;
-                    target.TargetPosition = node.GetIntImagePosition();
-
-                    var transform1 = target.transform;
-                    transform1.localScale = _imageSize *  transform1.localScale;
-
-                    if (node.IsNegateImagePosition())
-                    {
-                        SpriteRenderer spireRenderer = target.GetComponentInChildren<SpriteRenderer>();
-                        if (spireRenderer)
-                        {
-                            var transform2 = spireRenderer.transform;
-                            transform2.localPosition = -transform2.localPosition;
-                        }
-                    }
-                                
+                    int random = Random.Range(0, _spriteList.Count);
+                    selectedSprite = _spriteList[random];
+                    _spriteList.RemoveAt(random);
                 }
+                else
+                {
+                    selectedSprite = _spriteList[0];
+                    _spriteList.RemoveAt(0);
+                }
+
+                //Check his name to see if it's a target or a turret
+                if (selectedSprite.name.Split('_').Length >= 2 && selectedSprite.name.Split('_')[1].Contains("T"))
+                {
+                    //Create turret
+                    GameObject turret = Instantiate(TurretPrefab, node.GetImagePosition(), Quaternion.identity);
+                    Turret turretTarget = turret.GetComponent<Turret>();
+                    turret.transform.SetParent(floor.transform);
+
+                    //If there is image on this node
+                    if (turretTarget)
+                    {
+                        //Set shoot rate 
+                        turretTarget.TimeBetweenShoot = float.Parse(selectedSprite.name.Split('_')[1].Remove(0, 1));
+
+                        //Set target direction
+                        turretTarget.Direction = node.GetDirection();
+                        turretTarget.Sprite = selectedSprite;
+
+                        //Depending the target side left or right 
+                        turretTarget.IsNegateImage = node.IsNegateImagePosition();
+                        turretTarget.WayPointIndex = i;
+                        turretTarget.TargetPosition = node.GetIntImagePosition();
+
+                        var transform1 = turretTarget.transform;
+                        transform1.localScale = _imageSize * transform1.localScale;
+
+                        if (node.IsNegateImagePosition())
+                        {
+                            SpriteRenderer spireRenderer = turretTarget.GetComponentInChildren<SpriteRenderer>();
+                            if (spireRenderer)
+                            {
+                                var transform2 = spireRenderer.transform;
+                                transform2.localPosition = -transform2.localPosition;
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    //Create simple target
+                    GameObject image = Instantiate(imagePrefab, node.GetImagePosition(), Quaternion.identity);
+                    Target target = image.GetComponent<Target>();
+                    image.transform.SetParent(floor.transform);
+
+                    //If there is image on this node
+                    if (target)
+                    {
+                        //Set target direction
+                        target.Direction = node.GetDirection();
+                        target.Sprite = selectedSprite;
+
+                        //Depending the target side left or right 
+                        target.IsNegateImage = node.IsNegateImagePosition();
+                        target.WayPointIndex = i;
+                        target.TargetPosition = node.GetIntImagePosition();
+
+                        var transform1 = target.transform;
+                        transform1.localScale = _imageSize * transform1.localScale;
+
+                        if (node.IsNegateImagePosition())
+                        {
+                            SpriteRenderer spireRenderer = target.GetComponentInChildren<SpriteRenderer>();
+                            if (spireRenderer)
+                            {
+                                var transform2 = spireRenderer.transform;
+                                transform2.localPosition = -transform2.localPosition;
+                            }
+                        }
+
+                    }
+                }                   
             }
             
             #endregion

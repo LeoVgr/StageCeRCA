@@ -46,7 +46,7 @@ namespace Player
             _playerData = transform.parent.GetComponent<PlayerSaveData>();
 
             //Create bullet pool
-            _amountToPool = 3;
+            _amountToPool = 10;
             CreatePooledObjectList();          
         }
         private void Update()
@@ -82,7 +82,7 @@ namespace Player
                 _pooledObjects.Add(obj.GetComponent<Bullet>());
             }
         }
-        private Bullet GetFirstAvailablePooledObject()
+        public Bullet GetFirstAvailablePooledObject()
         {
             //Looking for the first bullet not active in hierarchy (aka not used)
             for (int i = 0; i < _pooledObjects.Count; ++i)
@@ -122,10 +122,14 @@ namespace Player
                 {
                     Target t = hit.collider.GetComponentInChildren<Target>();
                     if(t != null)
+                    {
                         t.Hit();
+                    }                   
+
                     endPoint = hit.point;
                     hitSomething = true;
                     normal = hit.normal;
+                    
                 }
                 else
                 {

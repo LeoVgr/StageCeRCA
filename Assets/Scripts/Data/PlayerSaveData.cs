@@ -35,6 +35,7 @@ namespace Data
         public BoolVariable IsRemy;
         public BoolVariable IsMegan;
         public BoolVariable IsMousey;
+        public BoolVariable IsCrosshairColorized;
 
         private string _startTime;
         private bool _endGame;
@@ -156,6 +157,7 @@ namespace Data
             text += "Score Affiche;" + (ScoreDisplay.Value ? "Oui" : "Non") + "\n";
             text += "Vitesse;" + Speed.Value + "\n";
             text += "Force frein;" + BreakForce.Value + "\n";
+            text += "Viseur colorise;" + (IsCrosshairColorized.Value ? "Oui" : "Non") + "\n";
             text += "Mode deplacement;" + (IsAutoMode.Value ? "Auto" : (IsManualMode.Value ? "Manuel" : "Semi-Auto")) +
                     "\n";
             text += "Personnage;" + (GameManager.instance.IsRemySelected.Value ? "Remy" : GameManager.instance.IsMeganSelected.Value ? "Megan" : "Mousey") + "\n";

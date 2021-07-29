@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>
 {
     #region "Attributs"
+    public Canvas Canvas;
     public GameObject ReadyUI;
     public GameObject EndGameUI;
     public GameObject TimerUI;
@@ -15,7 +16,9 @@ public class UIManager : Singleton<UIManager>
     public GameObject PauseUI;
     public GameObject CrosshairUI;
     public GameObject LoadingUI;
+    public GameObject HurtScreen;
 
+    public Sprite SplashSprite;
     public GameObject ReadyAnswerText;
     public GameObject CountDownText;   
     public GameObject MainPauseUI;
@@ -28,14 +31,6 @@ public class UIManager : Singleton<UIManager>
     #endregion
 
     #region "Events"
-    private void Start()
-    {
-        //EndGameUI.SetActive(false);
-        //TimerUI.SetActive(true);
-        //ScoreUI.SetActive(false);
-        //PauseUI.SetActive(false);
-        //CrosshairUI.SetActive(true);
-    }
     #endregion"
 
     #region "Methods"
@@ -65,7 +60,7 @@ public class UIManager : Singleton<UIManager>
     {
         PauseUI.SetActive(displayUI);
         MainPauseUI.SetActive(displayUI);
-        OptionsPauseUI.SetActive(!displayUI);
+        OptionsPauseUI.SetActive(displayUI);
     }
     public void ShowOptionsPauseUI(bool displayUI)
     {
@@ -104,7 +99,29 @@ public class UIManager : Singleton<UIManager>
         }
         
     }
-    
+    public void AddImageToHurtScreen(int x, int y)
+    {
+        GameObject splash = new GameObject();
+        splash.AddComponent<CanvasRenderer>();
+        Image splashImage = splash.AddComponent<Image>();
+        splash.AddComponent<Ink>();
+
+        splashImage.sprite = SplashSprite;
+
+        //Random color
+        Color[] colors = { Color.red, Color.blue, Color.green };
+        splashImage.color = colors[Random.Range(0, 3)];
+
+        splash.transform.parent = HurtScreen.transform;
+        splash.transform.position = Vector3.zero;
+        splash.transform.rotation = Quaternion.identity;
+        splash.transform.localScale = Vector3.one;
+        splash.transform.localScale = new Vector3(5,5,5);
+        print("X : " + x + " Y : " + y);
+        splash.transform.localPosition = new Vector3(x, y, 0);
+        
+    }
+
     public void HideOptionsPauseUI()
     {
         MainPauseUI.SetActive(true);
@@ -132,5 +149,6 @@ public class UIManager : Singleton<UIManager>
         TimerUI.SetActive(true);
         CrosshairUI.SetActive(true);
     }
+    
     #endregion
 }

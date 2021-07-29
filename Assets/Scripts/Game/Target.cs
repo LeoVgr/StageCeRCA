@@ -118,15 +118,23 @@ public class Target : MonoBehaviour
 
         CheckDistanceToPlayer(0);
 
-        //Setup up if image has to be shot or not depending their name (should contain N)
-        HasToBeShot = true;
-        if (Sprite.name.Split('_').Length >= 2 && Sprite.name.Split('_')[1] == "N")
+        if (this.GetComponent<Target>())
         {
-            HasToBeShot = false;
+            //Setup up if image has to be shot or not depending their name (should contain N)
+            HasToBeShot = true;
+            if (Sprite.name.Split('_').Length >= 2 && Sprite.name.Split('_')[1].Contains("N"))
+            {
+                HasToBeShot = false;
+            }
         }
+        else
+        {
+            HasToBeShot = true;
+        }
+        
 
     }
-    private void Update()
+    protected virtual void Update()
     {
         //If the target hasn't been shown yet
         if (!_hasBeenShown)
@@ -206,6 +214,7 @@ public class Target : MonoBehaviour
     }
     public void Hit()
     {
+        print(gameObject.name);
         //When a target is hit, check if it hasn't be already hit 
         if (!_isHit && _isShown)
         {
@@ -250,8 +259,9 @@ public class Target : MonoBehaviour
         parent.transform.SetParent(null);
         parent.transform.position = worldCanvasPosition;      
        
-        _spriteRenderer.transform.DOLocalMove(-_spriteRenderer.transform.localPosition, 0.3f)
-            .SetEase(Ease.InCubic);
+        if(_spriteRenderer)
+            _spriteRenderer.transform.DOLocalMove(-_spriteRenderer.transform.localPosition, 0.3f)
+                .SetEase(Ease.InCubic);
 
         GetComponentInChildren<MeshRenderer>().material.DOColor(Color.green * 2.0f, "_Color", 1f)
             .SetEase(Ease.OutBounce);
@@ -309,7 +319,8 @@ public class Target : MonoBehaviour
             scoreUpSequence.AppendCallback(() => Destroy(parent.gameObject));
         }
         
-        _spriteRenderer.transform.DOLocalMove(-_spriteRenderer.transform.localPosition, 0.3f)
+        if(_spriteRenderer)
+            _spriteRenderer.transform.DOLocalMove(-_spriteRenderer.transform.localPosition, 0.3f)
             .SetEase(Ease.InCubic);
 
         GetComponentInChildren<MeshRenderer>().material.DOColor(Color.red * 2.0f, "_Color", 1f)
@@ -325,6 +336,7 @@ public class Target : MonoBehaviour
 
         //Update target's status
         _isHit = true;
+        _isShown = false;
         _endTimeValue = _time;
 
         //Register some stats for further purpose (save data of player)
@@ -361,10 +373,14 @@ public class Target : MonoBehaviour
         }
 
         Sequence changeImage = DOTween.Sequence();
-        changeImage.Append(_spriteRenderer.DOColor(new Color(0, 0.25f, 0.25f, 1), 0.5f).SetEase(Ease.OutBounce));
-        changeImage.AppendCallback(() => _spriteRenderer.sprite = SplashImage);
-        changeImage.Append(_spriteRenderer.DOColor(Color.white, 0.5f).SetEase(Ease.OutBounce));
 
+        if (_spriteRenderer)
+        {
+            changeImage.Append(_spriteRenderer.DOColor(new Color(0, 0.25f, 0.25f, 1), 0.5f).SetEase(Ease.OutBounce));
+            changeImage.AppendCallback(() => _spriteRenderer.sprite = SplashImage);
+            changeImage.Append(_spriteRenderer.DOColor(Color.white, 0.5f).SetEase(Ease.OutBounce));
+        }
+        
         if (DisplayScore.Value)
         {
             Score.SetValue(Score.Value + 1);
@@ -391,6 +407,7 @@ public class Target : MonoBehaviour
 
         //Update target's status
         _isHit = true;
+        _isShown = false;
         _endTimeValue = _time;
 
         //Register some stats for further purpose (save data of player)
@@ -441,9 +458,12 @@ public class Target : MonoBehaviour
 
         Sequence changeImage = DOTween.Sequence();
 
-        changeImage.Append(_spriteRenderer.DOColor(new Color(0.25f, 0, 0, 1), 0.5f).SetEase(Ease.OutBounce));
-        changeImage.AppendCallback(() => _spriteRenderer.sprite = SplashImage);
-        changeImage.Append(_spriteRenderer.DOColor(Color.white, 0.5f).SetEase(Ease.OutBounce));        
+        if (_spriteRenderer)
+        {
+            changeImage.Append(_spriteRenderer.DOColor(new Color(0.25f, 0, 0, 1), 0.5f).SetEase(Ease.OutBounce));
+            changeImage.AppendCallback(() => _spriteRenderer.sprite = SplashImage);
+            changeImage.Append(_spriteRenderer.DOColor(Color.white, 0.5f).SetEase(Ease.OutBounce));
+        }            
     }
     public bool IsHit()
     {
@@ -456,6 +476,10 @@ public class Target : MonoBehaviour
     public bool GetIsHit()
     {
         return _isHit;
+    }
+    public bool IsShown()
+    {
+        return _isShown;
     }
     #endregion
 
