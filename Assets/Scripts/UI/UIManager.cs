@@ -60,7 +60,7 @@ public class UIManager : Singleton<UIManager>
     {
         PauseUI.SetActive(displayUI);
         MainPauseUI.SetActive(displayUI);
-        OptionsPauseUI.SetActive(!displayUI);
+        OptionsPauseUI.SetActive(displayUI);
     }
     public void ShowOptionsPauseUI(bool displayUI)
     {
