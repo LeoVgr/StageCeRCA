@@ -139,7 +139,7 @@ namespace Player
 
                 //Fire the bullet
                 if (bullet)
-                    bullet.GetComponent<Bullet>().Fire(FireStartPositon.transform.position,  endPoint, hitSomething, normal);
+                    bullet.Fire(FireStartPositon.transform.position,  endPoint, hitSomething, normal);
 
             }
         }

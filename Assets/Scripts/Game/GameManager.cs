@@ -8,7 +8,16 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     #region Attributs
-    public enum GameStatement { Ready, Countdown, Running, Pause, End, None};
+
+    public enum GameStatement
+    {
+        Ready,
+        Countdown,
+        Running,
+        Pause,
+        End,
+        None
+    };
 
     public IntVariable Score;
     public BoolVariable FpsCamera;
@@ -43,6 +52,7 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     #region Events
+
     public void Start()
     {
         //Reset UI
@@ -55,9 +65,9 @@ public class GameManager : Singleton<GameManager>
         //Initialize the first state
         _gameStatement = GameStatement.Ready;
         _previousGameStatement = GameStatement.None;
-        EnterReadyStatement();       
-
+        EnterReadyStatement();
     }
+
     private void Update()
     {
         switch (_gameStatement)
@@ -79,29 +89,29 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
 
-        
 
         ////Check if player press pause button
         //if (InputManager.instance.IsCancelAction() && _isGameRunning)
         //{
         //    Pause();
         //}
-
-        
-
     }
+
     private void OnDestroy()
     {
         Cursor.visible = true;
     }
+
     #endregion
 
     #region Methods
+
     /*Statements methods */
     public GameStatement GetGameStatement()
     {
         return _gameStatement;
     }
+
     private void CallExitPreviousState(GameStatement previousGameState)
     {
         switch (previousGameState)
@@ -127,41 +137,47 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
     }
+
     public void SetReadyStatement()
-    {     
+    {
         _previousGameStatement = _gameStatement;
         CallExitPreviousState(_previousGameStatement);
         _gameStatement = GameStatement.Ready;
         EnterReadyStatement();
     }
+
     public void SetCountdownStatement()
-    {        
+    {
         _previousGameStatement = _gameStatement;
         CallExitPreviousState(_previousGameStatement);
         _gameStatement = GameStatement.Countdown;
         EnterCountdownStatement();
     }
+
     public void SetRunningStatement()
-    {       
+    {
         _previousGameStatement = _gameStatement;
         CallExitPreviousState(_previousGameStatement);
         _gameStatement = GameStatement.Running;
         EnterRunningStatement();
     }
+
     public void SetPauseStatement()
-    {     
+    {
         _previousGameStatement = _gameStatement;
         CallExitPreviousState(_previousGameStatement);
         _gameStatement = GameStatement.Pause;
         EnterPauseStatement();
     }
+
     public void SetEndStatement()
-    {     
+    {
         _previousGameStatement = _gameStatement;
         CallExitPreviousState(_previousGameStatement);
         _gameStatement = GameStatement.End;
         EnterEndStatement();
     }
+
     public void NextState()
     {
         switch (_gameStatement)
@@ -187,7 +203,7 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
     }
-    
+
     public void EnterReadyStatement()
     {
         //Reset time scale
@@ -203,7 +219,7 @@ public class GameManager : Singleton<GameManager>
         Score.Reset(true);
         TargetCount.SetValue(0);
         TargetHit.SetValue(0);
-        TargetList.Clear();       
+        TargetList.Clear();
 
         //Get the references of the player
         PlayerVariable.SetValue(Player.gameObject);
@@ -211,28 +227,25 @@ public class GameManager : Singleton<GameManager>
         //Activate the right camera
         if (FpsCamera.Value)
         {
-            Remy.SetActive(false);
-            Megan.SetActive(false);
-            Mousey.SetActive(false);
-
             FPSCamera.Priority = 1;
             TPSCamera.Priority = 0;
         }
         else
         {
-            //Enable the right character
-            Remy.SetActive(IsRemySelected.Value);
-            Megan.SetActive(IsMeganSelected.Value);
-            Mousey.SetActive(IsMouseySelected.Value);
-
             FPSCamera.Priority = 0;
             TPSCamera.Priority = 1;
         }
 
+        //Enable the right character
+        Remy.SetActive(IsRemySelected.Value);
+        Megan.SetActive(IsMeganSelected.Value);
+        Mousey.SetActive(IsMouseySelected.Value);
+        
         //Reset some values
         _isMazeGenerated = false;
         _isGameLost = false;
     }
+
     public void EnterCountdownStatement()
     {
         //Reset timer
@@ -242,6 +255,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.instance.ShowReadyUI(true);
         UIManager.instance.StartCountDown();
     }
+
     public void EnterRunningStatement()
     {
         //Display ready UI
@@ -251,6 +265,7 @@ public class GameManager : Singleton<GameManager>
         InputManager.instance.EnableInputs();
         InputManager.instance.EnableMovementInputs();
     }
+
     public void EnterPauseStatement()
     {
         //Change timescale
@@ -263,6 +278,7 @@ public class GameManager : Singleton<GameManager>
         //Alow the player to move
         InputManager.instance.DisableInputs();
     }
+
     public void EnterEndStatement()
     {
         //Lock the player
@@ -300,6 +316,7 @@ public class GameManager : Singleton<GameManager>
             SetPauseStatement();
         }
     }
+
     public void CountdownStatement()
     {
         //Lock the cursor to the game window
@@ -314,8 +331,8 @@ public class GameManager : Singleton<GameManager>
 
         if (_countdownTimer < 0)
             SetRunningStatement();
-
     }
+
     public void RunningStatement()
     {
         //Lock the cursor to the game window
@@ -328,13 +345,14 @@ public class GameManager : Singleton<GameManager>
             SetPauseStatement();
         }
     }
-    public void PauseStatement()
-    {     
 
+    public void PauseStatement()
+    {
         //Lock the cursor to the game window
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
+
     public void EndStatement()
     {
         //Lock the cursor to the game window
@@ -347,16 +365,19 @@ public class GameManager : Singleton<GameManager>
         //Hide the UI
         UIManager.instance.ShowReadyUI(false);
     }
+
     public void ExitCountdownStatement()
     {
         //Hide the UI
         UIManager.instance.ShowReadyUI(false);
     }
+
     public void ExitRunningStatement()
     {
         //Hide the UI
         UIManager.instance.ShowInGameUI(false);
     }
+
     public void ExitPauseStatement()
     {
         //Change timescale
@@ -368,6 +389,7 @@ public class GameManager : Singleton<GameManager>
         //Enbale inputs
         InputManager.instance.EnableInputs();
     }
+
     public void ExitEndStatement()
     {
         //Hide the UI
@@ -383,12 +405,14 @@ public class GameManager : Singleton<GameManager>
         CallExitPreviousState(_previousGameStatement);
 
         //Reload the scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);  
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
+
     public void Exit()
     {
         Application.Quit();
     }
+
     public void Resume()
     {
         //Reset TimeScale
@@ -405,9 +429,10 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
     }
+
     public void EndGame(bool isLost)
     {
-        if(GetGameStatement() != GameStatement.End)
+        if (GetGameStatement() != GameStatement.End)
         {
             //Update game status
             _isGameLost = isLost;
@@ -416,5 +441,6 @@ public class GameManager : Singleton<GameManager>
             SetEndStatement();
         }
     }
+
     #endregion
 }
