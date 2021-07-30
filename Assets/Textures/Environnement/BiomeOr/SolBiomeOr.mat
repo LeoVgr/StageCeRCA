@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SolBiomeOr
+  m_Shader: {fileID: -6465566751694194690, guid: 8945ab2514b3d714eb8f2e4b69abf015,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _SampleTexture2D_1c7b390b333a484b9ef8e7486b36f7d9_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 238a5c7e1690dea4790595cf50f39e90, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_36b996a34b3546398b28997163655e51_Texture_1:
+        m_Texture: {fileID: 2800000, guid: bf42781fb51b2874cb5c0d2a871f900e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_45e887da277f442dbe6926fa7076f402_Texture_1:
+        m_Texture: {fileID: 2800000, guid: cf02e5e3ff9a29847b8042febc74b4fe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d0ba4b3db5f8437e99f356959cafafad_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 398f6387f97e77a489b24822c369ba19, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_dda7dfe1915a4df9baf0731b0d7986fe_Texture_1:
+        m_Texture: {fileID: 2800000, guid: a2de157f6f438f44abb9ccebc0860d02, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
