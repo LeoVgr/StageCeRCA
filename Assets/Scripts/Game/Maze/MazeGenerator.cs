@@ -36,21 +36,30 @@ public enum Direction
     West,
     Undefined
 }
+public enum ImagePos
+{
+    TopLeft,
+    TopRight,
+    BotLeft,
+    BotRight,
+    none
+}
 
 public class MazeGenerator : MonoBehaviour
 {
+    #region "Attributs"
     [Header("Maze size")] 
-    public IntReference mazeLength;
-    public FloatReference cubeSize;
-    public FloatReference wallHeight;   
+    public IntReference CorridorLenght;
+    public FloatReference CorridorCubeSegmentSize;
+    public FloatReference WallHeight;   
     
     [Header("Maze properties")]
-    public IntReference turnNumber;
-    public FloatReference imageSize;
+    public IntReference TurnNumber;
+    public FloatReference ImageSize;
 
     [Header("Random")]
-    public IntReference seed;
-    public BoolVariable randomizeImage;
+    public IntReference Seed;
+    public BoolVariable RandomizeImage;
 
     [Header("Prefab, material,...")]
     public GameObject PrefabWall;
@@ -59,12 +68,11 @@ public class MazeGenerator : MonoBehaviour
     public GameObject PrefabStraightRail;
     public GameObject PrefabRotatingRail;
     
-    public Material wallMaterial;
-    public Material floorMaterial;
-    public GameObject imagePrefab;
+    public Material FloorMaterial;
+    public GameObject ImagePrefab;
     public GameObject TurretPrefab;
-    public GameObject emptyTarget;
-    public GameObject raceEnd;
+    public GameObject EmptyTarget;
+    public GameObject RaceEnd;
     
     
     private List<Sprite> _baseSpriteList;
@@ -85,14 +93,14 @@ public class MazeGenerator : MonoBehaviour
     private bool _canCreate;
     
     // Maze properties
-    private float _cubeSizeX = 1.0f;
-    private float _cubeSizeZ = 1.0f;
+    private float _cubeSize = 1.0f;
     private float _wallHeight = 5.0f;
     private int _length = 10;
     private int _turnNumber;
     private float _imageSize = 1.0f;
-    
+    #endregion
 
+    #region "Events"
     public void Start()
     {  
         //Init List
@@ -104,10 +112,12 @@ public class MazeGenerator : MonoBehaviour
         //Load images in _baseSpriteList
         ReadImageFolderThenCreateMaze();
     }
+    #endregion
 
+    #region "Methods"
     /**
-     * @brief Set values bases on AtomsVariables then create corridor
-     */
+    * @brief Set values bases on AtomsVariables then create corridor
+    */
     public bool GenerateMaze()
     {
         //False if the all image hasn't been loaded
@@ -118,25 +128,24 @@ public class MazeGenerator : MonoBehaviour
             {
                 Destroy(_master);
             }
-            
+
             //Create new maze
             _master = new GameObject();
-            
+
             //Clear all list
             _maze.Clear();
             _turnValue.Clear();
             _imageValue.Clear();
-        
+
             //Set values
-            _cubeSizeX = cubeSize.Value;
-            _cubeSizeZ = cubeSize.Value;
-            _wallHeight = wallHeight.Value;
-            _length = mazeLength.Value;
-            _turnNumber = turnNumber.Value;
-            _imageSize = imageSize.Value;
+            _cubeSize = CorridorCubeSegmentSize.Value;
+            _wallHeight = WallHeight.Value;
+            _length = CorridorLenght.Value;
+            _turnNumber = TurnNumber.Value;
+            _imageSize = ImageSize.Value;
 
             //Copy _baseSpriteList into _spriteList
-            if(_length < _baseSpriteList.Count)
+            if (_length < _baseSpriteList.Count)
                 _spriteList = _baseSpriteList.GetRange(0, _length - 1);
             else
                 _spriteList = new List<Sprite>(_baseSpriteList);
@@ -146,8 +155,6 @@ public class MazeGenerator : MonoBehaviour
         }
         return false;
     }
-
-
     /**
      * @brief Fill _baseSpriteList with Images located in StreamingAssets/Images, taking few times to load all images
      */
@@ -158,16 +165,15 @@ public class MazeGenerator : MonoBehaviour
 
         StartCoroutine(nameof(LoadImages), allFiles);
     }
-    
     /**
      * @brief Load image
      */
     IEnumerator LoadImages(FileInfo[] allFiles)
     {
-    
+
         foreach (FileInfo file in allFiles)
         {
-            if ((file.Name.Contains("png")  || file.Name.Contains("jpg")) && !file.Name.Contains("meta"))
+            if ((file.Name.Contains("png") || file.Name.Contains("jpg")) && !file.Name.Contains("meta"))
             {
                 string playerFileWithoutExtension = Path.GetFileNameWithoutExtension(file.ToString());
                 string[] playerNameData = playerFileWithoutExtension.Split(" "[0]);
@@ -187,17 +193,18 @@ public class MazeGenerator : MonoBehaviour
 
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture(wwwImageFilePath);
                 yield return www.SendWebRequest();
-                
-                if(www.isNetworkError || www.isHttpError) {
+
+                if (www.isNetworkError || www.isHttpError)
+                {
                     Debug.Log(www.error);
                 }
-                else 
+                else
                 {
                     Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
                     Sprite sprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height),
                         new Vector2(0.5f, 0.5f));
                     sprite.name = file.Name;
-                    
+
                     _baseSpriteList.Add(sprite);
                 }
             }
@@ -205,16 +212,14 @@ public class MazeGenerator : MonoBehaviour
 
         _canCreate = true;
     }
-    
     /**
      * @brief Set the seed and generate the corridor
      */
     private void CreateMaze()
     {
-        Random.InitState(seed.Value);
+        Random.InitState(Seed.Value);
         InitMaze();
     }
-
     /**
      * Initialize the corridor
      */
@@ -230,22 +235,20 @@ public class MazeGenerator : MonoBehaviour
 
         BuildMaze();
     }
-    
     /**
      * @brief Creating object used to move player (CinemachineSmoothPath)
      */
     private void InitGameObject()
     {
         transform.position = Vector3.zero;
-        
+
         _master.AddComponent<CinemachineSmoothPath>();
         _master.name = "Corridor Maze";
 
         _playerPath = _master.GetComponent<CinemachineSmoothPath>();
         _wayPointsPath = new CinemachineSmoothPath.Waypoint[_length + _startLength];
-        
-    }
 
+    }
     /**
      * @brief Generates random values, index, used to know when to place a turn and an image.
      */
@@ -254,26 +257,26 @@ public class MazeGenerator : MonoBehaviour
         //Setup Turn place
         for (int i = 0; i < _turnNumber; ++i)
         {
-            float randomA =  i * _length / _turnNumber;
-            float randomB =   (i + 1) * _length / _turnNumber - 3;
+            float randomA = i * _length / _turnNumber;
+            float randomB = (i + 1) * _length / _turnNumber - 3;
             int j = Mathf.RoundToInt(Random.Range(randomA, randomB));
-            
+
             _turnValue.Add(j);
         }
 
         int maxImages = _spriteList.Count > _length ? _length : _spriteList.Count;
-        
+
         //Setup image place
         for (int i = 0; i < maxImages; ++i)
         {
-            float randomA =  i * _length / maxImages;
-            float randomB =   (i + 1) * _length / maxImages;
+            float randomA = i * _length / maxImages;
+            float randomB = (i + 1) * _length / maxImages;
             --randomB;
-            
+
             int j = Mathf.RoundToInt(Random.Range(randomA, randomB));
 
             //Debug.Log(randomA + " et " + randomB + " = " + j );
-            
+
             //Move images if it next to a turn
             if (_turnValue.Contains(j) && j != maxImages - 1)
                 ++j;
@@ -285,22 +288,20 @@ public class MazeGenerator : MonoBehaviour
             _imageValue.Add(j);
         }
     }
-
-
     /**
      * @brief Main function that generates nodes that allow the creation of the corridor
      */
     private void CorridorGeneration()
     {
         float pathHeight = 0.5f;
-        
+
         Direction previousDirection = Direction.North;
         Direction newDirection = Direction.North;
-        NodePosition position = new NodePosition(0,0);
+        NodePosition position = new NodePosition(0, 0);
 
         ImagePos oldImagePosition = ImagePos.none;
         ImagePos currentImagePosition = ImagePos.none;
-        
+
 
         // Base Node 
         _maze[position] = new MazeNode(position.X, position.Z, newDirection);
@@ -311,7 +312,7 @@ public class MazeGenerator : MonoBehaviour
             position = new Vector3(position.X, pathHeight, position.Z)
         };
         _wayPointsPath[0] = waypoint;
-        
+
         //Save previous node, all nodes know previous and next node
         MazeNode previousNode = _maze[position];
 
@@ -319,17 +320,17 @@ public class MazeGenerator : MonoBehaviour
         {
             position = GetPosition(newDirection, position);
             _maze[position] = new MazeNode(position.X, position.Z, newDirection);
-            
-            waypoint =  new CinemachineSmoothPath.Waypoint();
-            waypoint.position = new Vector3(position.X * _cubeSizeX, pathHeight , position.Z * _cubeSizeZ);
+
+            waypoint = new CinemachineSmoothPath.Waypoint();
+            waypoint.position = new Vector3(position.X * _cubeSize, pathHeight, position.Z * _cubeSize);
             _wayPointsPath[i + 1] = waypoint;
-            
+
             previousNode.SetNextNode(_maze[position]);
             _maze[position].SetPreviousNode(previousNode);
             previousNode = _maze[position];
         }
 
-        
+
         //Main loop
         for (int i = 0; i < _length; i++)
         {
@@ -348,7 +349,7 @@ public class MazeGenerator : MonoBehaviour
 
                     if (CheckDistance(tempPosition))
                         newDirection = tempDirection;
-                    
+
                 }
                 //Special case if it's the first block
                 /*if (i == 0)
@@ -358,21 +359,21 @@ public class MazeGenerator : MonoBehaviour
             previousDirection = newDirection;
             //Set Node position
             position = GetPosition(newDirection, position);
-            
+
             //New waypoint
-            waypoint =  new CinemachineSmoothPath.Waypoint();
-            waypoint.position = new Vector3(position.X * _cubeSizeX, pathHeight , position.Z * _cubeSizeZ);
+            waypoint = new CinemachineSmoothPath.Waypoint();
+            waypoint.position = new Vector3(position.X * _cubeSize, pathHeight, position.Z * _cubeSize);
             _wayPointsPath[i + _startLength] = waypoint;
 
             //Add new node to _maze
             _maze[position] = new MazeNode(position.X, position.Z, newDirection);
 
-            
-            
+
+
             //Check if random generated index equal current length index , if true generates image
             if (_imageValue.Contains(i))
             {
-                Vector3 imagePosition = CalculateRandomImagePosition( _maze[position], out currentImagePosition);
+                Vector3 imagePosition = CalculateRandomImagePosition(_maze[position], out currentImagePosition);
                 /*Debug.Log("Crrent " + currentImagePosition + " old " + oldImagePosition);
                 while (currentImagePosition == oldImagePosition)
                 {
@@ -384,22 +385,21 @@ public class MazeGenerator : MonoBehaviour
 
                 Debug.Log("================");
                 oldImagePosition = currentImagePosition;*/
-                
-                
+
+
                 _maze[position].SetImagePositon(imagePosition);
-                _maze[position].SetNegateImage( waypoint.position);
+                _maze[position].SetNegateImage(waypoint.position);
             }
 
             //Set previous and next node
             _maze[position].SetPreviousNode(previousNode);
             previousNode.SetNextNode(_maze[position]);
             previousNode.SetIsTurner(isTurner);
-            
-            previousNode = _maze[position];
-            
-        }
-    }     
 
+            previousNode = _maze[position];
+
+        }
+    }
     /**
      * @brief If image is generated in turner move it
      */
@@ -413,86 +413,82 @@ public class MazeGenerator : MonoBehaviour
                 switch (mazeNode.Value.GetNextNode().GetDirection())
                 {
                     case Direction.North:
-                        if(mazeNode.Value.GetPreviousNode().GetDirection() == Direction.East)
+                        if (mazeNode.Value.GetPreviousNode().GetDirection() == Direction.East)
                             mazeNode.Value.SetNegateImage(true);
-                        if(mazeNode.Value.GetPreviousNode().GetDirection() == Direction.West)
+                        if (mazeNode.Value.GetPreviousNode().GetDirection() == Direction.West)
                             mazeNode.Value.SetNegateImage(false);
-                        mazeNode.Value.SetImagePositon(ImagePosition(Random.Range(2, 4),  mazeNode.Value));
+                        mazeNode.Value.SetImagePositon(ImagePosition(Random.Range(2, 4), mazeNode.Value));
                         break;
                     case Direction.East:
-                        if(mazeNode.Value.GetPreviousNode().GetDirection() == Direction.North || mazeNode.Value.GetPreviousNode().GetDirection() == Direction.East )
+                        if (mazeNode.Value.GetPreviousNode().GetDirection() == Direction.North || mazeNode.Value.GetPreviousNode().GetDirection() == Direction.East)
                             mazeNode.Value.SetNegateImage(false);
-                        mazeNode.Value.SetImagePositon(ImagePosition(Random.Range(2, 4),  mazeNode.Value));
+                        mazeNode.Value.SetImagePositon(ImagePosition(Random.Range(2, 4), mazeNode.Value));
                         break;
                     case Direction.West:
-                        if(mazeNode.Value.GetPreviousNode().GetDirection() == Direction.North)
+                        if (mazeNode.Value.GetPreviousNode().GetDirection() == Direction.North)
                             mazeNode.Value.SetNegateImage(true);
-                        mazeNode.Value.SetImagePositon(ImagePosition(Random.Range(0, 2),  mazeNode.Value));
+                        mazeNode.Value.SetImagePositon(ImagePosition(Random.Range(0, 2), mazeNode.Value));
                         break;
                 }
             }
         }
     }
-    
     /**
      * @brief Set the player path
      */
     private void EndInit()
     {
         _playerPath.m_Waypoints = _wayPointsPath;
-        
+
         foreach (PlayerMovement playerMovement in FindObjectsOfType<PlayerMovement>())
         {
             playerMovement.SetPath(_playerPath);
         }
     }
-    
-
     private bool CheckDistance(NodePosition tempPosition)
     {
         return !_maze.ContainsKey(tempPosition);
     }
-    
     /**
      * @brief Generate wall, set material, floor, images,...
      */
     private void BuildMaze()
     {
         int i = 0;
-
-
         float decal = -0.5f;
-        
+
 
         foreach (var valuePair in _maze)
         {
             MazeNode node = valuePair.Value;
-            
+
             float wallPosition = _wallHeight / 2.0f + 0.5f;
-            Vector3 baseVector = new Vector3(node.GetPosition().X * _cubeSizeX, wallPosition ,node.GetPosition().Z * _cubeSizeZ);
+            Vector3 baseVector = new Vector3(node.GetPosition().X * _cubeSize, wallPosition, node.GetPosition().Z * _cubeSize);
 
 
             #region Spawn Floor
 
             //Create Floor
-            GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            floor.transform.position =  new Vector3(node.GetPosition().X * _cubeSizeX, 0 ,node.GetPosition().Z * _cubeSizeZ);
-            floor.transform.localScale = new Vector3(_cubeSizeX, 1, _cubeSizeZ);
-            floor.name = node.GetDirection() + " Corridor floor " + i;
-            floor.GetComponent<MeshRenderer>().material = floorMaterial;
-            
-            floor.transform.SetParent(_master.transform);
+            GameObject floor = CreateFloor(i, node);
+
+            //GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            //floor.transform.position =  new Vector3(node.GetPosition().X * _cubeSizeX, 0 ,node.GetPosition().Z * _cubeSizeZ);
+            //floor.transform.localScale = new Vector3(_cubeSizeX, 1, _cubeSizeZ);
+            //floor.name = node.GetDirection() + " Corridor floor " + i;
+            //floor.GetComponent<MeshRenderer>().material = floorMaterial;
+
+            //floor.transform.SetParent(_master.transform);
             #endregion
 
             #region Spawn Image
-            
+
             if (node.IsImage())
             {
                 //Pick our future sprite
                 Sprite selectedSprite;
 
                 //True = Get Random image, False = get the images in alphabetical order
-                if (randomizeImage.Value)
+                if (RandomizeImage.Value)
                 {
                     int random = Random.Range(0, _spriteList.Count);
                     selectedSprite = _spriteList[random];
@@ -545,7 +541,7 @@ public class MazeGenerator : MonoBehaviour
                 else
                 {
                     //Create simple target
-                    GameObject image = Instantiate(imagePrefab, node.GetImagePosition(), Quaternion.identity);
+                    GameObject image = Instantiate(ImagePrefab, node.GetImagePosition(), Quaternion.identity);
                     Target target = image.GetComponent<Target>();
                     image.transform.SetParent(floor.transform);
 
@@ -575,9 +571,9 @@ public class MazeGenerator : MonoBehaviour
                         }
 
                     }
-                }                   
+                }
             }
-            
+
             #endregion
 
             #region Spawn Wall
@@ -585,11 +581,11 @@ public class MazeGenerator : MonoBehaviour
 
             /*if (node.GetPreviousNode() != null && node.GetNextNode() != null)
                 Debug.Log("Number : " + i + " next " + node.GetNextNode().GetDirection() + " previous " + node.GetPreviousNode().GetDirection());*/
-            
-            
+
+
             WallsToDestroy(node.GetNextNode(), node.GetPreviousNode(), out Direction directionSupprPrevious, out Direction directionSupprNext);
 
-            
+
             //Create Wall South
             if (directionSupprPrevious != Direction.South && directionSupprNext != Direction.South)
                 CreateWall(Direction.South, floor.transform, baseVector, decal, node);
@@ -612,6 +608,9 @@ public class MazeGenerator : MonoBehaviour
             //Create Columns 
             CreateCeiling(floor.transform, baseVector);
 
+            //Create Rails
+            CreateRail(node.GetNextNode(), node.GetPreviousNode(),node, floor.transform, baseVector);
+
             #endregion
 
             // Poop code, check without
@@ -619,16 +618,15 @@ public class MazeGenerator : MonoBehaviour
 
 
             i++;
-            
+
             if (i == _maze.Count)
             {
-                
-                Vector3 pos =  new Vector3(node.GetPosition().X * _cubeSizeX, 3.0f ,node.GetPosition().Z * _cubeSizeZ);
-                Instantiate(raceEnd, pos, Quaternion.identity);
+
+                Vector3 pos = new Vector3(node.GetPosition().X * _cubeSize, 3.0f, node.GetPosition().Z * _cubeSize);
+                Instantiate(RaceEnd, pos, Quaternion.identity);
             }
         }
     }
-
     private void CreateFakeTarget(MazeNode node, GameObject floor)
     {
         for (int j = 0; j < 4; ++j)
@@ -657,8 +655,8 @@ public class MazeGenerator : MonoBehaviour
                             if (node.GetDirection() == Direction.West)
                                 removeRight = true;
                             break;
-                       
-                        case Direction.West:             
+
+                        case Direction.West:
                             if (node.GetDirection() == Direction.East)
                                 removeLeft = true;
                             if (node.GetDirection() == Direction.North)
@@ -669,7 +667,7 @@ public class MazeGenerator : MonoBehaviour
                     {
                         create = false;
                     }
-                
+
                     if (removeRight && j >= 2)
                     {
                         create = false;
@@ -678,59 +676,14 @@ public class MazeGenerator : MonoBehaviour
 
                 if (create)
                 {
-                    GameObject emptyTargetObject = Instantiate(emptyTarget, positon, Quaternion.identity);
+                    GameObject emptyTargetObject = Instantiate(EmptyTarget, positon, Quaternion.identity);
                     emptyTargetObject.transform.SetParent(floor.transform);
-                    emptyTargetObject.transform.localScale = _imageSize *  emptyTargetObject.transform.localScale;
+                    emptyTargetObject.transform.localScale = _imageSize * emptyTargetObject.transform.localScale;
                 }
             }
         }
     }
-
-    /* Build physical parts of the mine*/
-    private void CreateWall(Direction d, Transform floorTransform, Vector3 basePosition, float decal, MazeNode node)
-    {
-        GameObject wall = Instantiate(PrefabWall);/*GameObject.CreatePrimitive(PrimitiveType.Cube);*/
-        wall.transform.localScale = new Vector3(0.06f * _cubeSizeX, 0.15f * _wallHeight, 0.4f);
-
-        switch (d)
-        {
-            case Direction.North:
-                wall.name = "North Wall ";
-                wall.transform.position = basePosition + new Vector3(0, 0,  _cubeSizeZ / 2.0f - decal);
-                wall.transform.rotation = Quaternion.Euler(0,-180,0);/* = new Vector3(0.05f * _cubeSizeX, 0.5f *_wallHeight, 0.05f);*/
-                break;
-            case Direction.East:
-                wall.name = "East Wall ";
-                wall.transform.position = basePosition + new Vector3(_cubeSizeX / 2.0f - decal, 0,0);
-                wall.transform.rotation = Quaternion.Euler(0, -90, 0);
-                break;
-            case Direction.West:
-                wall.name = "West Wall ";
-                wall.transform.position = basePosition + new Vector3( -_cubeSizeX / 2.0f + decal , 0, 0);
-                wall.transform.rotation = Quaternion.Euler(0, 90, 0);
-                break;
-            case Direction.South:
-                wall.name = "South Wall ";
-                wall.transform.position =  basePosition + new Vector3(0, 0 ,  -_cubeSizeZ/2.0f + decal);
-                wall.transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-        }
-        
-        wall.transform.SetParent(floorTransform);
-    }
-    private void CreateCeiling(Transform floorTransform, Vector3 basePosition)
-    {
-        //Create ceiling
-        GameObject ceiling = Instantiate(PrefabCeiling);
-
-        ceiling.transform.position = new Vector3(basePosition.x, wallHeight + 3f, basePosition.z);
-        ceiling.transform.rotation = Quaternion.Euler(90, 90 * Random.Range(0,3), 0);
-        ceiling.transform.localScale = new Vector3(0.09f * _cubeSizeX, 0.09f * _cubeSizeX, 0.6f);
-        ceiling.transform.SetParent(floorTransform);
-
-    }
-    /* --- */
-
+    
     private NodePosition GetPosition(Direction testDirection, NodePosition tempPosition)
     {
         switch (testDirection)
@@ -747,10 +700,9 @@ public class MazeGenerator : MonoBehaviour
         }
         return tempPosition;
     }
-
     private Vector3 CalculateRandomImagePosition(MazeNode n, out ImagePos imagepos)
     {
-      
+
         float r = Random.Range(0, 101);
 
         if (r < 25)
@@ -773,21 +725,11 @@ public class MazeGenerator : MonoBehaviour
             imagepos = ImagePos.TopRight;
             return ImagePosition(3, n);
         }
-        
+
         imagepos = ImagePos.none;
-        
+
         return Vector3.zero;
     }
-    
-    public enum ImagePos
-    {
-        TopLeft,
-        TopRight,
-        BotLeft,
-        BotRight,
-        none
-    }
-
     private Vector3 ImagePosition(int i, MazeNode n, bool useToSetImagePosition = true)
     {
         float xDecal = 0;
@@ -800,50 +742,47 @@ public class MazeGenerator : MonoBehaviour
         {
             case Direction.North:
             case Direction.South:
-                xDecal = _cubeSizeX / 2.0f - 1.0f;
+                xDecal = _cubeSize / 2.0f - 1.0f;
                 break;
             case Direction.East:
             case Direction.West:
-                zDecal = _cubeSizeZ/2.0f - 1.0f;
+                zDecal = _cubeSize / 2.0f - 1.0f;
                 break;
         }
-        
-        if(useToSetImagePosition)
+
+        if (useToSetImagePosition)
             n.SetIntImagePositon(i);
-        
+
         switch (i)
         {
             case 0:
-                return new Vector3(np.X * _cubeSizeX + xDecal, _imageSize, np.Z * _cubeSizeZ + zDecal);
+                return new Vector3(np.X * _cubeSize + xDecal, _imageSize, np.Z * _cubeSize + zDecal);
             case 1:
-                return new Vector3(np.X * _cubeSizeX + xDecal, _wallHeight + (1 - _imageSize), np.Z * _cubeSizeZ + zDecal);
+                return new Vector3(np.X * _cubeSize + xDecal, _wallHeight + (1 - _imageSize), np.Z * _cubeSize + zDecal);
             case 2:
-                return new Vector3(np.X * _cubeSizeX - xDecal, _imageSize, np.Z * _cubeSizeZ - zDecal);
+                return new Vector3(np.X * _cubeSize - xDecal, _imageSize, np.Z * _cubeSize - zDecal);
             case 3:
-                return new Vector3(np.X * _cubeSizeX - xDecal, _wallHeight + (1 - _imageSize), np.Z * _cubeSizeZ - zDecal);
+                return new Vector3(np.X * _cubeSize - xDecal, _wallHeight + (1 - _imageSize), np.Z * _cubeSize - zDecal);
         }
-        
-        
+
+
         return Vector3.zero;
     }
-    
-
     private void WallsToDestroy(MazeNode nextNode, MazeNode previousNode, out Direction wallToDestroyPrevious, out Direction wallToDestroyNext)
     {
         wallToDestroyPrevious = Direction.Undefined;
         wallToDestroyNext = Direction.Undefined;
-        
-        if(previousNode != null)
+
+        if (previousNode != null)
         {
             wallToDestroyPrevious = WhereIsNode(previousNode, previousNode.GetNextNode());
         }
 
         if (nextNode != null)
         {
-            wallToDestroyNext =  nextNode.GetDirection();
+            wallToDestroyNext = nextNode.GetDirection();
         }
     }
-    
     private Direction WhereIsNode(MazeNode n, MazeNode n2)
     {
         if (n.GetPosition().X < n2.GetPosition().X)
@@ -857,142 +796,165 @@ public class MazeGenerator : MonoBehaviour
 
         return Direction.Undefined;
     }
-
-
     private Direction GetRandomDirection()
     {
         float r = Random.Range(0.0f, 100f);
 
-      /*  if (r < 25.0f)
-            return Direction.East;
-        if(r >= 25.0f && r < 50.0f)
-            return Direction.North;
-        if(r >= 50.0f && r < 75.0f)
-            return Direction.South;
-        if(r >= 75.0f)
-            return Direction.West;*/
-      
-          if (r < 33.0f)
+        /*  if (r < 25.0f)
               return Direction.East;
-          if(r >= 33.0f && r < 66.0f)
+          if(r >= 25.0f && r < 50.0f)
               return Direction.North;
-          if(r >= 66.0f)
-              return Direction.West;
-      
-      
+          if(r >= 50.0f && r < 75.0f)
+              return Direction.South;
+          if(r >= 75.0f)
+              return Direction.West;*/
+
+        if (r < 33.0f)
+            return Direction.East;
+        if (r >= 33.0f && r < 66.0f)
+            return Direction.North;
+        if (r >= 66.0f)
+            return Direction.West;
+
+
 
         return Direction.East;
     }
+
+
+    /* Build physical parts of the mine*/
+    private GameObject CreateFloor(int index, MazeNode node)
+    {
+        GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        floor.transform.position = new Vector3(node.GetPosition().X * _cubeSize, 0, node.GetPosition().Z * _cubeSize);
+        floor.transform.localScale = new Vector3(_cubeSize, 1, _cubeSize);
+        floor.name = node.GetDirection() + " Corridor floor " + index;
+        floor.GetComponent<MeshRenderer>().material = FloorMaterial;
+
+        floor.transform.SetParent(_master.transform);
+
+        return floor;
+    }
+    private void CreateRail(MazeNode nextNode, MazeNode previousNode, MazeNode currentNode, Transform floorTransform, Vector3 basePosition)
+    {
+        //Create rail
+        GameObject rail;
+
+        //Select a straight rail or rotating rail
+        if (nextNode != null && nextNode.GetDirection() != currentNode.GetDirection() && 
+            nextNode.GetDirection() != Direction.Undefined && currentNode.GetDirection() != Direction.Undefined)
+        {
+            rail = Instantiate(PrefabRotatingRail);
+
+            //Apply first the scale on rails
+            rail.transform.localScale = new Vector3(0.12f, 0.12f, 0.2f);
+        }
+        else
+        {
+            rail = Instantiate(PrefabStraightRail);
+
+            //Apply first the scale on rails
+            rail.transform.localScale = new Vector3(0.12f, 0.12f, 0.2f);
+        }
+
+        //Compute lenghts
+        float railLenght = rail.GetComponent<Renderer>().bounds.extents.z;
+        float railHeight = rail.GetComponent<Renderer>().bounds.extents.y;
+        float floorLenght = floorTransform.GetComponent<Renderer>().bounds.extents.z;
+        float floorHeight = floorTransform.GetComponent<Renderer>().bounds.extents.y;
+
+        //Find the direction of the current cube
+        Vector3 railPosition;
+        Quaternion railRotation;
+
+        if (currentNode.GetDirection() == Direction.East || currentNode.GetDirection() == Direction.West)
+        {
+            railPosition = new Vector3(basePosition.x - (floorLenght) + railLenght, floorHeight + railHeight, basePosition.z);
+            railRotation = Quaternion.Euler(-90, 90, 0);
+        }
+        else
+        {
+            railPosition = new Vector3(basePosition.x, floorHeight + railHeight, basePosition.z - (floorLenght) + railLenght);
+            railRotation = Quaternion.Euler(-90, 0, 0);
+        }            
+
+        //Compute how many rails we need to fill the fragment
+        float neededRails = ((floorLenght * 2) / (railLenght * 2))-1;
+
+        rail.transform.position = railPosition;
+        rail.transform.rotation = railRotation;
+        rail.transform.SetParent(floorTransform);
+
+        //Create rails until they fill the corridor segment
+        for (int i = 0; i < neededRails; i++)
+        {
+            GameObject nextRail = Instantiate(PrefabStraightRail);
+            nextRail.transform.localScale = new Vector3(0.12f, 0.12f, 0.2f);
+
+            //Find the direction of the current cube
+            Vector3 nextRailPosition;
+            Quaternion nextRailRotation;
+
+            if (currentNode.GetDirection() == Direction.East || currentNode.GetDirection() == Direction.West)
+            {
+                nextRailPosition = railPosition + new Vector3(railLenght * 2 * i, 0, 0);
+                nextRailRotation = Quaternion.Euler(-90, 90, 0);
+            }
+            else
+            {
+                nextRailPosition = railPosition + new Vector3(0, 0, railLenght * 2 * i);
+                nextRailRotation = Quaternion.Euler(-90, 0, 0);
+            }
+
+            nextRail.transform.position = nextRailPosition;
+            nextRail.transform.rotation = nextRailRotation;
+            nextRail.transform.SetParent(floorTransform);
+        }
+    }
+    private void CreateWall(Direction d, Transform floorTransform, Vector3 basePosition, float decal, MazeNode node)
+    {
+        GameObject wall = Instantiate(PrefabWall);/*GameObject.CreatePrimitive(PrimitiveType.Cube);*/
+        wall.transform.localScale = new Vector3(0.06f * _cubeSize, 0.15f * _wallHeight, 0.4f);
+
+        switch (d)
+        {
+            case Direction.North:
+                wall.name = "North Wall ";
+                wall.transform.position = basePosition + new Vector3(0, 0, _cubeSize / 2.0f - decal);
+                wall.transform.rotation = Quaternion.Euler(0, -180, 0);/* = new Vector3(0.05f * _cubeSizeX, 0.5f *_wallHeight, 0.05f);*/
+                break;
+            case Direction.East:
+                wall.name = "East Wall ";
+                wall.transform.position = basePosition + new Vector3(_cubeSize / 2.0f - decal, 0, 0);
+                wall.transform.rotation = Quaternion.Euler(0, -90, 0);
+                break;
+            case Direction.West:
+                wall.name = "West Wall ";
+                wall.transform.position = basePosition + new Vector3(-_cubeSize / 2.0f + decal, 0, 0);
+                wall.transform.rotation = Quaternion.Euler(0, 90, 0);
+                break;
+            case Direction.South:
+                wall.name = "South Wall ";
+                wall.transform.position = basePosition + new Vector3(0, 0, -_cubeSize / 2.0f + decal);
+                wall.transform.rotation = Quaternion.Euler(0, 0, 0);
+                break;
+        }
+
+        wall.transform.SetParent(floorTransform);
+    }
+    private void CreateCeiling(Transform floorTransform, Vector3 basePosition)
+    {
+        //Create ceiling
+        GameObject ceiling = Instantiate(PrefabCeiling);
+
+        ceiling.transform.position = new Vector3(basePosition.x, WallHeight + 3f, basePosition.z);
+        ceiling.transform.rotation = Quaternion.Euler(90, 90 * Random.Range(0, 3), 0);
+        ceiling.transform.localScale = new Vector3(0.09f * _cubeSize, 0.09f * _cubeSize, 0.6f);
+        ceiling.transform.SetParent(floorTransform);
+
+    }
+    /* --- */
+    #endregion
+
 }
 
-public class MazeNode
-{
-    private NodePosition _nodePosition;
-    private MazeNode _previousNode;
-    private MazeNode _nextNode;
-    
-    private Vector3 _imagePosition;
-    private Direction _direction;
-    private bool _negateImagePosition;
-    private bool _isTurner;
-
-    public MazeNode(int x, int z, Direction d)
-    {
-        _nodePosition.X = x;
-        _nodePosition.Z = z;
-        _nodePosition.ImagePositionInt = -1;
-        _imagePosition = Vector3.zero;
-        _direction = d;
-    }
-    
-
-    public bool IsCorner()
-    {
-        return _isTurner;
-    }
-
-    public void SetIsTurner(bool isTurn)
-    {
-        _isTurner = isTurn;
-    }
-
-    public NodePosition GetPosition()
-    {
-        return _nodePosition;
-    }
-
-    public void SetIntImagePositon(int pos)
-    {
-        _nodePosition.ImagePositionInt = pos;
-    }
-
-    public MazeNode GetPreviousNode()
-    {
-        return _previousNode;
-    }
-    
-    public MazeNode GetNextNode()
-    {
-        return _nextNode;
-    }
-
-    public void SetPreviousNode(MazeNode previousNode)
-    {
-        _previousNode = previousNode;
-    }
-    
-    public void SetNextNode(MazeNode nextNode)
-    {
-        _nextNode = nextNode;
-    }
-
-    public void SetImagePositon(Vector3 pos)
-    {
-        _imagePosition = pos;
-    }
-
-    public bool IsImage()
-    {
-        return Vector3.Distance(_imagePosition, Vector3.zero) > 0.1f;
-    }
-
-    public Vector3 GetImagePosition()
-    {
-        return _imagePosition;
-    }
-
-    public Direction GetDirection()
-    {
-        return _direction;
-    }
-
-    public bool IsNegateImagePosition()
-    {
-        return _negateImagePosition;
-    }
-
-    public void SetNegateImage(Vector3 nodePosition)
-    {
-        if (_imagePosition.x > nodePosition.x && (_direction == Direction.North || _direction == Direction.South))
-            _negateImagePosition = true;
-        if (_imagePosition.z < nodePosition.z && _direction == Direction.East)
-            _negateImagePosition = true;
-        if (_imagePosition.z > nodePosition.z && _direction == Direction.West)
-            _negateImagePosition = true;
-    }
-
-    public void SetNegateImage(bool setter)
-    {
-        _negateImagePosition = setter;
-    }
-
-    public void SetDirection(Direction newDirection)
-    {
-        _direction = newDirection;
-    }
-
-    public int GetIntImagePosition()
-    {
-        return _nodePosition.ImagePositionInt;
-    }
-}
