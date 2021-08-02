@@ -879,14 +879,14 @@ public class MazeGenerator : MonoBehaviour
         }            
 
         //Compute how many rails we need to fill the fragment
-        float neededRails = ((floorLenght * 2) / (railLenght * 2))-1;
-
+        float neededRails = ((floorLenght * 2f) / (railLenght * 2f));
+    
         rail.transform.position = railPosition;
         rail.transform.rotation = railRotation;
         rail.transform.SetParent(floorTransform);
 
         //Create rails until they fill the corridor segment
-        for (int i = 0; i < neededRails; i++)
+        for (int i = 1; i < Mathf.CeilToInt(neededRails); i++)
         {
             GameObject nextRail = Instantiate(PrefabStraightRail);
             nextRail.transform.localScale = new Vector3(0.12f, 0.12f, 0.2f);
