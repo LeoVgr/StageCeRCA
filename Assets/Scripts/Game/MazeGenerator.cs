@@ -52,7 +52,13 @@ public class MazeGenerator : MonoBehaviour
     public IntReference seed;
     public BoolVariable randomizeImage;
 
-    [Header("Prefab, material,...")] 
+    [Header("Prefab, material,...")]
+    public GameObject PrefabWall;
+    public GameObject PrefabCeiling;
+    public GameObject PrefabColumn;
+    public GameObject PrefabStraightRail;
+    public GameObject PrefabRotatingRail;
+    
     public Material wallMaterial;
     public Material floorMaterial;
     public GameObject imagePrefab;
@@ -455,7 +461,7 @@ public class MazeGenerator : MonoBehaviour
         int i = 0;
 
 
-        float decal = 0.5f;
+        float decal = -0.5f;
         
 
         foreach (var valuePair in _maze)
@@ -599,8 +605,13 @@ public class MazeGenerator : MonoBehaviour
             //Create Wall West
             if (directionSupprPrevious != Direction.West && directionSupprNext != Direction.West)
                 CreateWall(Direction.West, floor.transform, baseVector, decal, node);
-            
-            
+
+            //Create Ceiling 
+            CreateCeiling(floor.transform, baseVector);
+
+            //Create Columns 
+            CreateCeiling(floor.transform, baseVector);
+
             #endregion
 
             // Poop code, check without
@@ -675,43 +686,50 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
+    /* Build physical parts of the mine*/
     private void CreateWall(Direction d, Transform floorTransform, Vector3 basePosition, float decal, MazeNode node)
     {
-        GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        GameObject wall = Instantiate(PrefabWall);/*GameObject.CreatePrimitive(PrimitiveType.Cube);*/
+        wall.transform.localScale = new Vector3(0.06f * _cubeSizeX, 0.15f * _wallHeight, 0.4f);
+
         switch (d)
         {
             case Direction.North:
                 wall.name = "North Wall ";
                 wall.transform.position = basePosition + new Vector3(0, 0,  _cubeSizeZ / 2.0f - decal);
-                wall.transform.localScale = new Vector3(_cubeSizeX, _wallHeight, 1);
+                wall.transform.rotation = Quaternion.Euler(0,-180,0);/* = new Vector3(0.05f * _cubeSizeX, 0.5f *_wallHeight, 0.05f);*/
                 break;
             case Direction.East:
                 wall.name = "East Wall ";
                 wall.transform.position = basePosition + new Vector3(_cubeSizeX / 2.0f - decal, 0,0);
-                wall.transform.localScale = new Vector3(1, _wallHeight, _cubeSizeZ);
+                wall.transform.rotation = Quaternion.Euler(0, -90, 0);
                 break;
             case Direction.West:
                 wall.name = "West Wall ";
                 wall.transform.position = basePosition + new Vector3( -_cubeSizeX / 2.0f + decal , 0, 0);
-                wall.transform.localScale = new Vector3(1, _wallHeight, _cubeSizeZ);
+                wall.transform.rotation = Quaternion.Euler(0, 90, 0);
                 break;
             case Direction.South:
                 wall.name = "South Wall ";
                 wall.transform.position =  basePosition + new Vector3(0, 0 ,  -_cubeSizeZ/2.0f + decal);
-                wall.transform.localScale = new Vector3(_cubeSizeX, _wallHeight, 1);
+                wall.transform.rotation = Quaternion.Euler(0, 0, 0);
                 break;
         }
         
         wall.transform.SetParent(floorTransform);
-        wall.GetComponent<MeshRenderer>().material = wallMaterial;
-
-        //Create ceiling
-        GameObject ceiling = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        ceiling.transform.position = new Vector3(basePosition.x, wallHeight + 0.5f, basePosition.z);
-        ceiling.transform.localScale = new Vector3(_cubeSizeX, 0.1f, _cubeSizeZ);
-        ceiling.transform.SetParent(floorTransform);
-        ceiling.GetComponent<MeshRenderer>().material = wallMaterial;
     }
+    private void CreateCeiling(Transform floorTransform, Vector3 basePosition)
+    {
+        //Create ceiling
+        GameObject ceiling = Instantiate(PrefabCeiling);
+
+        ceiling.transform.position = new Vector3(basePosition.x, wallHeight + 3f, basePosition.z);
+        ceiling.transform.rotation = Quaternion.Euler(90, 90 * Random.Range(0,3), 0);
+        ceiling.transform.localScale = new Vector3(0.09f * _cubeSizeX, 0.09f * _cubeSizeX, 0.6f);
+        ceiling.transform.SetParent(floorTransform);
+
+    }
+    /* --- */
 
     private NodePosition GetPosition(Direction testDirection, NodePosition tempPosition)
     {
