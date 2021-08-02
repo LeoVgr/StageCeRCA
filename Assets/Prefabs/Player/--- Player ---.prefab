@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3fe902121744e4a98d36151d8405f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireStartPositon: {fileID: 5348930802557800616}
+  FireStartPositon: {fileID: 5568998858681792530}
   PlayerCanFire: {fileID: 11400000, guid: be80e8c6a3b5fe244b0b5d53bd4f9bf0, type: 2}
   CameraInfps: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0, type: 2}
   GunObject: {fileID: 5222772883039004003}
@@ -431,9 +431,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4991321827306260092}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5348930802557800616 stripped
+--- !u!1 &5568998858681792530 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1116757433879107284, guid: d399645252734234e8e427e993dc314e,
+  m_CorrespondingSourceObject: {fileID: 580315869758291566, guid: d399645252734234e8e427e993dc314e,
     type: 3}
   m_PrefabInstance: {fileID: 4991321827306260092}
   m_PrefabAsset: {fileID: 0}
