@@ -246,6 +246,7 @@ public class MazeGenerator : MonoBehaviour
         _master.name = "Corridor Maze";
 
         _playerPath = _master.GetComponent<CinemachineSmoothPath>();
+        _playerPath.m_Resolution = 100;
         _wayPointsPath = new CinemachineSmoothPath.Waypoint[_length + _startLength];
 
     }
@@ -607,9 +608,7 @@ public class MazeGenerator : MonoBehaviour
 
             //Create Columns 
             CreateCeiling(floor.transform, baseVector);
-
-            //Create Rails
-            CreateRail(node.GetNextNode(), node.GetPreviousNode(),node, floor.transform, baseVector);
+           
 
             #endregion
 
@@ -626,6 +625,9 @@ public class MazeGenerator : MonoBehaviour
                 Instantiate(RaceEnd, pos, Quaternion.identity);
             }
         }
+
+        //Create Rails
+        CreateRail(/*node.GetNextNode(), node.GetPreviousNode(), node, floor.transform, baseVector*/);
     }
     private void CreateFakeTarget(MazeNode node, GameObject floor)
     {
@@ -835,81 +837,31 @@ public class MazeGenerator : MonoBehaviour
 
         return floor;
     }
-    private void CreateRail(MazeNode nextNode, MazeNode previousNode, MazeNode currentNode, Transform floorTransform, Vector3 basePosition)
+    private void CreateRail()
     {
-        //Create rail
-        GameObject rail;
+        //Create the model with good scale
+        GameObject rail = Instantiate(PrefabStraightRail, new Vector3(0,0,0), Quaternion.identity);
+        rail.transform.localScale = new Vector3(0.12f, 0.08f, 0.12f);
+        rail.transform.rotation = Quaternion.Euler(90, 0, 0);
 
-        //Select a straight rail or rotating rail
-        if (nextNode != null && nextNode.GetDirection() != currentNode.GetDirection() && 
-            nextNode.GetDirection() != Direction.Undefined && currentNode.GetDirection() != Direction.Undefined)
-        {
-            rail = Instantiate(PrefabRotatingRail);
-
-            //Apply first the scale on rails
-            rail.transform.localScale = new Vector3(0.12f, 0.12f, 0.2f);
-        }
-        else
-        {
-            rail = Instantiate(PrefabStraightRail);
-
-            //Apply first the scale on rails
-            rail.transform.localScale = new Vector3(0.12f, 0.12f, 0.2f);
-        }
-
-        //Compute lenghts
+        //Compute dimension of the rail
         float railLenght = rail.GetComponent<Renderer>().bounds.extents.z;
         float railHeight = rail.GetComponent<Renderer>().bounds.extents.y;
-        float floorLenght = floorTransform.GetComponent<Renderer>().bounds.extents.z;
-        float floorHeight = floorTransform.GetComponent<Renderer>().bounds.extents.y;
 
-        //Find the direction of the current cube
-        Vector3 railPosition;
-        Quaternion railRotation;
+        //Compute the needed number of rail depending the path's lenght
+        float p = _playerPath.PathLength / (railLenght*1.7f);
+        float offset = _playerPath.MaxPos / p;
 
-        if (currentNode.GetDirection() == Direction.East || currentNode.GetDirection() == Direction.West)
+        //Add the other rails
+        for (int i = 0; i < p; i++)
         {
-            railPosition = new Vector3(basePosition.x - (floorLenght) + railLenght, floorHeight + railHeight, basePosition.z);
-            railRotation = Quaternion.Euler(-90, 90, 0);
+            GameObject nextrail = Instantiate(PrefabStraightRail, _playerPath.EvaluatePosition(offset * i) + new Vector3(0, railHeight, 0), Quaternion.identity);
+            nextrail.transform.localScale = new Vector3(0.12f, 0.08f, 0.12f);
+            nextrail.transform.rotation = _playerPath.EvaluateOrientation(offset * i) * Quaternion.Euler(90, 0, 0);      
         }
-        else
-        {
-            railPosition = new Vector3(basePosition.x, floorHeight + railHeight, basePosition.z - (floorLenght) + railLenght);
-            railRotation = Quaternion.Euler(-90, 0, 0);
-        }            
 
-        //Compute how many rails we need to fill the fragment
-        float neededRails = ((floorLenght * 2f) / (railLenght * 2f));
-    
-        rail.transform.position = railPosition;
-        rail.transform.rotation = railRotation;
-        rail.transform.SetParent(floorTransform);
-
-        //Create rails until they fill the corridor segment
-        for (int i = 1; i < Mathf.CeilToInt(neededRails); i++)
-        {
-            GameObject nextRail = Instantiate(PrefabStraightRail);
-            nextRail.transform.localScale = new Vector3(0.12f, 0.12f, 0.2f);
-
-            //Find the direction of the current cube
-            Vector3 nextRailPosition;
-            Quaternion nextRailRotation;
-
-            if (currentNode.GetDirection() == Direction.East || currentNode.GetDirection() == Direction.West)
-            {
-                nextRailPosition = railPosition + new Vector3(railLenght * 2 * i, 0, 0);
-                nextRailRotation = Quaternion.Euler(-90, 90, 0);
-            }
-            else
-            {
-                nextRailPosition = railPosition + new Vector3(0, 0, railLenght * 2 * i);
-                nextRailRotation = Quaternion.Euler(-90, 0, 0);
-            }
-
-            nextRail.transform.position = nextRailPosition;
-            nextRail.transform.rotation = nextRailRotation;
-            nextRail.transform.SetParent(floorTransform);
-        }
+        //Destroy the rail's model
+        Destroy(rail);
     }
     private void CreateWall(Direction d, Transform floorTransform, Vector3 basePosition, float decal, MazeNode node)
     {

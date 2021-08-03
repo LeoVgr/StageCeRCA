@@ -32,6 +32,10 @@ namespace Player
         #endregion
 
         #region Events
+        private void Start()
+        {
+            
+        }
         private void Update()
         {
             //If the player reach the end show UI
@@ -108,9 +112,7 @@ namespace Player
             {
                 DollyCartInfo.m_Path = _playerPath;
                 DollyCartInfo.m_Position = 0.0f;
-                //transform.position = _dollyCartInfo.transform.position;
-                WaypointIndex.SetValue(0);
-                
+                WaypointIndex.SetValue(0);              
             }
         }
         #endregion
