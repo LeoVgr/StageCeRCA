@@ -92,14 +92,31 @@ public class FillPresets : MonoBehaviour
     }
     private void ValueChangeCheck()
     {
-        //Set the preset name in the input field and dropdown UI
-        string text = _tmpDropdown.options[_tmpDropdown.value].text;
-        Input.text = text;
+        ImportPreset(false);
+    }
+    public void ImportPreset(bool IsTempSave)
+    {
+        string text;
 
-        PresetName?.SetValue(text);
+        if (IsTempSave)
+        {
+            text = "[TempSave]";
+        }
+        else
+        {
+            //Set the preset name in the input field and dropdown UI
+            text = _tmpDropdown.options[_tmpDropdown.value].text;
+            Input.text = text;
+
+            PresetName?.SetValue(text);
+        }
+        
 
         //Set all the csv value to atom's variable
         Dictionary<ColumnNames, float> dico;
+
+        if(_presets == null)
+            _presets = new Dictionary<string, Dictionary<ColumnNames, float>>();
 
         if (_presets.TryGetValue(text, out dico))
         {
@@ -107,11 +124,11 @@ public class FillPresets : MonoBehaviour
             {
 
                 switch (keyValuePair.Key)
-                {                    
+                {
                     case ColumnNames.Seed:
                         Seed.SetValue((int)keyValuePair.Value);
                         break;
-                    case ColumnNames.Longueur:                       
+                    case ColumnNames.Longueur:
                         CorridorLength.SetValue((int)keyValuePair.Value);
                         break;
                     case ColumnNames.Largeur:

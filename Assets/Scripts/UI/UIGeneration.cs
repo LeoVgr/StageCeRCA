@@ -17,11 +17,9 @@ public class UIGeneration : MonoBehaviour
 
     public GameObject mazeUI;
     public GameObject inputIdentfiant;
+    public SavePreset SavePreset;
 
     public StringVariable atomIdentifiant;
-    public BoolVariable isGameStart;
-    public bool hideOnGenerate;
-
     private Vector3 idBaseScale;
     
     // Start is called before the first frame update
@@ -40,6 +38,7 @@ public class UIGeneration : MonoBehaviour
         }
         else
         {
+            SavePreset.AddItemThenSave(true);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }

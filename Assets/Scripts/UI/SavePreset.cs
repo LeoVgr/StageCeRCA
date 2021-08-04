@@ -67,50 +67,60 @@ public class SavePreset : MonoBehaviour
     #endregion
 
     #region "Methods"
-    public void AddItemThenSave()
+    public void AddItemThenSave(bool IsTempSave)
     {
-        if (_Input.text != "")
+        //Name of the preset
+        string inputTextName;
+
+        if (IsTempSave)
         {
+            inputTextName = "[TempSave]";
+        }
+        else
+        {
+            if (_Input.text == "")
+                return;
 
             _Input.text = _Input.text.Replace(";", ".");
-            
-            if(fillPresetObject.Value && !fillPresets)
-                fillPresets = fillPresetObject.Value.GetComponent<FillPresets>();
-            
-            dico = fillPresets.GetPresets();
-            
-            string inputTextName = _Input.text;
-            dico[inputTextName] = new Dictionary<FillPresets.ColumnNames, float>();
-            dico[inputTextName][(FillPresets.ColumnNames.Seed)] = seed.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.Longueur)] = longueur.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.Largeur)] = largeur.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.Hauteur)] = hauteur.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.NbrVirage)] = nbrVirage.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.TempsImage)] = tempsImage.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.RandomizeImage)] = randomizeImage.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.TailleDesImages)] = tailleDesImages.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.Timer)] = chronoImage.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.Score)] = showScore.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.FpsCamera)] = fpsCamera.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.Shoot)] = isShootActivated.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.ShowEndTime)] = ShowEndTime.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.Speed)] = Speed.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.BreakForce)] = BreakForce.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.Remy)] = isRemySelected.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.Megan)] = isMeganSelected.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = isMouseySelected.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.AutoMode)] = IsAutoMode.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.SemiAutoMode)] = IsSemiAutoMode.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.ManualMode)] = IsManualMode.Value ? 1 : 0;
-            dico[inputTextName][(FillPresets.ColumnNames.MusicVolume)] = MusicVolume.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.SfxVolume)] = SfxVolume.Value;
-            dico[inputTextName][(FillPresets.ColumnNames.CrosshairColorized)] = IsCrosshairColorized.Value ? 1 : 0;
-            delete = false;
-            
-            DOVirtual.DelayedCall(Time.deltaTime, (() => presetName?.SetValue(inputTextName)));
-            
-            SaveCSV();
+
+            inputTextName = _Input.text;
         }
+
+        if (fillPresetObject.Value && !fillPresets)
+            fillPresets = fillPresetObject.Value.GetComponent<FillPresets>();
+
+        dico = fillPresets.GetPresets();
+        
+        dico[inputTextName] = new Dictionary<FillPresets.ColumnNames, float>();
+        dico[inputTextName][(FillPresets.ColumnNames.Seed)] = seed.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.Longueur)] = longueur.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.Largeur)] = largeur.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.Hauteur)] = hauteur.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.NbrVirage)] = nbrVirage.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.TempsImage)] = tempsImage.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.RandomizeImage)] = randomizeImage.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.TailleDesImages)] = tailleDesImages.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.Timer)] = chronoImage.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.Score)] = showScore.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.FpsCamera)] = fpsCamera.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.Shoot)] = isShootActivated.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.ShowEndTime)] = ShowEndTime.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.Speed)] = Speed.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.BreakForce)] = BreakForce.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.Remy)] = isRemySelected.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.Megan)] = isMeganSelected.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = isMouseySelected.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.AutoMode)] = IsAutoMode.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.SemiAutoMode)] = IsSemiAutoMode.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.ManualMode)] = IsManualMode.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.MusicVolume)] = MusicVolume.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.SfxVolume)] = SfxVolume.Value;
+        dico[inputTextName][(FillPresets.ColumnNames.CrosshairColorized)] = IsCrosshairColorized.Value ? 1 : 0;
+        delete = false;
+
+        DOVirtual.DelayedCall(Time.deltaTime, (() => presetName?.SetValue(inputTextName)));
+
+        SaveCSV();
     }
     public void DeleteItemThenSave()
     {

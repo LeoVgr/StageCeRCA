@@ -300,6 +300,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4695237271452456653, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695237271452456653, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SavePreset, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4724425360533551999, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -782,6 +792,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8700334320796237467, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
+        type: 3}
+      propertyPath: SavePreset
+      value: 
+      objectReference: {fileID: 1443922132}
     - target: {fileID: 9063220662085623476, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
         type: 3}
       propertyPath: RemyCharacterPreview
@@ -1569,3 +1584,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateAround: {x: 0, y: 1, z: 0}
   rotateSpeed: 30
+--- !u!114 &1443922132 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 846944201415803303, guid: 47fdbae2f7d4e7f428c0cc626a38648c,
+    type: 3}
+  m_PrefabInstance: {fileID: 227260763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdaa7c2b049d02d478e00765c61baf03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

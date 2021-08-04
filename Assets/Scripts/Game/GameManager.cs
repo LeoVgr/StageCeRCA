@@ -67,7 +67,6 @@ public class GameManager : Singleton<GameManager>
         _previousGameStatement = GameStatement.None;
         EnterReadyStatement();
     }
-
     private void Update()
     {
         switch (_gameStatement)
@@ -96,7 +95,6 @@ public class GameManager : Singleton<GameManager>
         //    Pause();
         //}
     }
-
     private void OnDestroy()
     {
         Cursor.visible = true;
@@ -111,7 +109,6 @@ public class GameManager : Singleton<GameManager>
     {
         return _gameStatement;
     }
-
     private void CallExitPreviousState(GameStatement previousGameState)
     {
         switch (previousGameState)
@@ -137,7 +134,6 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
     }
-
     public void SetReadyStatement()
     {
         _previousGameStatement = _gameStatement;
@@ -145,7 +141,6 @@ public class GameManager : Singleton<GameManager>
         _gameStatement = GameStatement.Ready;
         EnterReadyStatement();
     }
-
     public void SetCountdownStatement()
     {
         _previousGameStatement = _gameStatement;
@@ -153,7 +148,6 @@ public class GameManager : Singleton<GameManager>
         _gameStatement = GameStatement.Countdown;
         EnterCountdownStatement();
     }
-
     public void SetRunningStatement()
     {
         _previousGameStatement = _gameStatement;
@@ -161,7 +155,6 @@ public class GameManager : Singleton<GameManager>
         _gameStatement = GameStatement.Running;
         EnterRunningStatement();
     }
-
     public void SetPauseStatement()
     {
         _previousGameStatement = _gameStatement;
@@ -169,7 +162,6 @@ public class GameManager : Singleton<GameManager>
         _gameStatement = GameStatement.Pause;
         EnterPauseStatement();
     }
-
     public void SetEndStatement()
     {
         _previousGameStatement = _gameStatement;
@@ -177,7 +169,6 @@ public class GameManager : Singleton<GameManager>
         _gameStatement = GameStatement.End;
         EnterEndStatement();
     }
-
     public void NextState()
     {
         switch (_gameStatement)
@@ -245,7 +236,6 @@ public class GameManager : Singleton<GameManager>
         _isMazeGenerated = false;
         _isGameLost = false;
     }
-
     public void EnterCountdownStatement()
     {
         //Reset timer
@@ -255,7 +245,6 @@ public class GameManager : Singleton<GameManager>
         UIManager.instance.ShowReadyUI(true);
         UIManager.instance.StartCountDown();
     }
-
     public void EnterRunningStatement()
     {
         //Display ready UI
@@ -265,7 +254,6 @@ public class GameManager : Singleton<GameManager>
         InputManager.instance.EnableInputs();
         InputManager.instance.EnableMovementInputs();
     }
-
     public void EnterPauseStatement()
     {
         //Change timescale
@@ -278,7 +266,6 @@ public class GameManager : Singleton<GameManager>
         //Alow the player to move
         InputManager.instance.DisableInputs();
     }
-
     public void EnterEndStatement()
     {
         //Lock the player
@@ -316,7 +303,6 @@ public class GameManager : Singleton<GameManager>
             SetPauseStatement();
         }
     }
-
     public void CountdownStatement()
     {
         //Lock the cursor to the game window
@@ -332,7 +318,6 @@ public class GameManager : Singleton<GameManager>
         if (_countdownTimer < 0)
             SetRunningStatement();
     }
-
     public void RunningStatement()
     {
         //Lock the cursor to the game window
@@ -345,7 +330,6 @@ public class GameManager : Singleton<GameManager>
             SetPauseStatement();
         }
     }
-
     public void PauseStatement()
     {
         //Lock the cursor to the game window
@@ -359,25 +343,21 @@ public class GameManager : Singleton<GameManager>
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
-
     public void ExitReadyStatement()
     {
         //Hide the UI
         UIManager.instance.ShowReadyUI(false);
     }
-
     public void ExitCountdownStatement()
     {
         //Hide the UI
         UIManager.instance.ShowReadyUI(false);
     }
-
     public void ExitRunningStatement()
     {
         //Hide the UI
         UIManager.instance.ShowInGameUI(false);
     }
-
     public void ExitPauseStatement()
     {
         //Change timescale
@@ -389,7 +369,6 @@ public class GameManager : Singleton<GameManager>
         //Enbale inputs
         InputManager.instance.EnableInputs();
     }
-
     public void ExitEndStatement()
     {
         //Hide the UI
@@ -407,12 +386,10 @@ public class GameManager : Singleton<GameManager>
         //Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
-
     public void Exit()
     {
         Application.Quit();
     }
-
     public void Resume()
     {
         //Reset TimeScale
@@ -429,7 +406,6 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
     }
-
     public void EndGame(bool isLost)
     {
         if (GetGameStatement() != GameStatement.End)

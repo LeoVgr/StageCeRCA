@@ -13,6 +13,7 @@ using UnityEngine.UI;
 public class MazeManager : MonoBehaviour
 {
     #region "Attributs"
+    
     [Header("GameObject")]
     public GameObject LengthCorridorSlider;
     public GameObject WidthCorridorSlider;
@@ -78,12 +79,18 @@ public class MazeManager : MonoBehaviour
     public Vector2Constant MinMaxMusicVolume;
 
     private List<UIDataManager> _dataManagers;
-    
+    private FillPresets _fillPreset;
+    private bool _isDone = false;
+
     #endregion
 
     #region "Events"
     private void Start()
     {
+        _isDone = false;
+
+        _fillPreset = GetComponentInChildren<FillPresets>();
+
         _dataManagers = new List<UIDataManager>
         {
             LengthCorridorSlider.GetComponent<UIDataManager>(),
@@ -262,10 +269,21 @@ public class MazeManager : MonoBehaviour
         ResetVariable();
         
         InitUI();
+
+        
     }
     private void OnDestroy()
     {
         _dataManagers.Clear();
+    }
+    private void Update()
+    {
+        //Allow us to fill preset after every start methods of the scene (because update is called after start)
+        if (!_isDone)
+        {
+            _isDone = true;
+            _fillPreset.ImportPreset(true);
+        }
     }
     #endregion
 
