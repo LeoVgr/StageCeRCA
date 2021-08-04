@@ -14,7 +14,6 @@ public class VictoryScreen : MonoBehaviour
     public IntVariable ScoreAtom;
     public IntVariable TargetHit;
     public BoolVariable ShowEndTime;
-    public FloatVariable Time;
     
     [Header("GameObject")]
     public TextMeshProUGUI ScoreText;
@@ -53,7 +52,7 @@ public class VictoryScreen : MonoBehaviour
     {
         ScoreText.text = "" + ScoreAtom.Value * 100;
         TargetHitText.text = "" + TargetHit.Value;
-        TimeText.text = "" + Time.Value + " s";
+        TimeText.text = "" + UIManager.instance.TimerUI.GetComponent<PlayerTimer>().GetPlayerTimer() + " s";
 
         //Show end time only if it is allowed
         if (!ShowEndTime.Value)

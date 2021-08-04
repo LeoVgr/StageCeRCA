@@ -26,7 +26,6 @@ namespace Data
         public IntVariable Score;
         public BoolVariable ScoreDisplay;
         public BoolVariable EnableFire;
-        public FloatVariable TotalTimer;
         public FloatVariable Speed;
         public FloatVariable BreakForce;
         public BoolVariable IsAutoMode;
@@ -69,14 +68,6 @@ namespace Data
         {
             _startTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
         }
-        private void Update()
-        {
-            //Increment timer value while the game is running
-            if (InputManager.instance.IsInputEnabled() && !_endGame)
-            {
-                TotalTimer.Value += Time.deltaTime;
-            }
-        }
         #endregion
 
         #region Methods
@@ -87,9 +78,6 @@ namespace Data
             //Save infos in data files
             FillCsv(); //Csv with all last players
             CreateNewPlayerFile(); //Specific player file
-
-            //Reset the timer
-            TotalTimer.SetValue(.0f);
         }
         private void FillCsv()
         {
@@ -142,7 +130,7 @@ namespace Data
             text += "Date et heure;" + _startTime + "\n";
             text += "Type Camera;" + (IsFPSBool.Value ? "FPS" : "TPS") + "\n";
             text += "Identifiant;" + IdPlayer.Value + "\n";
-            text += "Temps de jeu (s);" + TotalTimer.Value + "\n";
+            text += "Temps de jeu (s);" + UIManager.instance.TimerUI.GetComponent<PlayerTimer>().GetPlayerTimer() + "\n";
             text += "Nombres d'images;" + TargetCount.Value + "\n";
             text += "Cibles manquees;" + (TargetCount.Value - TargetHit.Value) + "\n";
             text += "Longueur;" + CorridorLength.Value + "\n";
@@ -182,7 +170,7 @@ namespace Data
             //Create a file in the good path
             string path = "";
 
-            if (PresetName.Value.Length > 0)
+            if (PresetName.Value.Length > 0 && PresetName.Value!="[TempSave]")
             {
                 path = PresetName.Value + "/";
                 Directory.CreateDirectory(_directoryInfo + "/Players/" + PresetName.Value);
@@ -220,7 +208,7 @@ namespace Data
             text += _startTime + ";";
             text += (IsFPSBool.Value ? "FPS" : "TPS") + ";";
             text += average + ";";
-            text += TotalTimer.Value + ";";
+            text += UIManager.instance.TimerUI.GetComponent<PlayerTimer>().GetPlayerTimer() + ";";
             text += TargetCount.Value + ";";
             text += TargetCount.Value - TargetHit.Value + ";";
             text += CorridorLength.Value + ";";

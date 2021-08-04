@@ -65,6 +65,10 @@ public class PlayerTimer : MonoBehaviour
     #endregion
 
     #region "Methods"
+    public float GetPlayerTimer()
+    {
+        return _initialValue - TimerMax.Value;
+    }
     private string TimerParser(float seconds)
     {
         string s = "";

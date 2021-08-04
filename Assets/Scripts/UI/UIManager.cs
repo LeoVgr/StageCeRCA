@@ -117,7 +117,6 @@ public class UIManager : Singleton<UIManager>
         splash.transform.rotation = Quaternion.identity;
         splash.transform.localScale = Vector3.one;
         splash.transform.localScale = new Vector3(5,5,5);
-        print("X : " + x + " Y : " + y);
         splash.transform.localPosition = new Vector3(x, y, 0);
         
     }

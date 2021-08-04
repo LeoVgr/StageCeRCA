@@ -865,15 +865,15 @@ public class MazeGenerator : MonoBehaviour
     }
     private void CreateWall(Direction d, Transform floorTransform, Vector3 basePosition, float decal, MazeNode node)
     {
-        GameObject wall = Instantiate(PrefabWall);/*GameObject.CreatePrimitive(PrimitiveType.Cube);*/
-        wall.transform.localScale = new Vector3(0.06f * _cubeSize, 0.15f * _wallHeight, 0.4f);
+        GameObject wall = Instantiate(PrefabWall);
+        wall.transform.localScale = new Vector3(0.06f * _cubeSize, 0.15f * _wallHeight, 0.41f);
 
         switch (d)
         {
             case Direction.North:
                 wall.name = "North Wall ";
                 wall.transform.position = basePosition + new Vector3(0, 0, _cubeSize / 2.0f - decal);
-                wall.transform.rotation = Quaternion.Euler(0, -180, 0);/* = new Vector3(0.05f * _cubeSizeX, 0.5f *_wallHeight, 0.05f);*/
+                wall.transform.rotation = Quaternion.Euler(0, -180, 0);
                 break;
             case Direction.East:
                 wall.name = "East Wall ";

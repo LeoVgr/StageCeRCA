@@ -87,13 +87,6 @@ public class GameManager : Singleton<GameManager>
                 EndStatement();
                 break;
         }
-
-
-        ////Check if player press pause button
-        //if (InputManager.instance.IsCancelAction() && _isGameRunning)
-        //{
-        //    Pause();
-        //}
     }
     private void OnDestroy()
     {

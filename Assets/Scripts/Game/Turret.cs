@@ -7,6 +7,8 @@ using UnityEngine;
 public class Turret : Target
 {
     #region "Attributs"
+    public GameObject TurretBody;
+    public Transform OriginBullet;
     public float TimeBetweenShoot;
 
     private float _shootTimer = 0;
@@ -17,8 +19,12 @@ public class Turret : Target
     {
         base.Update();
 
+        
+
         if (this.IsShown())
         {
+            OrientTurret();
+
             //Add the time to cd 
             _shootTimer += Time.deltaTime;
 
@@ -41,7 +47,7 @@ public class Turret : Target
         //FireAudio.Play();
 
         //Shot animation
-        transform.DOPunchScale(transform.localScale * 0.1f, 1f);
+        TurretBody.transform.DOPunchScale(TurretBody.transform.localScale * 0.1f, 1f);
 
         //Prepare the bullet and fire it
         Bullet bullet = Player.Value.GetComponentInChildren<PlayerFire>().GetFirstAvailablePooledObject();
@@ -49,13 +55,17 @@ public class Turret : Target
         if (bullet)
         {
             bullet.gameObject.SetActive(true);
-            bullet.GetComponent<Bullet>().Fire(transform.position, Player.Value.transform.position, false, Vector3.zero);
+            bullet.GetComponent<Bullet>().Fire(OriginBullet.position, Player.Value.transform.position, false, Vector3.zero);
         }
 
         //Do damage effect on the player
         Player.Value.transform.DOPunchScale(transform.localScale * 0.1f, 0.5f);
 
         Player.Value.GetComponentInChildren<PlayerLife>().GetHurt();
+    }
+    public void OrientTurret()
+    {
+        TurretBody.transform.rotation = Quaternion.Euler(0,Vector3.Angle(-this.transform.forward, Player.Value.transform.position - transform.position),0);
     }
 }       
     #endregion

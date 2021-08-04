@@ -2760,7 +2760,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &653260036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3897,7 +3897,7 @@ MonoBehaviour:
     type: 3}
   PrefabRotatingRail: {fileID: 7736065039744544843, guid: 41bd4a659bd188e439d14d68d98ea384,
     type: 3}
-  FloorMaterial: {fileID: 2100000, guid: 5b5956096dabf4a44a49398f47f729d9, type: 2}
+  FloorMaterial: {fileID: 2100000, guid: 2211baf62fa12df4d949e46919749309, type: 2}
   ImagePrefab: {fileID: 7246851261278487832, guid: eea72ecab5d9d7648a31a320e3f22978,
     type: 3}
   TurretPrefab: {fileID: 9167860563194740769, guid: 2d48a6596886c7c4ea2fcd70440a7a9f,
@@ -3962,7 +3962,6 @@ MonoBehaviour:
   Score: {fileID: 11400000, guid: 430167122483e4f4db623e61b74f5da2, type: 2}
   ScoreDisplay: {fileID: 11400000, guid: 858691476eddd37479523f19b4fd1735, type: 2}
   EnableFire: {fileID: 11400000, guid: be80e8c6a3b5fe244b0b5d53bd4f9bf0, type: 2}
-  TotalTimer: {fileID: 11400000, guid: f6974a4d68489614a9c5fb133fc24882, type: 2}
   Speed: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2, type: 2}
   BreakForce: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545, type: 2}
   IsAutoMode: {fileID: 11400000, guid: 9be0cf80078b3f442b5b07660f12bb8a, type: 2}
@@ -7529,7 +7528,6 @@ MonoBehaviour:
   ScoreAtom: {fileID: 11400000, guid: 430167122483e4f4db623e61b74f5da2, type: 2}
   TargetHit: {fileID: 11400000, guid: 0bf3203a3ed23d643b809180df1979e3, type: 2}
   ShowEndTime: {fileID: 11400000, guid: 22b35ac1c0554014ba5a08c9b5ea179c, type: 2}
-  Time: {fileID: 11400000, guid: f6974a4d68489614a9c5fb133fc24882, type: 2}
   ScoreText: {fileID: 1339933796}
   TimeText: {fileID: 1790753804}
   TargetHitText: {fileID: 2124828766}
