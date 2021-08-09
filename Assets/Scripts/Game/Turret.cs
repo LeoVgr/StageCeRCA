@@ -17,9 +17,7 @@ public class Turret : Target
     #region "Events"
     protected override void Update()
     {
-        base.Update();
-
-        
+        base.Update();       
 
         if (this.IsShown())
         {

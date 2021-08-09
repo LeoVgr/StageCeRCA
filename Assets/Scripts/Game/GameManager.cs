@@ -188,7 +188,7 @@ public class GameManager : Singleton<GameManager>
         InputManager.instance.DisableMovementInputs();
 
         //Reset values of scriptable objects
-        DataManager.instance.Score.Reset(true);
+        DataManager.instance.Score.SetValue(0,true);
         DataManager.instance.TargetCount.SetValue(0);
         DataManager.instance.TargetHit.SetValue(0);
         DataManager.instance.TargetList.Clear();
@@ -301,6 +301,7 @@ public class GameManager : Singleton<GameManager>
     }
     public void RunningStatement()
     {
+
         //Lock the cursor to the game window
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;

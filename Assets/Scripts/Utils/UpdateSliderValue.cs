@@ -6,16 +6,19 @@ using UnityEngine.UI;
 
 public class UpdateSliderValue : MonoBehaviour
 {
-    private TextMeshProUGUI ValueText;
+    public float ValueDisplayFactor;
+    public string Precision;
+
+    private TextMeshProUGUI _valueText;
 
     private void Start()
     {
-        ValueText = GetComponent<TextMeshProUGUI>();
+        _valueText = GetComponent<TextMeshProUGUI>();
     }
 
     public void OnSliderValueChanged(float value)
     {
-        if(ValueText)
-            ValueText.text = (value * 100).ToString("0");
+        if(_valueText)
+            _valueText.text = (ValueDisplayFactor * value).ToString(Precision);
     }
 }

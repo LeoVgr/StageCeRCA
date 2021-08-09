@@ -55,5 +55,14 @@ namespace Audio
             if (Source.playOnAwake)
                 Source.Play();         
         }
+
+        public void SetVolumeMusic(float value)
+        {
+            DataManager.instance.MusicVolume.Value = value;
+        }
+        public void SetSfxVolumeMusic(float value)
+        {
+            DataManager.instance.SfxVolume.Value = value;
+        }
     }
 }

@@ -24,7 +24,31 @@ public class UIManager : Singleton<UIManager>
     public GameObject MainPauseUI;
     public GameObject OptionsPauseUI;
     public GameObject ParametersPauseUI;
+    public TextMeshProUGUI MusicVolumeText;
+    public TextMeshProUGUI SfxVolumeText;
     public Slider SensibilitySlider;
+    public Slider MusicVolumeSlider;
+    public Slider SfxVolumeSlider;
+
+    [Header("Value parameters")]
+    public TextMeshProUGUI CorridorLenghtText;
+    public TextMeshProUGUI CorridorWidthText;
+    public TextMeshProUGUI WallHeightText;
+    public TextMeshProUGUI TurnNumberText;
+    public TextMeshProUGUI SeedText;
+    public TextMeshProUGUI DisplayScoreText;
+    public TextMeshProUGUI DisplayEndTimerText;
+    public TextMeshProUGUI TimeText;
+    public TextMeshProUGUI ImageTimeText;
+    public TextMeshProUGUI ImageSizeText;
+    public TextMeshProUGUI RandomImageText;
+    public TextMeshProUGUI ShotActivatedText;
+    public TextMeshProUGUI FpsViewText;
+    public TextMeshProUGUI ColorizedCrosshairText;
+    public TextMeshProUGUI MovementModeText;
+    public TextMeshProUGUI CharacterText;
+    public TextMeshProUGUI SpeedText;
+    public TextMeshProUGUI BreakText;
 
     private float _lastFullSeconds = 4f;
 
@@ -61,6 +85,7 @@ public class UIManager : Singleton<UIManager>
         PauseUI.SetActive(displayUI);       
         MainPauseUI.SetActive(displayUI);
         OptionsPauseUI.SetActive(displayUI);
+        UpdateParametersPauseMenu();
 
         if (displayUI)
         {
@@ -75,7 +100,11 @@ public class UIManager : Singleton<UIManager>
         ParametersPauseUI.SetActive(!displayUI);
 
         //Update slider's value
-        SensibilitySlider.value = InputManager.instance.GetSensibility();
+        MusicVolumeSlider.value = DataManager.instance.MusicVolume.Value;
+        SfxVolumeSlider.value = DataManager.instance.SfxVolume.Value;
+        MusicVolumeText.text = DataManager.instance.MusicVolume.Value.ToString("0.00");
+        SfxVolumeText.text = DataManager.instance.SfxVolume.Value.ToString("0.00");
+        SensibilitySlider.value = InputManager.instance.GetSensibility();      
     }
     public void ShowParametersPauseUI(bool displayUI)
     {
@@ -84,6 +113,27 @@ public class UIManager : Singleton<UIManager>
         ParametersPauseUI.SetActive(displayUI);
     }
 
+    public void UpdateParametersPauseMenu()
+    {
+        CorridorLenghtText.text = "" + DataManager.instance.CorridorLength.Value;
+        CorridorWidthText.text = "" + DataManager.instance.CorridorWidth.Value;
+        WallHeightText.text = "" + DataManager.instance.WallHeight.Value;
+        TurnNumberText.text = "" + DataManager.instance.TurnNumber.Value;
+        SeedText.text = "" + DataManager.instance.Seed.Value;
+        DisplayScoreText.text = "" + (DataManager.instance.DisplayScore.Value? "Oui" : "Non");
+        DisplayEndTimerText.text = "" + (DataManager.instance.ShowEndTime.Value? "Oui" : "Non");
+        TimeText.text = "" + DataManager.instance.Timer.Value;
+        ImageTimeText.text = "" + DataManager.instance.ImageTime.Value;
+        ImageSizeText.text = "" + DataManager.instance.ImageSize.Value;
+        RandomImageText.text = "" + (DataManager.instance.RandomizeImage.Value ? "Oui" : "Non");
+        ShotActivatedText.text = "" + (DataManager.instance.IsShootActivated.Value ? "Oui" : "Non");
+        FpsViewText.text = "" + (DataManager.instance.FpsCamera.Value ? "Oui" : "Non");
+        ColorizedCrosshairText.text = "" + (DataManager.instance.IsCrosshairColorized.Value ? "Oui" : "Non");
+        MovementModeText.text = "" + (DataManager.instance.IsAutoMode.Value ? "Auto" : (DataManager.instance.IsManualMode.Value ? "Manuel" : "Semi-Auto"));
+        CharacterText.text = "" + (DataManager.instance.IsMeganSelected.Value? "Megan" : (DataManager.instance.IsRemySelected.Value? "Remy" : "Mousey"));
+        SpeedText.text = "" + DataManager.instance.Speed.Value;
+        BreakText.text = "" + DataManager.instance.BreakForce.Value;
+    }
     public void HideCountDownScreen()
     {
         ReadyUI.SetActive(false);
