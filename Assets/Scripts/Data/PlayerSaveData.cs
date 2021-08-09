@@ -10,31 +10,7 @@ namespace Data
     public class PlayerSaveData : MonoBehaviour
     {
         #region Attributs
-        public IntVariable TargetCount;
-        public IntVariable TargetHit;
-        public IntVariable CorridorLength;
-        public IntVariable TurnCount;
-        public FloatVariable ImageTime;
-        public FloatVariable ImageSize;
-        public BoolVariable ImageRandom;
-        public BoolVariable IsFPSBool;
-        public IntVariable SeedNumber;
-        public StringVariable PresetName;
-        public FloatValueList TimeToShootList;
-        public GameObjectValueList TargetList;
-        public StringVariable IdPlayer;
-        public IntVariable Score;
-        public BoolVariable ScoreDisplay;
-        public BoolVariable EnableFire;
-        public FloatVariable Speed;
-        public FloatVariable BreakForce;
-        public BoolVariable IsAutoMode;
-        public BoolVariable IsSemiAutoMode;
-        public BoolVariable IsManualMode;
-        public BoolVariable IsRemy;
-        public BoolVariable IsMegan;
-        public BoolVariable IsMousey;
-        public BoolVariable IsCrosshairColorized;
+        
 
         private string _startTime;
         private bool _endGame;
@@ -44,9 +20,9 @@ namespace Data
         {
             get
             {
-                if (IsRemy.Value) return 0;
-                if (IsMegan.Value) return 1;
-                if (IsMousey.Value) return 2;
+                if (DataManager.instance.IsRemySelected.Value) return 0;
+                if (DataManager.instance.IsMeganSelected.Value) return 1;
+                if (DataManager.instance.IsMouseySelected.Value) return 2;
                 else
                 {
                     Debug.LogError("Player not found !");
@@ -62,7 +38,7 @@ namespace Data
         {
             //Define where we will save our file
             _directoryInfo = new DirectoryInfo(Application.streamingAssetsPath);
-            TargetList.Clear();
+            DataManager.instance.TargetList.Clear();
         }
         private void Start()
         {
@@ -128,32 +104,32 @@ namespace Data
             // Add data to our specific player file
             string text = "";
             text += "Date et heure;" + _startTime + "\n";
-            text += "Type Camera;" + (IsFPSBool.Value ? "FPS" : "TPS") + "\n";
-            text += "Identifiant;" + IdPlayer.Value + "\n";
+            text += "Type Camera;" + (DataManager.instance.FpsCamera.Value ? "FPS" : "TPS") + "\n";
+            text += "Identifiant;" + DataManager.instance.IdPlayer.Value + "\n";
             text += "Temps de jeu (s);" + UIManager.instance.TimerUI.GetComponent<PlayerTimer>().GetPlayerTimer() + "\n";
-            text += "Nombres d'images;" + TargetCount.Value + "\n";
-            text += "Cibles manquees;" + (TargetCount.Value - TargetHit.Value) + "\n";
-            text += "Longueur;" + CorridorLength.Value + "\n";
-            text += "Nombre  Virages;" + TurnCount.Value + "\n";
-            text += "Images Random;" + (ImageRandom.Value ? "Oui" : "Non") + "\n";
-            text += "Taille images;" + ImageSize.Value + "\n";
-            text += "Temps images;" + ImageTime.Value + "\n";
-            text += "Seed;" + SeedNumber.Value + "\n";
-            text += "Preset;" + PresetName.Value + "\n";
-            text += "Score;" + (Score.Value * 100) + "\n";
-            text += "Tir Actif;" + (EnableFire.Value ? "Oui" : "Non") + "\n";
-            text += "Score Affiche;" + (ScoreDisplay.Value ? "Oui" : "Non") + "\n";
-            text += "Vitesse;" + Speed.Value + "\n";
-            text += "Force frein;" + BreakForce.Value + "\n";
-            text += "Viseur colorise;" + (IsCrosshairColorized.Value ? "Oui" : "Non") + "\n";
-            text += "Mode deplacement;" + (IsAutoMode.Value ? "Auto" : (IsManualMode.Value ? "Manuel" : "Semi-Auto")) +
+            text += "Nombres d'images;" + DataManager.instance.TargetCount.Value + "\n";
+            text += "Cibles manquees;" + (DataManager.instance.TargetCount.Value - DataManager.instance.TargetHit.Value) + "\n";
+            text += "Longueur;" + DataManager.instance.CorridorLength.Value + "\n";
+            text += "Nombre  Virages;" + DataManager.instance.TurnNumber.Value + "\n";
+            text += "Images Random;" + (DataManager.instance.RandomizeImage.Value ? "Oui" : "Non") + "\n";
+            text += "Taille images;" + DataManager.instance.ImageSize.Value + "\n";
+            text += "Temps images;" + DataManager.instance.ImageTime.Value + "\n";
+            text += "Seed;" + DataManager.instance.Seed.Value + "\n";
+            text += "Preset;" + DataManager.instance.PresetName.Value + "\n";
+            text += "Score;" + (DataManager.instance.Score.Value * 100) + "\n";
+            text += "Tir Actif;" + (DataManager.instance.IsShootActivated.Value ? "Oui" : "Non") + "\n";
+            text += "Score Affiche;" + (DataManager.instance.DisplayScore.Value ? "Oui" : "Non") + "\n";
+            text += "Vitesse;" + DataManager.instance.Speed.Value + "\n";
+            text += "Force frein;" + DataManager.instance.BreakForce.Value + "\n";
+            text += "Viseur colorise;" + (DataManager.instance.IsCrosshairColorized.Value ? "Oui" : "Non") + "\n";
+            text += "Mode deplacement;" + (DataManager.instance.IsAutoMode.Value ? "Auto" : (DataManager.instance.IsManualMode.Value ? "Manuel" : "Semi-Auto")) +
                     "\n";
-            text += "Personnage;" + (GameManager.instance.IsRemySelected.Value ? "Remy" : GameManager.instance.IsMeganSelected.Value ? "Megan" : "Mousey") + "\n";
+            text += "Personnage;" + (DataManager.instance.IsRemySelected.Value ? "Remy" : DataManager.instance.IsMeganSelected.Value ? "Megan" : "Mousey") + "\n";
             text +=
                 "\nNom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?\n";
 
             //For each target in the level, add data
-            foreach (GameObject o in TargetList.List)
+            foreach (GameObject o in DataManager.instance.TargetList.List)
             {
                 text += o.GetComponent<Target>().Sprite.name + ";" +
                         o.GetComponent<Target>().TargetPosition + ";" +
@@ -170,10 +146,10 @@ namespace Data
             //Create a file in the good path
             string path = "";
 
-            if (PresetName.Value.Length > 0 && PresetName.Value!="[TempSave]")
+            if (DataManager.instance.PresetName.Value.Length > 0 && DataManager.instance.PresetName.Value!="[TempSave]")
             {
-                path = PresetName.Value + "/";
-                Directory.CreateDirectory(_directoryInfo + "/Players/" + PresetName.Value);
+                path = DataManager.instance.PresetName.Value + "/";
+                Directory.CreateDirectory(_directoryInfo + "/Players/" + DataManager.instance.PresetName.Value);
             }
 
             int index = Directory.GetFiles(_directoryInfo + "/Players/" + path).Length;
@@ -182,7 +158,7 @@ namespace Data
             if (index > 0)
                 playerUniqueId = "_" + index;
 
-            string fullPath = _directoryInfo + "/Players/" + path + IdPlayer.Value +
+            string fullPath = _directoryInfo + "/Players/" + path + DataManager.instance.IdPlayer.Value +
                               playerUniqueId /*+ "(" + DateTime.Now.ToString("hhmm_ss") */ + ".csv";
 
             FileStream fs = File.Create(fullPath);
@@ -198,27 +174,27 @@ namespace Data
 
             float average = 0.0f;
 
-            foreach (float f in TimeToShootList.List)
+            foreach (float f in DataManager.instance.TimeToShootList.List)
             {
                 average += f;
             }
 
-            average /= TimeToShootList.Count;
+            average /= DataManager.instance.TimeToShootList.Count;
 
             text += _startTime + ";";
-            text += (IsFPSBool.Value ? "FPS" : "TPS") + ";";
+            text += (DataManager.instance.FpsCamera.Value ? "FPS" : "TPS") + ";";
             text += average + ";";
             text += UIManager.instance.TimerUI.GetComponent<PlayerTimer>().GetPlayerTimer() + ";";
-            text += TargetCount.Value + ";";
-            text += TargetCount.Value - TargetHit.Value + ";";
-            text += CorridorLength.Value + ";";
-            text += TurnCount.Value + ";";
-            text += ImageTime.Value + ";";
-            text += (ImageRandom.Value ? "Oui" : "Non") + ";";
-            text += ImageSize.Value + ";";
-            text += SeedNumber.Value + ";";
+            text += DataManager.instance.TargetCount.Value + ";";
+            text += DataManager.instance.TargetCount.Value - DataManager.instance.TargetHit.Value + ";";
+            text += DataManager.instance.CorridorLength.Value + ";";
+            text += DataManager.instance.TurnNumber.Value + ";";
+            text += DataManager.instance.ImageTime.Value + ";";
+            text += (DataManager.instance.RandomizeImage.Value ? "Oui" : "Non") + ";";
+            text += DataManager.instance.ImageSize.Value + ";";
+            text += DataManager.instance.Seed.Value + ";";
             text += gameObject.name + ";";
-            text += PresetName.Value + ";\n";
+            text += DataManager.instance.PresetName.Value + ";\n";
             return text;
         }
         #endregion

@@ -13,8 +13,7 @@ namespace Audio
         [Tooltip("Look in audio references, the index reference the sound to come play")]
         public int SoundIndex;
         public AudioSource Source;
-        public FloatVariable MusicVolume;
-        public FloatVariable SfxVolume;
+        
         public bool IsSfxSound;
 
         private void Update()
@@ -25,13 +24,13 @@ namespace Audio
             //Adjust the sound of the clip depending options
             if (!IsSfxSound)
             {
-                if(MusicVolume)
-                    Source.volume = MusicVolume.Value;
+                if(DataManager.instance.MusicVolume)
+                    Source.volume = DataManager.instance.MusicVolume.Value;
             }
             else
             {
-                if (SfxVolume)
-                    Source.volume = SfxVolume.Value;
+                if (DataManager.instance.SfxVolume)
+                    Source.volume = DataManager.instance.SfxVolume.Value;
             }
         }
 

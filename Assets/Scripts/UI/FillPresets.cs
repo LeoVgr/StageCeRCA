@@ -15,32 +15,7 @@ using UnityEngine.UI;
  */
 public class FillPresets : MonoBehaviour
 {
-    public StringVariable PresetName;
     public InputField Input;
-    public IntVariable Seed;
-    public IntVariable CorridorLength;
-    public IntVariable TurnNumber;
-    public FloatVariable CorridorWidth;
-    public FloatVariable WallHeight;
-    public FloatVariable ImageSize;
-    public FloatVariable ImageTime;
-    public FloatVariable Timer;
-    public BoolVariable RandomizeImage;
-    public BoolVariable DisplayScore;
-    public BoolVariable FpsCamera;
-    public BoolVariable IsShootActivated;
-    public BoolVariable ShowEndTime;
-    public FloatVariable Speed;
-    public FloatVariable BreakForce;
-    public BoolVariable IsRemySelected;
-    public BoolVariable IsMeganSelected;
-    public BoolVariable IsMouseySelected;
-    public BoolVariable IsAutoMode;
-    public BoolVariable IsSemiAutoMode;
-    public BoolVariable IsManualMode;
-    public FloatVariable MusicVolume;
-    public FloatVariable SfxVolume;
-    public BoolVariable IsCrosshairColorized;
 
     private Dropdown _tmpDropdown;
     private Dictionary<string, Dictionary<ColumnNames, float>> _presets;
@@ -108,7 +83,7 @@ public class FillPresets : MonoBehaviour
             text = _tmpDropdown.options[_tmpDropdown.value].text;
             Input.text = text;
 
-            PresetName?.SetValue(text);
+            DataManager.instance.PresetName?.SetValue(text);
         }
         
 
@@ -126,76 +101,76 @@ public class FillPresets : MonoBehaviour
                 switch (keyValuePair.Key)
                 {
                     case ColumnNames.Seed:
-                        Seed.SetValue((int)keyValuePair.Value);
+                        DataManager.instance.Seed.SetValue((int)keyValuePair.Value);
                         break;
                     case ColumnNames.Longueur:
-                        CorridorLength.SetValue((int)keyValuePair.Value);
+                        DataManager.instance.CorridorLength.SetValue((int)keyValuePair.Value);
                         break;
                     case ColumnNames.Largeur:
-                        CorridorWidth.SetValue(keyValuePair.Value);
+                        DataManager.instance.CorridorWidth.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.Hauteur:
-                        WallHeight.SetValue(keyValuePair.Value);
+                        DataManager.instance.WallHeight.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.TailleDesImages:
-                        ImageSize.SetValue(keyValuePair.Value);
+                        DataManager.instance.ImageSize.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.NbrVirage:
-                        TurnNumber.SetValue((int)keyValuePair.Value);
+                        DataManager.instance.TurnNumber.SetValue((int)keyValuePair.Value);
                         break;
                     case ColumnNames.TempsImage:
-                        ImageTime.SetValue(keyValuePair.Value);
+                        DataManager.instance.ImageTime.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.RandomizeImage:
-                        RandomizeImage.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.RandomizeImage.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.Timer:
-                        Timer.SetValue(keyValuePair.Value);
+                        DataManager.instance.Timer.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.Score:
-                        DisplayScore.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.DisplayScore.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.FpsCamera:
-                        FpsCamera.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.FpsCamera.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.Shoot:
-                        IsShootActivated.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.IsShootActivated.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.ShowEndTime:
-                        ShowEndTime.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.ShowEndTime.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.Speed:
-                        Speed.SetValue(keyValuePair.Value);
+                        DataManager.instance.Speed.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.BreakForce:
-                        BreakForce.SetValue(keyValuePair.Value);
+                        DataManager.instance.BreakForce.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.Remy:
-                        IsRemySelected.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.IsRemySelected.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.Megan:
-                        IsMeganSelected.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.IsMeganSelected.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.Mousey:
-                        IsMouseySelected.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.IsMouseySelected.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.AutoMode:
-                        IsAutoMode.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.IsAutoMode.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.SemiAutoMode:
-                        IsSemiAutoMode.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.IsSemiAutoMode.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.ManualMode:
-                        IsManualMode.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.IsManualMode.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.MusicVolume:
-                        MusicVolume.SetValue(keyValuePair.Value);
+                        DataManager.instance.MusicVolume.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.SfxVolume:
-                        SfxVolume.SetValue(keyValuePair.Value);
+                        DataManager.instance.SfxVolume.SetValue(keyValuePair.Value);
                         break;
                     case ColumnNames.CrosshairColorized:
-                        IsCrosshairColorized.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.IsCrosshairColorized.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                 }
             }

@@ -50,22 +50,22 @@ public class Turret : Target
         TurretBody.transform.DOPunchScale(TurretBody.transform.localScale * 0.1f, 1f);
 
         //Prepare the bullet and fire it
-        Bullet bullet = Player.Value.GetComponentInChildren<PlayerFire>().GetFirstAvailablePooledObject();
+        Bullet bullet = DataManager.instance.Player.Value.GetComponentInChildren<PlayerFire>().GetFirstAvailablePooledObject();
 
         if (bullet)
         {
             bullet.gameObject.SetActive(true);
-            bullet.GetComponent<Bullet>().Fire(OriginBullet.position, Player.Value.transform.position, false, Vector3.zero);
+            bullet.GetComponent<Bullet>().Fire(OriginBullet.position, DataManager.instance.Player.Value.transform.position, false, Vector3.zero);
         }
 
         //Do damage effect on the player
-        Player.Value.transform.DOPunchScale(transform.localScale * 0.1f, 0.5f);
+        DataManager.instance.Player.Value.transform.DOPunchScale(transform.localScale * 0.1f, 0.5f);
 
-        Player.Value.GetComponentInChildren<PlayerLife>().GetHurt();
+        DataManager.instance.Player.Value.GetComponentInChildren<PlayerLife>().GetHurt();
     }
     public void OrientTurret()
     {
-        TurretBody.transform.rotation = Quaternion.Euler(0,Vector3.Angle(-this.transform.forward, Player.Value.transform.position - transform.position),0);
+        TurretBody.transform.rotation = Quaternion.Euler(0,Vector3.Angle(-this.transform.forward, DataManager.instance.Player.Value.transform.position - transform.position),0);
     }
 }       
     #endregion

@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class DisplayInFps : MonoBehaviour
 {
-    public BoolVariable isGameInFPS;
     
     // Start is called before the first frame update
     void Start()
     {
-        isGameInFPS.Changed.Register(SetActive);
-        SetActive(isGameInFPS.Value);
+        DataManager.instance.FpsCamera.Changed.Register(SetActive);
+        SetActive(DataManager.instance.FpsCamera.Value);
     }
 
     private void SetActive(bool b)

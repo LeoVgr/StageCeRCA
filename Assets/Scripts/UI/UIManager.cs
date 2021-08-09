@@ -58,9 +58,15 @@ public class UIManager : Singleton<UIManager>
     }
     public void ShowPauseUI(bool displayUI)
     {
-        PauseUI.SetActive(displayUI);
+        PauseUI.SetActive(displayUI);       
         MainPauseUI.SetActive(displayUI);
         OptionsPauseUI.SetActive(displayUI);
+
+        if (displayUI)
+        {
+            MainPauseUI.GetComponent<Animator>().SetBool("IsOpen",true);
+        }
+              
     }
     public void ShowOptionsPauseUI(bool displayUI)
     {

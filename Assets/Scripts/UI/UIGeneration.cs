@@ -19,7 +19,7 @@ public class UIGeneration : MonoBehaviour
     public GameObject inputIdentfiant;
     public SavePreset SavePreset;
 
-    public StringVariable atomIdentifiant;
+    
     private Vector3 idBaseScale;
     
     // Start is called before the first frame update
@@ -31,7 +31,7 @@ public class UIGeneration : MonoBehaviour
 
     public void GenerateMaze()
     {
-        if (atomIdentifiant.Value.Length < 1)
+        if (DataManager.instance.IdPlayer.Value.Length < 1)
         {
             inputIdentfiant.transform.DOScale(inputIdentfiant.transform.localScale * Random.Range(1.1f, 1.5f), 0.2f)
                 .OnComplete(() => inputIdentfiant.transform.DOScale(idBaseScale, 0.2f));

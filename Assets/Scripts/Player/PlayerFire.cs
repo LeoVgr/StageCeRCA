@@ -14,10 +14,7 @@ namespace Player
     public class PlayerFire : MonoBehaviour
     {
         #region Attributs
-        [Header("Atom variables")]
         public GameObject FireStartPositon;
-        public BoolVariable PlayerCanFire;
-        public BoolVariable CameraInfps;
 
         private PlayerSaveData _playerData;
         private int _modelIndex => _playerData._modelIndex;
@@ -97,7 +94,7 @@ namespace Player
         }
         private void RapidFire()
         {
-            if(PlayerCanFire.Value)
+            if(DataManager.instance.IsShootActivated.Value)
             {
                 FireAudio.Play();
 

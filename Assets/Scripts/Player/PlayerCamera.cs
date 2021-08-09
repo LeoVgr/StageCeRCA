@@ -8,8 +8,6 @@ namespace Player
     public class PlayerCamera : MonoBehaviour
     {
         #region "Attributs"
-        public BoolVariable isPlayerFPS;
-
         public GameObject FpsCamera;
         public GameObject TpsCamera;
 

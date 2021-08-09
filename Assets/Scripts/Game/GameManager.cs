@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     #region Attributs
-
     public enum GameStatement
     {
         Ready,
@@ -19,18 +18,7 @@ public class GameManager : Singleton<GameManager>
         None
     };
 
-    public IntVariable Score;
-    public BoolVariable FpsCamera;
-    public IntVariable TargetCount;
-    public IntVariable TargetHit;
-    public GameObjectValueList TargetList;
-    public GameObjectVariable PlayerVariable;
-    public BoolVariable IsRemySelected;
-    public BoolVariable IsMeganSelected;
-    public BoolVariable IsMouseySelected;
-
     public PlayerMovement Player;
-
     public GameObject Remy;
     public GameObject Megan;
     public GameObject Mousey;
@@ -200,16 +188,16 @@ public class GameManager : Singleton<GameManager>
         InputManager.instance.DisableMovementInputs();
 
         //Reset values of scriptable objects
-        Score.Reset(true);
-        TargetCount.SetValue(0);
-        TargetHit.SetValue(0);
-        TargetList.Clear();
+        DataManager.instance.Score.Reset(true);
+        DataManager.instance.TargetCount.SetValue(0);
+        DataManager.instance.TargetHit.SetValue(0);
+        DataManager.instance.TargetList.Clear();
 
         //Get the references of the player
-        PlayerVariable.SetValue(Player.gameObject);
+        DataManager.instance.Player.SetValue(Player.gameObject);
 
         //Activate the right camera
-        if (FpsCamera.Value)
+        if (DataManager.instance.FpsCamera.Value)
         {
             FPSCamera.Priority = 1;
             TPSCamera.Priority = 0;
@@ -221,9 +209,9 @@ public class GameManager : Singleton<GameManager>
         }
 
         //Enable the right character
-        Remy.SetActive(IsRemySelected.Value);
-        Megan.SetActive(IsMeganSelected.Value);
-        Mousey.SetActive(IsMouseySelected.Value);
+        Remy.SetActive(DataManager.instance.IsRemySelected.Value);
+        Megan.SetActive(DataManager.instance.IsMeganSelected.Value);
+        Mousey.SetActive(DataManager.instance.IsMouseySelected.Value);
         
         //Reset some values
         _isMazeGenerated = false;

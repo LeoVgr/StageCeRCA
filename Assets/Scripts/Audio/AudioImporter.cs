@@ -28,7 +28,6 @@ namespace Audio
         private void OnLoaded(AudioClip clip)
         {
             Debug.Log("Loading audio file "+path);
-            // References.clips.Add(new List<AudioClip>());
             References.clips.Insert(_myIndex,clip);
         }
 

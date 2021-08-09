@@ -10,10 +10,6 @@ public class CharacterSelectionGroup : MonoBehaviour
     public GameObject MeganCharacterPreview;
     public GameObject MouseyCharacterPreview;
 
-    public BoolVariable IsRemySelected;
-    public BoolVariable IsMeganSelected;
-    public BoolVariable IsMouseySelected;
-
     public Toggle ToggleRemy;
     public Toggle ToggleMegan;
     public Toggle ToggleMousey;
@@ -34,9 +30,9 @@ public class CharacterSelectionGroup : MonoBehaviour
     private void Start()
     {
         //Enable or disable previews at the launch with value of atom's variables
-        SetMouseyAsCharacter(IsMouseySelected.Value);
-        SetMeganAsCharacter(IsMeganSelected.Value);
-        SetRemyAsCharacter(IsRemySelected.Value);
+        SetMouseyAsCharacter(DataManager.instance.IsMouseySelected.Value);
+        SetMeganAsCharacter(DataManager.instance.IsMeganSelected.Value);
+        SetRemyAsCharacter(DataManager.instance.IsRemySelected.Value);
     }
 
     private void SetMeganAsCharacter(bool isMeganCharacter)

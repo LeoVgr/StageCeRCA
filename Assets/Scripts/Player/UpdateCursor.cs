@@ -8,13 +8,12 @@ namespace Player
     {
         public Image CrossHair;
         public LayerMask TargetLayer;
-        public BoolVariable IsCrosshairColorized;
 
         // Update is called once per frame
         void Update()
         {
             //Check if we have to apply crosshair colorization 
-            if (IsCrosshairColorized.Value){
+            if (DataManager.instance.IsCrosshairColorized.Value){
 
                 //Change the color of the crosshair if the target aimed has to be shot or not
                 Ray ray = Camera.main.ScreenPointToRay(CrossHair.gameObject.transform.position);

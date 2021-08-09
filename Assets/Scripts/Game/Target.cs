@@ -25,23 +25,6 @@ public class Target : MonoBehaviour
     public Text ScoreUpText;
     public Sprite SplashImage;
 
-    [Header("Atoms Variables")]
-    public FloatVariable ShowTime;
-    public FloatVariable DistanceToShow;
-    public FloatValueList TimeToShootList;
-    public IntVariable Score;
-    public IntVariable TargetCount;
-    public IntVariable TargetHit;
-    public GameObjectValueList TargetList;
-    public BoolVariable DisplayScore;
-    public GameObjectVariable Player;
-    
-    [Header("Atoms Events")]
-    public IntEvent PlayerWaypointChange;
-    
-    [Header("Atoms Constant")]
-    public Vector2Constant WidthHeight;
-
     [Header("Sound Effect")] 
     public AudioSource AudioValidate;
     public AudioSource AudioMiss;
@@ -90,13 +73,13 @@ public class Target : MonoBehaviour
                 break;
         }
         
-        TargetList.Add(gameObject);
+        DataManager.instance.TargetList.Add(gameObject);
 
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
 
-        TargetCount?.SetValue(TargetCount.Value + 1);
-        
-        TimeToShootList.Clear();
+        DataManager.instance.TargetCount?.SetValue(DataManager.instance.TargetCount.Value + 1);
+
+        DataManager.instance.TimeToShootList.Clear();
 
         _colliders = GetComponentsInChildren<Collider>().ToList();
         foreach (Collider collider1 in _colliders)
@@ -108,11 +91,11 @@ public class Target : MonoBehaviour
         if (_spriteRenderer)
         {
             _spriteRenderer.sprite = Sprite;
-            GetComponentInChildren<SpriteRenderer>().size = WidthHeight.Value;
+            GetComponentInChildren<SpriteRenderer>().size = DataManager.instance.WidthHeight.Value;
             _spriteRenderer.transform.localPosition = -_spriteRenderer.transform.localPosition;
         }
-        
-        PlayerWaypointChange.Register(CheckDistanceToPlayer);
+
+        DataManager.instance.PlayerWaypointChange.Register(CheckDistanceToPlayer);
         
         ScoreUpText.material = Instantiate(ScoreUpText.material);
 
@@ -145,12 +128,12 @@ public class Target : MonoBehaviour
                 Vector3 position = transform.position;
                 
                 Vector3 origin = position + (IsNegateImage ? -right : right);
-                Vector3 direction = Player.Value.transform.position + Vector3.up - position +
+                Vector3 direction = DataManager.instance.Player.Value.transform.position + Vector3.up - position +
                                     (IsNegateImage ? right : -right);
 
                 if (Physics.Raycast(origin, direction, out RaycastHit hitinfo))
                 {
-                    if (hitinfo.collider.gameObject == Player.Value)
+                    if (hitinfo.collider.gameObject == DataManager.instance.Player.Value)
                     {
                         Show();
                     }
@@ -171,7 +154,7 @@ public class Target : MonoBehaviour
     {
         if (!_hasBeenShown)
         {
-            if (!_isShown && Mathf.Abs(WayPointIndex - playerPosition) < DistanceToShow.Value)
+            if (!_isShown && Mathf.Abs(WayPointIndex - playerPosition) < DataManager.instance.DistanceToShow.Value)
             {
                 _canShow = true;
             }
@@ -190,8 +173,8 @@ public class Target : MonoBehaviour
                 collider1.enabled = true;
             }
         
-            if (ShowTime.Value > 0.1f)
-                DOVirtual.DelayedCall(ShowTime.Value, Hide);
+            if (DataManager.instance.ImageTime.Value > 0.1f)
+                DOVirtual.DelayedCall(DataManager.instance.ImageTime.Value, Hide);
         }
     }
     private void Hide()
@@ -214,7 +197,6 @@ public class Target : MonoBehaviour
     }
     public void Hit()
     {
-        print(gameObject.name);
         //When a target is hit, check if it hasn't be already hit 
         if (!_isHit && _isShown)
         {
@@ -246,8 +228,8 @@ public class Target : MonoBehaviour
         _endTimeValue = _time;
 
         //Register some stats for further purpose (save data of player)
-        TimeToShootList.Add(_time);       
-        TargetHit?.SetValue(TargetHit.Value + 1);
+        DataManager.instance.TimeToShootList.Add(_time);
+        DataManager.instance.TargetHit?.SetValue(DataManager.instance.TargetHit.Value + 1);
 
         //Play sound
         //AudioValidate.Play();
@@ -266,9 +248,9 @@ public class Target : MonoBehaviour
         GetComponentInChildren<MeshRenderer>().material.DOColor(Color.green * 2.0f, "_Color", 1f)
             .SetEase(Ease.OutBounce);
 
-        if (DisplayScore.Value)
+        if (DataManager.instance.DisplayScore.Value)
         {
-            Score.SetValue(Score.Value + 1);
+            DataManager.instance.Score.SetValue(DataManager.instance.Score.Value + 1);
             ScoreUpText.text = "+100";
             ScoreUpText.material.SetColor(ColorMat, new Color(0, 0, 0, 0));
             Sequence scoreUpSequence = DOTween.Sequence();
@@ -294,7 +276,7 @@ public class Target : MonoBehaviour
         _endTimeValue = _time;
 
         //Register some stats for further purpose (save data of player)
-        TimeToShootList.Add(_time);
+        DataManager.instance.TimeToShootList.Add(_time);
 
         //Play sound
         AudioMiss.Play();
@@ -306,9 +288,9 @@ public class Target : MonoBehaviour
         parent.transform.SetParent(null);
         parent.transform.position = worldCanvasPosition;
 
-        if (Score.Value > 0 && DisplayScore.Value)
+        if (DataManager.instance.Score.Value > 0 && DataManager.instance.DisplayScore.Value)
         {
-            Score.SetValue(Score.Value - 1);
+            DataManager.instance.Score.SetValue(DataManager.instance.Score.Value - 1);
             ScoreUpText.text = "-100";
             ScoreUpText.material.SetColor(ColorMat, new Color(0, 0, 0, 0));
             Sequence scoreUpSequence = DOTween.Sequence();
@@ -340,8 +322,8 @@ public class Target : MonoBehaviour
         _endTimeValue = _time;
 
         //Register some stats for further purpose (save data of player)
-        TimeToShootList.Add(_time);
-        TargetHit?.SetValue(TargetHit.Value + 1);
+        DataManager.instance.TimeToShootList.Add(_time);
+        DataManager.instance.TargetHit?.SetValue(DataManager.instance.TargetHit.Value + 1);
 
         //Play sound
         AudioValidate.Play();
@@ -381,9 +363,9 @@ public class Target : MonoBehaviour
             changeImage.Append(_spriteRenderer.DOColor(Color.white, 0.5f).SetEase(Ease.OutBounce));
         }
         
-        if (DisplayScore.Value)
+        if (DataManager.instance.DisplayScore.Value)
         {
-            Score.SetValue(Score.Value + 1);
+            DataManager.instance.Score.SetValue(DataManager.instance.Score.Value + 1);
             ScoreUpText.text = "+100";
             ScoreUpText.material.SetColor(ColorMat, new Color(0, 0, 0, 0));
             Sequence scoreUpSequence = DOTween.Sequence();
@@ -411,7 +393,7 @@ public class Target : MonoBehaviour
         _endTimeValue = _time;
 
         //Register some stats for further purpose (save data of player)
-        TimeToShootList.Add(_time);
+        DataManager.instance.TimeToShootList.Add(_time);
 
         //Play sound
         AudioMiss.Play();
@@ -423,9 +405,9 @@ public class Target : MonoBehaviour
         parent.transform.SetParent(null);
         parent.transform.position = worldCanvasPosition;
 
-        if (Score.Value > 0 && DisplayScore.Value)
+        if (DataManager.instance.Score.Value > 0 && DataManager.instance.DisplayScore.Value)
         {
-            Score.SetValue(Score.Value - 1);
+            DataManager.instance.Score.SetValue(DataManager.instance.Score.Value - 1);
             ScoreUpText.text = "-100";
             ScoreUpText.material.SetColor(ColorMat, new Color(0, 0, 0, 0));
             Sequence scoreUpSequence = DOTween.Sequence();

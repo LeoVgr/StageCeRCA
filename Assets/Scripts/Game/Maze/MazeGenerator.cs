@@ -48,19 +48,6 @@ public enum ImagePos
 public class MazeGenerator : MonoBehaviour
 {
     #region "Attributs"
-    [Header("Maze size")] 
-    public IntReference CorridorLenght;
-    public FloatReference CorridorCubeSegmentSize;
-    public FloatReference WallHeight;   
-    
-    [Header("Maze properties")]
-    public IntReference TurnNumber;
-    public FloatReference ImageSize;
-
-    [Header("Random")]
-    public IntReference Seed;
-    public BoolVariable RandomizeImage;
-
     [Header("Prefab, material,...")]
     public GameObject PrefabWall;
     public GameObject PrefabCeiling;
@@ -138,11 +125,11 @@ public class MazeGenerator : MonoBehaviour
             _imageValue.Clear();
 
             //Set values
-            _cubeSize = CorridorCubeSegmentSize.Value;
-            _wallHeight = WallHeight.Value;
-            _length = CorridorLenght.Value;
-            _turnNumber = TurnNumber.Value;
-            _imageSize = ImageSize.Value;
+            _cubeSize = DataManager.instance.CorridorWidth.Value;
+            _wallHeight = DataManager.instance.WallHeight.Value;
+            _length = DataManager.instance.CorridorLength.Value;
+            _turnNumber = DataManager.instance.TurnNumber.Value;
+            _imageSize = DataManager.instance.ImageSize.Value;
 
             //Copy _baseSpriteList into _spriteList
             if (_length < _baseSpriteList.Count)
@@ -217,7 +204,7 @@ public class MazeGenerator : MonoBehaviour
      */
     private void CreateMaze()
     {
-        Random.InitState(Seed.Value);
+        Random.InitState(DataManager.instance.Seed.Value);
         InitMaze();
     }
     /**
@@ -489,7 +476,7 @@ public class MazeGenerator : MonoBehaviour
                 Sprite selectedSprite;
 
                 //True = Get Random image, False = get the images in alphabetical order
-                if (RandomizeImage.Value)
+                if (DataManager.instance.RandomizeImage.Value)
                 {
                     int random = Random.Range(0, _spriteList.Count);
                     selectedSprite = _spriteList[random];
@@ -899,7 +886,7 @@ public class MazeGenerator : MonoBehaviour
         //Create ceiling
         GameObject ceiling = Instantiate(PrefabCeiling);
 
-        ceiling.transform.position = new Vector3(basePosition.x, WallHeight + 3f, basePosition.z);
+        ceiling.transform.position = new Vector3(basePosition.x, DataManager.instance.WallHeight.Value + 3f, basePosition.z);
         ceiling.transform.rotation = Quaternion.Euler(90, 90 * Random.Range(0, 3), 0);
         ceiling.transform.localScale = new Vector3(0.09f * _cubeSize, 0.09f * _cubeSize, 0.6f);
         ceiling.transform.SetParent(floorTransform);

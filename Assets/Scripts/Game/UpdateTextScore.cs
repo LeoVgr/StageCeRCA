@@ -15,10 +15,6 @@ using Random = UnityEngine.Random;
  */
 public class UpdateTextScore : MonoBehaviour
 {
-    public IntEvent updateEvent;
-    public BoolVariable isCameraFps;
-    public BoolVariable isScoreShow;
-
     [Header("Audio")] public AudioSource AudioIncreaseScore;
     public AudioSource AudioDecreaseScore;
 
@@ -33,8 +29,8 @@ public class UpdateTextScore : MonoBehaviour
     {
         _textMeshProUi = GetComponent<TextMeshProUGUI>();
         _text = GetComponent<Text>();
-        updateEvent.Register(UpdateText);
-        ShowText(isScoreShow);
+        DataManager.instance.UpdateEvent.Register(UpdateText);
+        ShowText(DataManager.instance.DisplayScore);
     }
 
     private void ShowText(bool val)
@@ -44,7 +40,7 @@ public class UpdateTextScore : MonoBehaviour
 
     private void OnDestroy()
     {
-        updateEvent.Unregister(UpdateText);
+        DataManager.instance.UpdateEvent.Unregister(UpdateText);
     }
 
 

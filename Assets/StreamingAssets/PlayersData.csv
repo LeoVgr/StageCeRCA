@@ -926,3 +926,6 @@ Date et heure;Type Camera; Temps de reaction moyen (s); Temps de jeu (s); Nombre
 04/08/2021 10:45:11;TPS;2,010087;17,82481;5;3;10;2;2;Non;1,5;1;GameManager;[TempSave];
 04/08/2021 10:50:52;TPS;2,008678;13,05554;5;3;10;2;2;Non;1,5;1;GameManager;[TempSave];
 04/08/2021 16:08:11;TPS;3,250974;25,25863;5;4;10;2;10;Non;1,5;1;GameManager;[TempSave];
+05/08/2021 14:26:50;TPS;1,311064;15,04845;5;3;10;2;10;Non;1,5;1;GameManager;[TempSave];
+05/08/2021 14:44:50;TPS;1,040332;13,05688;5;5;10;2;10;Non;1,5;1;GameManager;[TempSave];
+05/08/2021 14:47:16;FPS;1,271253;14,84568;5;3;10;2;10;Non;1,915423;1;GameManager;[TempSave];

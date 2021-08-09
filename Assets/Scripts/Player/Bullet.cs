@@ -18,8 +18,7 @@ public class Bullet : MonoBehaviour
     #region "Attribut"
     public LineRenderer LineRendererComponent;
     public float Time = 0.3f;
-    public float IntervalTime = 0.5f;
-    public Vector2Variable ScreenShakesValues;
+    public float IntervalTime = 0.5f;   
     public GameObject BulletImpact;
     public float ImpactLife = 10f;
     public GameObject BulletSphere;
@@ -76,10 +75,10 @@ public class Bullet : MonoBehaviour
     }
     private void GenerateScreenShake()
     {
-        _impulseSource.m_ImpulseDefinition.m_AmplitudeGain = ScreenShakesValues.Value.x;
-        _impulseSource.m_ImpulseDefinition.m_FrequencyGain = ScreenShakesValues.Value.x;
+        _impulseSource.m_ImpulseDefinition.m_AmplitudeGain = DataManager.instance.ScreenShakesValues.Value.x;
+        _impulseSource.m_ImpulseDefinition.m_FrequencyGain = DataManager.instance.ScreenShakesValues.Value.x;
         _impulseSource.GenerateImpulse();
-        DOVirtual.DelayedCall(ScreenShakesValues.Value.y, ResetCiemachine);
+        DOVirtual.DelayedCall(DataManager.instance.ScreenShakesValues.Value.y, ResetCiemachine);
     }      
     private void HitEvent()
     {

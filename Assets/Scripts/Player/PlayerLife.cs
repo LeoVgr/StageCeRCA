@@ -6,24 +6,24 @@ using UnityEngine;
 public class PlayerLife : MonoBehaviour
 {
     #region "Attributs"
-    public FloatVariable LifeAmount;
+    
     #endregion
 
     #region "Events"
     private void Start()
     {
-        LifeAmount.Reset();
+        DataManager.instance.LifeAmount.Reset();
     }
     private void Update()
     {
-        LifeAmount.Value += Time.deltaTime * 3;   
+        DataManager.instance.LifeAmount.Value += Time.deltaTime * 3;   
     }
     #endregion
 
     #region "Methods"
     public void GetHurt()
     {
-        LifeAmount.Value = Mathf.Max(0, LifeAmount.Value - 10);
+        DataManager.instance.LifeAmount.Value = Mathf.Max(0, DataManager.instance.LifeAmount.Value - 10);
 
         //Find random pos
         int x,y;

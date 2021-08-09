@@ -10,10 +10,6 @@ using UnityEngine.UI;
 public class VictoryScreen : MonoBehaviour
 {
     #region "Attributs"
-    [Header("Atom Variables")] 
-    public IntVariable ScoreAtom;
-    public IntVariable TargetHit;
-    public BoolVariable ShowEndTime;
     
     [Header("GameObject")]
     public TextMeshProUGUI ScoreText;
@@ -50,12 +46,12 @@ public class VictoryScreen : MonoBehaviour
     }
     public void FillText()
     {
-        ScoreText.text = "" + ScoreAtom.Value * 100;
-        TargetHitText.text = "" + TargetHit.Value;
+        ScoreText.text = "" + DataManager.instance.Score.Value * 100;
+        TargetHitText.text = "" + DataManager.instance.TargetHit.Value;
         TimeText.text = "" + UIManager.instance.TimerUI.GetComponent<PlayerTimer>().GetPlayerTimer() + " s";
 
         //Show end time only if it is allowed
-        if (!ShowEndTime.Value)
+        if (!DataManager.instance.ShowEndTime.Value)
         {
             TimeText.text = "--:--";
         }

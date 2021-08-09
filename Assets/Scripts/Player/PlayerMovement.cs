@@ -16,14 +16,7 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         #region Attributs
-        //Atom's variable
-        public FloatVariable Speed;
-        public FloatVariable BreakForce;
-        public BoolVariable IsAutoMode;
-        public BoolVariable IsSemiAutoMode;
-        public BoolVariable IsManualMode;
-        public IntVariable WaypointIndex;
-        public GameObjectVariable CurrentPlayerGameObject;
+        
 
         public GameObject PauseMenuGameObject;
         public CinemachineDollyCart DollyCartInfo;
@@ -32,10 +25,6 @@ namespace Player
         #endregion
 
         #region Events
-        private void Start()
-        {
-            
-        }
         private void Update()
         {
             //If the player reach the end show UI
@@ -64,23 +53,23 @@ namespace Player
 
 
                 //Check if the player is breaking (semi auto mode)
-                if (InputManager.instance.IsBreakAction() && IsSemiAutoMode.Value)
+                if (InputManager.instance.IsBreakAction() && DataManager.instance.IsSemiAutoMode.Value)
                 {
-                    DollyCartInfo.m_Speed = Mathf.Max(0, DollyCartInfo.m_Speed - BreakForce.Value * Time.deltaTime);
+                    DollyCartInfo.m_Speed = Mathf.Max(0, DollyCartInfo.m_Speed - DataManager.instance.BreakForce.Value * Time.deltaTime);
                 }
                 else
                 {
                     //Check if we're in manual mode
-                    if (IsManualMode.Value)
+                    if (DataManager.instance.IsManualMode.Value)
                     {
-                        _currentSpeed = Speed.Value * InputManager.instance.GetInputMovementVector().y;
+                        _currentSpeed = DataManager.instance.Speed.Value * InputManager.instance.GetInputMovementVector().y;
                         DollyCartInfo.m_Speed = _currentSpeed;
                     }
                     else
                     {
                         //We assume here that the break force is also the start force
-                        DollyCartInfo.m_Speed = Mathf.Min(Speed.Value,
-                            DollyCartInfo.m_Speed + BreakForce.Value * Time.deltaTime);
+                        DollyCartInfo.m_Speed = Mathf.Min(DataManager.instance.Speed.Value,
+                            DollyCartInfo.m_Speed + DataManager.instance.BreakForce.Value * Time.deltaTime);
                     }
                 }
 
@@ -100,9 +89,9 @@ namespace Player
                 return;
 
             var waypoints = DollyCartInfo.m_Path.GetComponent<CinemachineSmoothPath>().m_Waypoints;
-            if(WaypointIndex.Value + 1 < waypoints.Length && Vector3.Distance(this.transform.position, waypoints[WaypointIndex.Value + 1].position) <= 0.5f)
+            if(DataManager.instance.WaypointIndex.Value + 1 < waypoints.Length && Vector3.Distance(this.transform.position, waypoints[DataManager.instance.WaypointIndex.Value + 1].position) <= 0.5f)
             {
-                WaypointIndex.SetValue(WaypointIndex.Value + 1);
+                DataManager.instance.WaypointIndex.SetValue(DataManager.instance.WaypointIndex.Value + 1);
             }
         }
         public void SetPath(CinemachineSmoothPath smoothPath)
@@ -112,7 +101,7 @@ namespace Player
             {
                 DollyCartInfo.m_Path = _playerPath;
                 DollyCartInfo.m_Position = 0.0f;
-                WaypointIndex.SetValue(0);              
+                DataManager.instance.WaypointIndex.SetValue(0);              
             }
         }
         #endregion
