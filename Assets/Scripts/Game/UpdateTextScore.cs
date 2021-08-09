@@ -40,7 +40,8 @@ public class UpdateTextScore : MonoBehaviour
 
     private void OnDestroy()
     {
-        DataManager.instance.UpdateEvent.Unregister(UpdateText);
+        if(DataManager.instance.UpdateEvent)
+            DataManager.instance.UpdateEvent.Unregister(UpdateText);
     }
 
 

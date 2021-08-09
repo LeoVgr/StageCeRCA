@@ -97,13 +97,6 @@ public class DataManager : Singleton<DataManager>
       ScreenShakesValues.Reset();
       LifeAmount.Reset();
       WaypointIndex.Reset();
-      WidthHeight.Reset();
-      MinMaxLength.Reset();
-      MinMaxSize.Reset();
-      MinMaxImageSizeSlider.Reset();
-      MinMaxHeightSlider.Reset();
       MinMaxTurnSlider.Reset();
-      MinMaxImagesTime.Reset();
-      MinMaxMusicVolume.Reset();
 }
 }

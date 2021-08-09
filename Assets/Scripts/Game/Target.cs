@@ -232,7 +232,7 @@ public class Target : MonoBehaviour
         DataManager.instance.TargetHit?.SetValue(DataManager.instance.TargetHit.Value + 1);
 
         //Play sound
-        //AudioValidate.Play();
+        AudioValidate.Play();
 
         //Play animation
         Canvas parent = ScoreUpText.GetComponentInParent<Canvas>();
@@ -255,7 +255,7 @@ public class Target : MonoBehaviour
             ScoreUpText.material.SetColor(ColorMat, new Color(0, 0, 0, 0));
             Sequence scoreUpSequence = DOTween.Sequence();
             scoreUpSequence.Append(ScoreUpText.material.DOColor(Color.green * 3.0f, "_Color", 0.5f).SetEase(Ease.InBounce));
-            scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 1.5f, 0.5f));
+            scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 0.5f, 0.5f));
             scoreUpSequence.Join(ScoreUpText.transform.DOScale(ScoreUpText.transform.localScale + ScoreUpText.transform.localScale * 1.2f, 0.5f).SetEase(Ease.OutBounce));
             scoreUpSequence.Append(ScoreUpText.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBounce));
             scoreUpSequence.AppendCallback(() =>
@@ -295,7 +295,7 @@ public class Target : MonoBehaviour
             ScoreUpText.material.SetColor(ColorMat, new Color(0, 0, 0, 0));
             Sequence scoreUpSequence = DOTween.Sequence();
             scoreUpSequence.Append(ScoreUpText.material.DOColor(Color.red * 3.0f, "_Color", 0.5f).SetEase(Ease.InBounce));
-            scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 1.5f, 0.2f));
+            scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 0.5f, 0.2f));
             scoreUpSequence.Append(ScoreUpText.transform.DOScale(ScoreUpText.transform.localScale + ScoreUpText.transform.localScale * 1.5f, 0.5f).SetEase(Ease.OutBounce));
             scoreUpSequence.Append(ScoreUpText.transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBounce));
             scoreUpSequence.AppendCallback(() => Destroy(parent.gameObject));
@@ -370,7 +370,7 @@ public class Target : MonoBehaviour
             ScoreUpText.material.SetColor(ColorMat, new Color(0, 0, 0, 0));
             Sequence scoreUpSequence = DOTween.Sequence();
             scoreUpSequence.Append(ScoreUpText.material.DOColor(Color.green * 3.0f, "_Color", 0.5f).SetEase(Ease.InBounce));
-            scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 1.5f, 0.5f));
+            scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 0.5f, 0.5f));
             scoreUpSequence.Join(ScoreUpText.transform.DOScale(ScoreUpText.transform.localScale + ScoreUpText.transform.localScale * 1.2f, 0.5f).SetEase(Ease.OutBounce));
             scoreUpSequence.Append(ScoreUpText.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBounce));
             scoreUpSequence.AppendCallback(() =>
@@ -412,7 +412,7 @@ public class Target : MonoBehaviour
             ScoreUpText.material.SetColor(ColorMat, new Color(0, 0, 0, 0));
             Sequence scoreUpSequence = DOTween.Sequence();
             scoreUpSequence.Append(ScoreUpText.material.DOColor(Color.red * 3.0f, "_Color", 0.5f).SetEase(Ease.InBounce));
-            scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 1.5f, 0.2f));
+            scoreUpSequence.Join(ScoreUpText.transform.DOMove(transform1.position + Vector3.up * 0.5f, 0.2f));
             scoreUpSequence.Append(ScoreUpText.transform.DOScale(ScoreUpText.transform.localScale + ScoreUpText.transform.localScale * 1.5f, 0.5f).SetEase(Ease.OutBounce));
             scoreUpSequence.Append(ScoreUpText.transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBounce));
             scoreUpSequence.AppendCallback(() => Destroy(parent.gameObject));
