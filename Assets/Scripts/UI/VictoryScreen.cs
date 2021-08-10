@@ -27,12 +27,12 @@ public class VictoryScreen : MonoBehaviour
     #region "Events"
     void Awake()
     {
-        CheckList();
-        _baseImageList = GetComponentsInChildren<Image>(true).ToList();
-        _baseTextList = GetComponentsInChildren<Text>(true).ToList();
-        _baseTextMeshProList = GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
+        //CheckList();
+        //_baseImageList = GetComponentsInChildren<Image>(true).ToList();
+        //_baseTextList = GetComponentsInChildren<Text>(true).ToList();
+        //_baseTextMeshProList = GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
 
-        HideScreen();
+        //HideScreen();
     }
     #endregion
 
@@ -41,7 +41,7 @@ public class VictoryScreen : MonoBehaviour
     {
  
         MessageText.text = isLoose ? "Temps écoulé" : "Victoire !";     
-        SetAll();
+        //SetAll();
         FillText();
     }
     public void FillText()

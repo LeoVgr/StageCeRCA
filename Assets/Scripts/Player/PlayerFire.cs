@@ -118,11 +118,12 @@ namespace Player
                 if (Physics.Raycast(ray, out hit, 100.0f, ~LayerMask.GetMask("Player")))
                 {
                     Target t = hit.collider.GetComponentInChildren<Target>();
+                    
                     if(t != null)
                     {
                         t.Hit();
-                    }                   
-
+                    }
+                    
                     endPoint = hit.point;
                     hitSomething = true;
                     normal = hit.normal;
