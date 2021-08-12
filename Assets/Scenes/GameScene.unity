@@ -6462,9 +6462,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4461981d664a2c4b8fc03fe9025a5ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrefabWall: {fileID: 7333814407606949674, guid: 000e8499f8a09db40a479327189f5327,
+  PrefabWall: {fileID: 5019109974055766573, guid: 14284bba5a50dc249860d54209214875,
     type: 3}
-  PrefabCeiling: {fileID: 303462436681340384, guid: 4694c9db751cddb40aa90a8ed98859ca,
+  PrefabEndCeiling: {fileID: 2927964860276432673, guid: 1cbbbbc44ef153f4bb271ed773729040,
+    type: 3}
+  PrefabCeilingMiddlePart: {fileID: 3550539425815443184, guid: f9fbfcdf5095535459efc251d62fc815,
     type: 3}
   PrefabColumn: {fileID: 4258138899667693954, guid: cc0ee2417272cd24e98bdc8fb99168e2,
     type: 3}
@@ -6472,7 +6474,7 @@ MonoBehaviour:
     type: 3}
   PrefabRotatingRail: {fileID: 7736065039744544843, guid: 41bd4a659bd188e439d14d68d98ea384,
     type: 3}
-  FloorMaterial: {fileID: 2100000, guid: 5b5956096dabf4a44a49398f47f729d9, type: 2}
+  FloorMaterial: {fileID: 2100000, guid: 7becc2a36ab73c44b89a4565b182b7e2, type: 2}
   ImagePrefab: {fileID: 7246851261278487832, guid: eea72ecab5d9d7648a31a320e3f22978,
     type: 3}
   TurretPrefab: {fileID: 9167860563194740769, guid: 2d48a6596886c7c4ea2fcd70440a7a9f,
