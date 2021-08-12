@@ -285,7 +285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57b12eb8e17b7747bd45c4f750ce392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerFPS: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0, type: 2}
   FpsCamera: {fileID: 7519636735349517554}
   TpsCamera: {fileID: 1143805747301951701}
   RotatorX: {fileID: 6234010678003706325}
@@ -381,7 +380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7519636735349517554}
   m_LocalRotation: {x: 0.7274679, y: -6.355494e-10, z: 6.8076333e-10, w: 0.6861417}
-  m_LocalPosition: {x: -0.015999999, y: -0.102, z: 0.8800002}
+  m_LocalPosition: {x: -0.015999999, y: -0.097, z: 0.801}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1741518284794122528}
@@ -2741,7 +2740,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.245
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6151691165341861114, guid: fe54268d93d74e64a8ec91ca8e76fff1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fe54268d93d74e64a8ec91ca8e76fff1, type: 3}
 --- !u!4 &1290436678120007867 stripped
 Transform:
@@ -4593,6 +4593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6108104372396286437, guid: 53bc9d56048ed7e47b5d9f67a393b2c6, type: 3}
+    - {fileID: 8947212965109428479, guid: 53bc9d56048ed7e47b5d9f67a393b2c6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 53bc9d56048ed7e47b5d9f67a393b2c6, type: 3}
 --- !u!4 &6958209175194241935 stripped
 Transform:
@@ -4797,7 +4798,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 29076832048271052, guid: e7dd8282b644e3045a56f294106a003f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e7dd8282b644e3045a56f294106a003f, type: 3}
 --- !u!224 &471639048178226195 stripped
 RectTransform:
@@ -7293,7 +7295,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 31.753
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6181391724581424259, guid: 2ba72a1e94e974d43a910dbb35f3acab, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2ba72a1e94e974d43a910dbb35f3acab, type: 3}
 --- !u!4 &4609760386985998664 stripped
 Transform:
