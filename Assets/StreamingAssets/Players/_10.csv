@@ -1,0 +1,38 @@
+Date et heure;10/08/2021 10:44:47
+Type Camera;TPS
+Identifiant;
+Temps de jeu (s);60
+Nombres d'images;15
+Cibles manquees;15
+Longueur;50
+Nombre  Virages;10
+Images Random;Non
+Taille images;1,5
+Temps images;2
+Seed;1
+Preset;
+Score;0
+Tir Actif;Oui
+Score Affiche;Oui
+Vitesse;1
+Force frein;1
+Viseur colorise;Oui
+Mode deplacement;Manuel
+Personnage;Megan
+
+Nom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?
+01_N_Diapositive01.jpg;3;0;Non;Non;Oui;
+02_N_Diapositive02.jpg;2;0;Non;Non;Oui;
+03_T1_Diapositive03.jpg;2;0;Oui;Non;Non;
+04Diapositive04.jpg;2;0;Oui;Non;Non;
+05_N_Diapositive05.jpg;3;0;Non;Non;Oui;
+06Diapositive06.jpg;1;0;Oui;Non;Non;
+07Diapositive07.jpg;0;0;Oui;Non;Non;
+08Diapositive08.jpg;2;0;Oui;Non;Non;
+09Diapositive09.jpg;1;0;Oui;Non;Non;
+10Diapositive10.jpg;0;0;Oui;Non;Non;
+11Diapositive11.jpg;3;0;Oui;Non;Non;
+12Diapositive12.jpg;3;0;Oui;Non;Non;
+13Diapositive13.jpg;0;0;Oui;Non;Non;
+14Diapositive14.jpg;1;0;Oui;Non;Non;
+15Diapositive15.jpg;1;0;Oui;Non;Non;

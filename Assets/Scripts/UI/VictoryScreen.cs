@@ -16,24 +16,9 @@ public class VictoryScreen : MonoBehaviour
     public TextMeshProUGUI TimeText;
     public TextMeshProUGUI TargetHitText;
     public Text MessageText;
-    
-    private List<Image> _baseImageList;
-    private List<Text> _baseTextList;
-    private List<TextMeshProUGUI> _baseTextMeshProList;
-
-    private Color alphaNull;
     #endregion
 
     #region "Events"
-    void Awake()
-    {
-        CheckList();
-        _baseImageList = GetComponentsInChildren<Image>(true).ToList();
-        _baseTextList = GetComponentsInChildren<Text>(true).ToList();
-        _baseTextMeshProList = GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
-
-        HideScreen();
-    }
     #endregion
 
     #region "Methods"
@@ -41,7 +26,7 @@ public class VictoryScreen : MonoBehaviour
     {
  
         MessageText.text = isLoose ? "Temps écoulé" : "Victoire !";     
-        SetAll();
+       
         FillText();
     }
     public void FillText()
@@ -56,65 +41,6 @@ public class VictoryScreen : MonoBehaviour
             TimeText.text = "--:--";
         }
       
-    }
-    public void HideScreen()
-    {
-        CheckList();
-        foreach (Image image in _baseImageList)
-        {
-            var color = image.color;
-            color =  new Color(color .r,color .g,color.b,0);
-            image.color = color;
-        }
-        
-        foreach (Text text in _baseTextList)
-        {
-            var color = text.color;
-            color =  new Color(color .r,color .g,color.b,0);
-            text.color = color;
-        }
-        
-        
-        foreach (TextMeshProUGUI text in _baseTextMeshProList)
-        {
-            var color = text.color;
-            color =  new Color(color .r,color .g,color.b,0);
-            text.color = color;        
-        }
-    }
-    public void SetAll()
-    {
-        CheckList();
-
-        foreach (Image image in _baseImageList)
-        {
-            var color = image.color;
-            image.DOColor(new Color(color.r, color.g, color.b, 1), 0.3f);
-        }
-        
-        foreach (Text text in _baseTextList)
-        {
-            var color = text.color;
-            text.DOColor(new Color(color.r, color.g, color.b, 1), 0.3f);
-        }
-        
-        
-        foreach (TextMeshProUGUI text in _baseTextMeshProList)
-        {
-            var color = text.color;
-            text.DOColor(new Color(color.r, color.g, color.b, 1), 0.3f);
-        }
-    }
-    private void CheckList()
-    {
-        if (_baseImageList == null)
-            _baseImageList = GetComponentsInChildren<Image>(true).ToList();
-        
-        if (_baseTextList == null)
-            _baseTextList = GetComponentsInChildren<Text>(true).ToList();
-        
-        if (_baseTextMeshProList == null)
-            _baseTextMeshProList = GetComponentsInChildren<TextMeshProUGUI>(true).ToList();
     }
     #endregion
 }
