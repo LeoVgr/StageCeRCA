@@ -8,6 +8,7 @@ public class Turret : Target
 {
     #region "Attributs"
     public GameObject TurretBody;
+    public GameObject TurretArm;
     public Transform OriginBullet;
     public float TimeBetweenShoot;
 
@@ -15,6 +16,18 @@ public class Turret : Target
     #endregion
 
     #region "Events"
+    protected override void Start()
+    {
+        base.Start();
+
+        //Put the turret arm in the right place
+        if (!IsNegateImage)
+        {
+            TurretArm.transform.rotation *= Quaternion.Euler(0,180,0);
+            TurretArm.transform.localPosition = new Vector3(-7, 0, 0);
+        }
+      
+    }
     protected override void Update()
     {
         base.Update();       
@@ -63,7 +76,12 @@ public class Turret : Target
     }
     public void OrientTurret()
     {
-        TurretBody.transform.rotation = Quaternion.Euler(0,Vector3.Angle(-this.transform.forward, DataManager.instance.Player.Value.transform.position - transform.position),0);
+        Vector3 lookPos = DataManager.instance.Player.Value.transform.position - TurretBody.transform.position;
+        lookPos.y = 0;
+
+        Quaternion rotation = Quaternion.Euler(0,180,0) * Quaternion.LookRotation(lookPos);
+        TurretBody.transform.rotation = rotation;
+
     }
 }       
     #endregion
