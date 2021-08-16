@@ -27,6 +27,7 @@ public class GameManager : Singleton<GameManager>
     public CinemachineVirtualCamera TPSCamera;
 
     public MazeGenerator MazeGenerator;
+    public AudioSource MusicManager;
     public PlayerSaveData PlayerSaveData;
 
     private float _countdownDuration = 3.4f;
@@ -235,6 +236,9 @@ public class GameManager : Singleton<GameManager>
         //Alow the player to move
         InputManager.instance.EnableInputs();
         InputManager.instance.EnableMovementInputs();
+
+        //Play Music
+        MusicManager.Play();
     }
     public void EnterPauseStatement()
     {
