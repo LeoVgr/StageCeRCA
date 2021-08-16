@@ -29,11 +29,18 @@ public class GameManager : Singleton<GameManager>
     public MazeGenerator MazeGenerator;
     public AudioSource MusicManager;
     public PlayerSaveData PlayerSaveData;
+    
 
     private float _countdownDuration = 3.4f;
     private float _countdownTimer = 3.4f;
     private bool _isGameLost = false;
     private bool _isMazeGenerated = false;
+
+    private int _tutorialStep = 0;
+    private float _tutorialInstructionMinimumTime = 0.5f;
+    private float _tutorialTimer = 0;
+    private Vector2 _previousMousePos = Vector2.one;
+    private string[] _tutorialInstructions; 
 
     private GameStatement _gameStatement;
     private GameStatement _previousGameStatement;
@@ -51,10 +58,24 @@ public class GameManager : Singleton<GameManager>
         UIManager.instance.ShowPauseUI(false);
         UIManager.instance.ShowLoadingUI(true);
 
-        //Initialize the first state
+        //Initialize the first state        
         _gameStatement = GameStatement.Ready;
         _previousGameStatement = GameStatement.None;
         EnterReadyStatement();
+
+        _tutorialInstructions = new string[]
+        {
+            "Bienvenue dans ce tutoriel, nous allons ensemble voir les bases",
+            "Le but du jeu est d'arriver au bout de ce couloir dans le temps imparti tout en marquant des points",
+            "Pour cela, tirez sur les images " + (DataManager.instance.IsCrosshairColorized.Value? "lorsque votre viseur devient vert en les survolants" : "que le chercheur vous a décrites"),
+            (DataManager.instance.IsCrosshairColorized.Value? "Si votre viseur est rouge, il ne faut pas tirer dessus" : "Sinon il ne faut pas tirer dessus"),
+            "Parfois, une tourelle fera son apparaition, empressez vous de la neutraliser",
+            (InputManager.instance.IsUsingGamepad()? "Utilisez le joystick droit pour bouger la vue" : "Utilisez la souris pour bouger la vue"),
+            (InputManager.instance.IsUsingGamepad()? "Appuyez sur [RT] pour tirer" : "Appuyer sur le clic gauche pour tirer"),
+            "Pour déplacer le chariot, "+(InputManager.instance.IsUsingGamepad()? "utilisez le joystick gauche" : "utilisez les touches [Z] et [S]"),
+            "Pour faire freiner le chariot, "+(InputManager.instance.IsUsingGamepad()? "appuyez sur [LT]" : "appuyez sur [Espace]"),
+            "Tirez pour commencer."
+        };
     }
     private void Update()
     {
@@ -81,7 +102,6 @@ public class GameManager : Singleton<GameManager>
     {
         Cursor.visible = true;
     }
-
     #endregion
 
     #region Methods
@@ -184,6 +204,7 @@ public class GameManager : Singleton<GameManager>
 
         //Display ready UI
         UIManager.instance.ShowReadyUI(true);
+        UIManager.instance.ShowTipUI(true);      
 
         //Lock the player because he don't need to move when he is in menu
         InputManager.instance.DisableMovementInputs();
@@ -194,6 +215,7 @@ public class GameManager : Singleton<GameManager>
         DataManager.instance.TargetCount.SetValue(0);
         DataManager.instance.TargetHit.SetValue(0);
         DataManager.instance.TargetList.Clear();
+        _tutorialStep = 0;
 
         //Get the references of the player
         DataManager.instance.Player.SetValue(Player.gameObject);
@@ -277,17 +299,47 @@ public class GameManager : Singleton<GameManager>
             UIManager.instance.ShowLoadingUI(!_isMazeGenerated);
         }
 
+        //Tutorial
+        if (DataManager.instance.IsTutorial.Value)
+        {
+            UIManager.instance.TipText.text = _tutorialInstructions[_tutorialStep];
+
+            switch (_tutorialStep)
+            {
+                case 1:
+                    if(InputManager.instance.GetInputMovementVector() != Vector2.one && InputManager.instance.GetInputMovementVector() != _previousMousePos)
+                    {
+                        TutorialNextStep();
+                    }
+                    _previousMousePos = InputManager.instance.GetInputMovementVector();
+                    break;
+            }
+
+            _tutorialTimer += Time.deltaTime;
+        }
+        else
+        {
+            UIManager.instance.TipText.text = "Tirez pour commencer.";           
+        }
+
         //Check if the player is ready
-        if (_isMazeGenerated && InputManager.instance.IsFireAction())
+        if ((_isMazeGenerated && InputManager.instance.IsFireAction() && !DataManager.instance.IsTutorial.Value) || (DataManager.instance.IsTutorial.Value && _tutorialStep == _tutorialInstructions.Length-1 && InputManager.instance.IsFireAction()))
         {
             SetCountdownStatement();
         }
+
+        //Go to next tutorial step
+        if (InputManager.instance.IsInteractAction())
+        {
+            TutorialNextStep();
+        }   
 
         //Check if the player want to pause the game
         if (InputManager.instance.IsCancelAction())
         {
             SetPauseStatement();
         }
+
     }
     public void CountdownStatement()
     {
@@ -322,7 +374,7 @@ public class GameManager : Singleton<GameManager>
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
-
+    
     public void EndStatement()
     {
         //Lock the cursor to the game window
@@ -333,6 +385,7 @@ public class GameManager : Singleton<GameManager>
     {
         //Hide the UI
         UIManager.instance.ShowReadyUI(false);
+        UIManager.instance.ShowTipUI(false);
     }
     public void ExitCountdownStatement()
     {
@@ -363,6 +416,28 @@ public class GameManager : Singleton<GameManager>
 
 
     /* Other methods */
+    public void TutorialNextStep()
+    {
+        if(_tutorialTimer > _tutorialInstructionMinimumTime && _tutorialStep < _tutorialInstructions.Length - 1)
+        {      
+            _tutorialStep++;
+
+
+            if(_tutorialStep == 7)
+            {
+                _tutorialStep = (DataManager.instance.IsManualMode.Value ? 7 : (DataManager.instance.IsSemiAutoMode.Value ? 8 : 9));
+            }
+            else
+            {
+                if (_tutorialStep > 7)
+                {
+                    _tutorialStep = _tutorialInstructions.Length - 1;
+                }
+            }
+          
+            _tutorialTimer = 0;
+        }
+    }
     public void RestartGame()
     {
         //Exit the state machine 

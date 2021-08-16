@@ -19,6 +19,7 @@ public class InputManager : Singleton<InputManager>
     private bool _isFireAction = false;
     private bool _isCancelAction = false;
     private bool _isBreakAction = false;
+    private bool _isInteractAction = false;
     #endregion"
 
     #region "Events"
@@ -36,9 +37,11 @@ public class InputManager : Singleton<InputManager>
         _controls.Gameplay.Aim.canceled += UpdateInputAimVector;
 
         _controls.Gameplay.Break.performed += UpdateBreak;
+        _controls.Gameplay.Interact.performed += UpdateInteract;
         _controls.Gameplay.Fire.performed += UpdateFire;
         _controls.Gameplay.Cancel.performed += UpdateCancel;
         _controls.Gameplay.Break.canceled += UpdateBreak;
+        _controls.Gameplay.Interact.canceled += UpdateInteract;
         _controls.Gameplay.Fire.canceled += UpdateFire;
         _controls.Gameplay.Cancel.canceled += UpdateCancel;
 
@@ -134,6 +137,18 @@ public class InputManager : Singleton<InputManager>
             _isCancelAction = false;
         }
     }
+    public void UpdateInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _isInteractAction = true;
+        }
+
+        if (context.canceled)
+        {
+            _isInteractAction = false;
+        }
+    }
 
     public Vector2 GetInputMovementVector()
     {
@@ -148,6 +163,10 @@ public class InputManager : Singleton<InputManager>
             return Vector2.zero;
 
         return _inputAimVector;
+    }
+    public bool IsInteractAction()
+    {
+        return _isInteractAction;
     }
     public bool IsBreakAction()
     {
@@ -169,6 +188,14 @@ public class InputManager : Singleton<InputManager>
             return false;
 
         return _isFireAction;
+    }
+    public bool IsUsingGamepad()
+    {
+        return _isUsingGamepad;
+    }
+    public bool IsUsingKeyboardMouse()
+    {
+        return _isUsingKeyboardMouse;
     }
     public void SetSensibility(float value)
     {

@@ -42,6 +42,7 @@ public class DataManager : Singleton<DataManager>
     public Vector2Variable ScreenShakesValues;
     public FloatVariable LifeAmount;
     public IntVariable WaypointIndex;
+    public BoolVariable IsTutorial;
 
     [Header("Atoms Events")]
     public IntEvent PlayerWaypointChange;
@@ -98,5 +99,6 @@ public class DataManager : Singleton<DataManager>
       LifeAmount.Reset();
       WaypointIndex.Reset();
       MinMaxTurnSlider.Reset();
-}
+      IsTutorial.Reset();
+    }
 }

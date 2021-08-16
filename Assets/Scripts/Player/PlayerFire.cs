@@ -60,7 +60,7 @@ namespace Player
                 if (_timer > _cooldownFire)
                 {
                     _timer = 0f;
-                    RapidFire();
+                    RapidFire();                   
                 }
             }
         

@@ -17,9 +17,10 @@ public class UIManager : Singleton<UIManager>
     public GameObject CrosshairUI;
     public GameObject LoadingUI;
     public GameObject HurtScreen;
+    public GameObject TipUI;
 
+    public TextMeshProUGUI TipText;
     public Sprite SplashSprite;
-    public GameObject ReadyAnswerText;
     public GameObject CountDownText;   
     public GameObject MainPauseUI;
     public GameObject OptionsPauseUI;
@@ -73,7 +74,6 @@ public class UIManager : Singleton<UIManager>
     public void ShowReadyUI(bool displayUI)
     {
         ReadyUI.SetActive(displayUI);
-        ReadyAnswerText.SetActive(displayUI);
         CountDownText.SetActive(!displayUI);
     }
     public void ShowEndGameUI(bool displayUI)
@@ -112,6 +112,10 @@ public class UIManager : Singleton<UIManager>
         OptionsPauseUI.SetActive(!displayUI);
         ParametersPauseUI.SetActive(displayUI);
     }
+    public void ShowTipUI(bool displayUI)
+    {
+        TipUI.SetActive(displayUI);
+    }
 
     public void UpdateParametersPauseMenu()
     {
@@ -140,7 +144,7 @@ public class UIManager : Singleton<UIManager>
     }
     public void StartCountDown()
     {
-        ReadyAnswerText.SetActive(false);
+        TipUI.SetActive(false);
         CountDownText.SetActive(true);
     }
     public void UpdateCountDown(string value)
