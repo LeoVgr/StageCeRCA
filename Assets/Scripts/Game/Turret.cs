@@ -9,6 +9,8 @@ public class Turret : Target
     #region "Attributs"
     public GameObject TurretBody;
     public GameObject TurretArm;
+    public LineRenderer LineRenderer;
+    public Transform EyeTransform;
     public Transform OriginBullet;
     public float TimeBetweenShoot;
 
@@ -34,7 +36,11 @@ public class Turret : Target
 
         if (this.IsShown())
         {
+            LineRenderer.enabled = true;
+
             OrientTurret();
+
+            DisplayLineRenderer();
 
             //Add the time to cd 
             _shootTimer += Time.deltaTime;
@@ -47,12 +53,17 @@ public class Turret : Target
                 _shootTimer = 0;
             }
         }
+        else
+        {
+            LineRenderer.enabled = false;
+        }
+        
 
     }
     #endregion
 
     #region "Methods"
-    public void ShootAtPlayer()
+    private void ShootAtPlayer()
     {
         //TODO : put shot sound
         //FireAudio.Play();
@@ -74,7 +85,7 @@ public class Turret : Target
 
         DataManager.instance.Player.Value.GetComponentInChildren<PlayerLife>().GetHurt();
     }
-    public void OrientTurret()
+    private void OrientTurret()
     {
         Vector3 lookPos = DataManager.instance.Player.Value.transform.position - TurretBody.transform.position;
         lookPos.y = 0;
@@ -82,6 +93,16 @@ public class Turret : Target
         Quaternion rotation = Quaternion.Euler(0,180,0) * Quaternion.LookRotation(lookPos);
         TurretBody.transform.rotation = rotation;
 
+    }
+    private void DisplayLineRenderer()
+    {
+        //Starting position
+        LineRenderer.SetPosition(0, EyeTransform.position);
+
+        //End position
+        LineRenderer.SetPosition(1, DataManager.instance.Player.Value.transform.position + new Vector3(0,1f,0));
+
+        LineRenderer.widthMultiplier = 0.05f;
     }
 }       
     #endregion
