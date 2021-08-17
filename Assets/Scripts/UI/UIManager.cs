@@ -19,6 +19,8 @@ public class UIManager : Singleton<UIManager>
     public GameObject HurtScreen;
     public GameObject TipUI;
 
+    public GameObject KeyImage;
+    public GameObject ButtonImage;
     public TextMeshProUGUI TipText;
     public Sprite SplashSprite;
     public GameObject CountDownText;   
@@ -115,6 +117,10 @@ public class UIManager : Singleton<UIManager>
     public void ShowTipUI(bool displayUI)
     {
         TipUI.SetActive(displayUI);
+        //Enable right image depends on what controller player is using
+        ButtonImage.SetActive(InputManager.instance.IsUsingGamepad());
+        KeyImage.SetActive(!InputManager.instance.IsUsingGamepad());
+
     }
 
     public void UpdateParametersPauseMenu()

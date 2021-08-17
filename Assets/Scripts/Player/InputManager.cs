@@ -8,8 +8,6 @@ public class InputManager : Singleton<InputManager>
     #region "Attributs"
     private PlayerControls _controls;
     private float _sensibility;
-    private bool _isUsingGamepad = false;
-    private bool _isUsingKeyboardMouse = false;
     private bool _isInputEnabled = true;
     private bool _isMovementInputEnabled = true;
 
@@ -47,18 +45,6 @@ public class InputManager : Singleton<InputManager>
 
         //Load player's pref options
         _sensibility = PlayerPrefs.GetFloat("sensibility", 0.5f);
-    }
-    private void Update()
-    {
-        if (Gamepad.current != null)
-        {
-            _isUsingGamepad = true;
-        }
-
-        if (Keyboard.current != null && Mouse.current != null)
-        {
-            _isUsingKeyboardMouse = true;
-        }
     }
     private void OnApplicationQuit()
     {
@@ -191,11 +177,11 @@ public class InputManager : Singleton<InputManager>
     }
     public bool IsUsingGamepad()
     {
-        return _isUsingGamepad;
+        return Gamepad.current != null;
     }
     public bool IsUsingKeyboardMouse()
     {
-        return _isUsingKeyboardMouse;
+        return Mouse.current != null && Keyboard.current != null;
     }
     public void SetSensibility(float value)
     {

@@ -65,16 +65,16 @@ public class GameManager : Singleton<GameManager>
 
         _tutorialInstructions = new string[]
         {
-            "Bienvenue dans ce tutoriel, nous allons ensemble voir les bases",
-            "Le but du jeu est d'arriver au bout de ce couloir dans le temps imparti tout en marquant des points",
-            "Pour cela, tirez sur les images " + (DataManager.instance.IsCrosshairColorized.Value? "lorsque votre viseur devient vert en les survolants" : "que le chercheur vous a décrites"),
-            (DataManager.instance.IsCrosshairColorized.Value? "Si votre viseur est rouge, il ne faut pas tirer dessus" : "Sinon il ne faut pas tirer dessus"),
-            "Parfois, une tourelle fera son apparaition, empressez vous de la neutraliser",
-            (InputManager.instance.IsUsingGamepad()? "Utilisez le joystick droit pour bouger la vue" : "Utilisez la souris pour bouger la vue"),
-            (InputManager.instance.IsUsingGamepad()? "Appuyez sur [RT] pour tirer" : "Appuyer sur le clic gauche pour tirer"),
-            "Pour déplacer le chariot, "+(InputManager.instance.IsUsingGamepad()? "utilisez le joystick gauche" : "utilisez les touches [Z] et [S]"),
-            "Pour faire freiner le chariot, "+(InputManager.instance.IsUsingGamepad()? "appuyez sur [LT]" : "appuyez sur [Espace]"),
-            "Tirez pour commencer."
+            "Bonjour et bienvenue dans Minagéa !",
+            "Dans Minagéa, ton but est d'atteindre le bout de la mine tout en collectant des points.",
+            "Pour cela, tire sur les images qui apparaissent " + (DataManager.instance.IsCrosshairColorized.Value? "uniquement quand ton viseur devient vert en les survolant." : "que le chercheur t'as décrites."),
+            (DataManager.instance.IsCrosshairColorized.Value? "Si ton viseur est rouge, il ne faut pas tirer dessus." : "Sinon il ne faut pas tirer dessus."),
+            "Parfois, une tourelle fera son apparition, empresse-toi de la neutraliser.",
+            (InputManager.instance.IsUsingGamepad()? "Utilise le joystick droit de ta manette pour bouger la vue." : "Déplace ta souris pour bouger la vue."),
+            (InputManager.instance.IsUsingGamepad()? "Et appuie sur [RT] pour tirer !" : "Et appuie sur le clic gauche pour tirer !"),
+            "Pour déplacer le chariot, "+(InputManager.instance.IsUsingGamepad()? "utilise le joystick gauche." : "utilise les touches [Z] et [S]."),
+            "Pour faire freiner le chariot, "+(InputManager.instance.IsUsingGamepad()? "appuie sur [LT]." : "appuie sur [Espace]."),
+            "Est-ce que tu es prêt à commencer ?"
         };
     }
     private void Update()
@@ -288,6 +288,7 @@ public class GameManager : Singleton<GameManager>
 
     public void ReadyStatement()
     {
+        
         //Lock the cursor to the game window
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
@@ -319,11 +320,11 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            UIManager.instance.TipText.text = "Tirez pour commencer.";           
+            UIManager.instance.TipText.text = "Est-ce que tu es prêt à commencer ?";           
         }
 
         //Check if the player is ready
-        if ((_isMazeGenerated && InputManager.instance.IsFireAction() && !DataManager.instance.IsTutorial.Value) || (DataManager.instance.IsTutorial.Value && _tutorialStep == _tutorialInstructions.Length-1 && InputManager.instance.IsFireAction()))
+        if ((_isMazeGenerated && InputManager.instance.IsInteractAction() && !DataManager.instance.IsTutorial.Value))
         {
             SetCountdownStatement();
         }
@@ -418,10 +419,17 @@ public class GameManager : Singleton<GameManager>
     /* Other methods */
     public void TutorialNextStep()
     {
-        if(_tutorialTimer > _tutorialInstructionMinimumTime && _tutorialStep < _tutorialInstructions.Length - 1)
+        if(_tutorialTimer > _tutorialInstructionMinimumTime && _tutorialStep <= _tutorialInstructions.Length - 1)
         {      
-            _tutorialStep++;
+            //If the player is ready at the last instructions, start the countdown
+            if(_tutorialStep == _tutorialInstructions.Length - 1)
+            {
+                SetCountdownStatement();
+                return;
+            }
 
+
+            _tutorialStep++;
 
             if(_tutorialStep == 7)
             {
