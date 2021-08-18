@@ -52,7 +52,7 @@ public class Target : MonoBehaviour
     #endregion
 
     #region "Events"
-    void Start()
+    protected virtual void Start()
     {
         switch (Direction)
         {

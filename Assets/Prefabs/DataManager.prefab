@@ -80,6 +80,7 @@ MonoBehaviour:
   ScreenShakesValues: {fileID: 11400000, guid: 211d00b7c00e89345a44e7bb56f594ef, type: 2}
   LifeAmount: {fileID: 11400000, guid: e587d2d333bf98e4aaa414ceeb1bcba8, type: 2}
   WaypointIndex: {fileID: 11400000, guid: bce1e3eec14fdbe48b9eb6e5ac0fc20b, type: 2}
+  IsTutorial: {fileID: 11400000, guid: 152d2dfdc75fa354297f356c6377d1a2, type: 2}
   PlayerWaypointChange: {fileID: 11400000, guid: 1a8098de4b8af1044b9498a43a61127d,
     type: 2}
   UpdateEvent: {fileID: 11400000, guid: 4035d89cfd7d5e449a5469e71d543269, type: 2}

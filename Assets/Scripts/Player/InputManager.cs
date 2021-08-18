@@ -8,8 +8,6 @@ public class InputManager : Singleton<InputManager>
     #region "Attributs"
     private PlayerControls _controls;
     private float _sensibility;
-    private bool _isUsingGamepad = false;
-    private bool _isUsingKeyboardMouse = false;
     private bool _isInputEnabled = true;
     private bool _isMovementInputEnabled = true;
 
@@ -19,6 +17,7 @@ public class InputManager : Singleton<InputManager>
     private bool _isFireAction = false;
     private bool _isCancelAction = false;
     private bool _isBreakAction = false;
+    private bool _isInteractAction = false;
     #endregion"
 
     #region "Events"
@@ -36,26 +35,16 @@ public class InputManager : Singleton<InputManager>
         _controls.Gameplay.Aim.canceled += UpdateInputAimVector;
 
         _controls.Gameplay.Break.performed += UpdateBreak;
+        _controls.Gameplay.Interact.performed += UpdateInteract;
         _controls.Gameplay.Fire.performed += UpdateFire;
         _controls.Gameplay.Cancel.performed += UpdateCancel;
         _controls.Gameplay.Break.canceled += UpdateBreak;
+        _controls.Gameplay.Interact.canceled += UpdateInteract;
         _controls.Gameplay.Fire.canceled += UpdateFire;
         _controls.Gameplay.Cancel.canceled += UpdateCancel;
 
         //Load player's pref options
         _sensibility = PlayerPrefs.GetFloat("sensibility", 0.5f);
-    }
-    private void Update()
-    {
-        if (Gamepad.current != null)
-        {
-            _isUsingGamepad = true;
-        }
-
-        if (Keyboard.current != null && Mouse.current != null)
-        {
-            _isUsingKeyboardMouse = true;
-        }
     }
     private void OnApplicationQuit()
     {
@@ -134,6 +123,18 @@ public class InputManager : Singleton<InputManager>
             _isCancelAction = false;
         }
     }
+    public void UpdateInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _isInteractAction = true;
+        }
+
+        if (context.canceled)
+        {
+            _isInteractAction = false;
+        }
+    }
 
     public Vector2 GetInputMovementVector()
     {
@@ -148,6 +149,10 @@ public class InputManager : Singleton<InputManager>
             return Vector2.zero;
 
         return _inputAimVector;
+    }
+    public bool IsInteractAction()
+    {
+        return _isInteractAction;
     }
     public bool IsBreakAction()
     {
@@ -169,6 +174,14 @@ public class InputManager : Singleton<InputManager>
             return false;
 
         return _isFireAction;
+    }
+    public bool IsUsingGamepad()
+    {
+        return Gamepad.current != null;
+    }
+    public bool IsUsingKeyboardMouse()
+    {
+        return Mouse.current != null && Keyboard.current != null;
     }
     public void SetSensibility(float value)
     {
