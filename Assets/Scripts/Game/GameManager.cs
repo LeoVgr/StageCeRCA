@@ -288,6 +288,7 @@ public class GameManager : Singleton<GameManager>
 
     public void ReadyStatement()
     {
+        
         //Lock the cursor to the game window
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
@@ -319,11 +320,11 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            UIManager.instance.TipText.text = "Tirez pour commencer.";           
+            UIManager.instance.TipText.text = "Est-ce que tu es pr�t � commencer ?";           
         }
 
         //Check if the player is ready
-        if ((_isMazeGenerated && InputManager.instance.IsFireAction() && !DataManager.instance.IsTutorial.Value) || (DataManager.instance.IsTutorial.Value && _tutorialStep == _tutorialInstructions.Length-1 && InputManager.instance.IsFireAction()))
+        if ((_isMazeGenerated && InputManager.instance.IsInteractAction() && !DataManager.instance.IsTutorial.Value))
         {
             SetCountdownStatement();
         }
@@ -418,10 +419,17 @@ public class GameManager : Singleton<GameManager>
     /* Other methods */
     public void TutorialNextStep()
     {
-        if(_tutorialTimer > _tutorialInstructionMinimumTime && _tutorialStep < _tutorialInstructions.Length - 1)
+        if(_tutorialTimer > _tutorialInstructionMinimumTime && _tutorialStep <= _tutorialInstructions.Length - 1)
         {      
-            _tutorialStep++;
+            //If the player is ready at the last instructions, start the countdown
+            if(_tutorialStep == _tutorialInstructions.Length - 1)
+            {
+                SetCountdownStatement();
+                return;
+            }
 
+
+            _tutorialStep++;
 
             if(_tutorialStep == 7)
             {
