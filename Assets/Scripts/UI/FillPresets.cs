@@ -39,7 +39,7 @@ public class FillPresets : MonoBehaviour
         BreakForce,
         Remy,
         Megan,
-        Mousey,
+        Dog,
         AutoMode,
         SemiAutoMode,
         ManualMode,
@@ -151,7 +151,7 @@ public class FillPresets : MonoBehaviour
                     case ColumnNames.Megan:
                         DataManager.instance.IsMeganSelected.SetValue(keyValuePair.Value >= 0.5f);
                         break;
-                    case ColumnNames.Mousey:
+                    case ColumnNames.Dog:
                         DataManager.instance.IsDogSelected.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.AutoMode:
@@ -261,7 +261,7 @@ public class FillPresets : MonoBehaviour
                             _presets[selection][(ColumnNames.Megan)] = f;
 
                             f = CheckStringLength(value[18]);
-                            _presets[selection][(ColumnNames.Mousey)] = f;
+                            _presets[selection][(ColumnNames.Dog)] = f;
 
                             f = CheckStringLength(value[19]);
                             _presets[selection][(ColumnNames.AutoMode)] = f;

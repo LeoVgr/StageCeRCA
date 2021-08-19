@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
     public PlayerMovement Player;
     public GameObject Remy;
     public GameObject Megan;
-    public GameObject Mousey;
+    public GameObject Dog;
 
     public CinemachineVirtualCamera FPSCamera;
     public CinemachineVirtualCamera TPSCamera;
@@ -235,7 +235,7 @@ public class GameManager : Singleton<GameManager>
         //Enable the right character
         Remy.SetActive(DataManager.instance.IsRemySelected.Value);
         Megan.SetActive(DataManager.instance.IsMeganSelected.Value);
-        Mousey.SetActive(DataManager.instance.IsDogSelected.Value);
+        Dog.SetActive(DataManager.instance.IsDogSelected.Value);
         
         //Reset some values
         _isMazeGenerated = false;
@@ -320,7 +320,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            UIManager.instance.TipText.text = "Est-ce que tu es pr�t � commencer ?";           
+            UIManager.instance.TipText.text = "Est-ce que tu es prêt à commencer ?";           
         }
 
         //Check if the player is ready

@@ -124,7 +124,7 @@ namespace Data
             text += "Viseur colorise;" + (DataManager.instance.IsCrosshairColorized.Value ? "Oui" : "Non") + "\n";
             text += "Mode deplacement;" + (DataManager.instance.IsAutoMode.Value ? "Auto" : (DataManager.instance.IsManualMode.Value ? "Manuel" : "Semi-Auto")) +
                     "\n";
-            text += "Personnage;" + (DataManager.instance.IsRemySelected.Value ? "Remy" : DataManager.instance.IsMeganSelected.Value ? "Megan" : "Mousey") + "\n";
+            text += "Personnage;" + (DataManager.instance.IsRemySelected.Value ? "Remy" : DataManager.instance.IsMeganSelected.Value ? "Megan" : "Dog") + "\n";
             text +=
                 "\nNom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?\n";
 

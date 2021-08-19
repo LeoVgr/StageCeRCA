@@ -32,7 +32,7 @@ public class MazeManager : MonoBehaviour
     public GameObject BreakForceField;
     public GameObject IsRemySelectedToggle;
     public GameObject IsMeganSelectedToggle;
-    public GameObject IsMouseySelectedToggle;
+    public GameObject IsDogSelectedToggle;
     public GameObject IsAutoModeToggle;
     public GameObject IsSemiAutoModeToggle;
     public GameObject IsManualModeToggle;
@@ -74,7 +74,7 @@ public class MazeManager : MonoBehaviour
             TimerField.GetComponent<UIDataManager>(),
             IsRemySelectedToggle.GetComponent<UIDataManager>(),
             IsMeganSelectedToggle.GetComponent<UIDataManager>(),
-            IsMouseySelectedToggle.GetComponent<UIDataManager>(),
+            IsDogSelectedToggle.GetComponent<UIDataManager>(),
             IsAutoModeToggle.GetComponent<UIDataManager>(),
             IsSemiAutoModeToggle.GetComponent<UIDataManager>(),
             IsManualModeToggle.GetComponent<UIDataManager>(),
@@ -185,11 +185,11 @@ public class MazeManager : MonoBehaviour
         IsMeganSelectedToggle.GetComponent<UIDataManager>().AtomVariableBool = DataManager.instance.IsMeganSelected;
         IsMeganSelectedToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
 
-        //Toggle mousey selected
-        IsMouseySelectedToggle.GetComponent<UIDataManager>().minInt = 0;
-        IsMouseySelectedToggle.GetComponent<UIDataManager>().maxInt = 0;
-        IsMouseySelectedToggle.GetComponent<UIDataManager>().AtomVariableBool = DataManager.instance.IsDogSelected;
-        IsMouseySelectedToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
+        //Toggle Dog selected
+        IsDogSelectedToggle.GetComponent<UIDataManager>().minInt = 0;
+        IsDogSelectedToggle.GetComponent<UIDataManager>().maxInt = 0;
+        IsDogSelectedToggle.GetComponent<UIDataManager>().AtomVariableBool = DataManager.instance.IsDogSelected;
+        IsDogSelectedToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
 
         //Toggle auto mode
         IsAutoModeToggle.GetComponent<UIDataManager>().minInt = 0;
