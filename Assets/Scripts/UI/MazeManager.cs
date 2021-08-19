@@ -188,7 +188,7 @@ public class MazeManager : MonoBehaviour
         //Toggle mousey selected
         IsMouseySelectedToggle.GetComponent<UIDataManager>().minInt = 0;
         IsMouseySelectedToggle.GetComponent<UIDataManager>().maxInt = 0;
-        IsMouseySelectedToggle.GetComponent<UIDataManager>().AtomVariableBool = DataManager.instance.IsMouseySelected;
+        IsMouseySelectedToggle.GetComponent<UIDataManager>().AtomVariableBool = DataManager.instance.IsDogSelected;
         IsMouseySelectedToggle.GetComponent<UIDataManager>().RegisterThisEvent = true;
 
         //Toggle auto mode

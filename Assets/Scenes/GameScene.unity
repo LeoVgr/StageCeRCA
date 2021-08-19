@@ -17547,7 +17547,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -17574,8 +17574,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852386519}
-  m_LocalRotation: {x: 0.029222012, y: 3.1971065e-11, z: 9.307737e-10, w: 0.999573}
-  m_LocalPosition: {x: -0.07751348, y: 1.328254, z: 0.0984869}
+  m_LocalRotation: {x: 0.000000119209275, y: 4.7584154e-12, z: 9.3131025e-10, w: 1}
+  m_LocalPosition: {x: 0.30067158, y: 1.8252561, z: -2.6529062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -19843,7 +19843,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.19, y: -107.106}
+  m_AnchoredPosition: {x: -12.189941, y: -107.10596}
   m_SizeDelta: {x: -1375.2, y: -715.601}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2076587297
@@ -20700,11 +20700,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1755282994500477457, guid: 95fd8457ff1638e42a69ded8db34d4de,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.80304766
+      objectReference: {fileID: 0}
     - target: {fileID: 2472941861418389924, guid: 95fd8457ff1638e42a69ded8db34d4de,
         type: 3}
       propertyPath: CrossHair
       value: 
       objectReference: {fileID: 246213747}
+    - target: {fileID: 3602488034905549907, guid: 95fd8457ff1638e42a69ded8db34d4de,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.80304796
+      objectReference: {fileID: 0}
+    - target: {fileID: 3602488034905549907, guid: 95fd8457ff1638e42a69ded8db34d4de,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.000000119209275
+      objectReference: {fileID: 0}
     - target: {fileID: 5401053777716401614, guid: 95fd8457ff1638e42a69ded8db34d4de,
         type: 3}
       propertyPath: Crosshair
@@ -20810,7 +20825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!1 &4883274550442690077 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 3359661192202098505, guid: 95fd8457ff1638e42a69ded8db34d4de,
+  m_CorrespondingSourceObject: {fileID: 4693888977175424023, guid: 95fd8457ff1638e42a69ded8db34d4de,
     type: 3}
   m_PrefabInstance: {fileID: 4883274550442690073}
   m_PrefabAsset: {fileID: 0}

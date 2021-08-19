@@ -22,7 +22,7 @@ namespace Data
             {
                 if (DataManager.instance.IsRemySelected.Value) return 0;
                 if (DataManager.instance.IsMeganSelected.Value) return 1;
-                if (DataManager.instance.IsMouseySelected.Value) return 2;
+                if (DataManager.instance.IsDogSelected.Value) return 2;
                 else
                 {
                     Debug.LogError("Player not found !");

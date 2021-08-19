@@ -82,7 +82,7 @@ public class SavePreset : MonoBehaviour
         dico[inputTextName][(FillPresets.ColumnNames.BreakForce)] = DataManager.instance.BreakForce.Value;
         dico[inputTextName][(FillPresets.ColumnNames.Remy)] = DataManager.instance.IsRemySelected.Value ? 1 : 0;
         dico[inputTextName][(FillPresets.ColumnNames.Megan)] = DataManager.instance.IsMeganSelected.Value ? 1 : 0;
-        dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = DataManager.instance.IsMouseySelected.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = DataManager.instance.IsDogSelected.Value ? 1 : 0;
         dico[inputTextName][(FillPresets.ColumnNames.AutoMode)] = DataManager.instance.IsAutoMode.Value ? 1 : 0;
         dico[inputTextName][(FillPresets.ColumnNames.SemiAutoMode)] = DataManager.instance.IsSemiAutoMode.Value ? 1 : 0;
         dico[inputTextName][(FillPresets.ColumnNames.ManualMode)] = DataManager.instance.IsManualMode.Value ? 1 : 0;
