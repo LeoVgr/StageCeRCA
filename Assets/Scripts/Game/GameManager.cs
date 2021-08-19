@@ -67,12 +67,12 @@ public class GameManager : Singleton<GameManager>
         {
             "Bienvenue dans ce tutoriel, nous allons ensemble voir les bases",
             "Le but du jeu est d'arriver au bout de ce couloir dans le temps imparti tout en marquant des points",
-            "Pour cela, tirez sur les images " + (DataManager.instance.IsCrosshairColorized.Value? "lorsque votre viseur devient vert en les survolants" : "que le chercheur vous a décrites"),
+            "Pour cela, tirez sur les images " + (DataManager.instance.IsCrosshairColorized.Value? "lorsque votre viseur devient vert en les survolants" : "que le chercheur vous a dÃ©crites"),
             (DataManager.instance.IsCrosshairColorized.Value? "Si votre viseur est rouge, il ne faut pas tirer dessus" : "Sinon il ne faut pas tirer dessus"),
             "Parfois, une tourelle fera son apparaition, empressez vous de la neutraliser",
             (InputManager.instance.IsUsingGamepad()? "Utilisez le joystick droit pour bouger la vue" : "Utilisez la souris pour bouger la vue"),
             (InputManager.instance.IsUsingGamepad()? "Appuyez sur [RT] pour tirer" : "Appuyer sur le clic gauche pour tirer"),
-            "Pour déplacer le chariot, "+(InputManager.instance.IsUsingGamepad()? "utilisez le joystick gauche" : "utilisez les touches [Z] et [S]"),
+            "Pour dÃ©placer le chariot, "+(InputManager.instance.IsUsingGamepad()? "utilisez le joystick gauche" : "utilisez les touches [Z] et [S]"),
             "Pour faire freiner le chariot, "+(InputManager.instance.IsUsingGamepad()? "appuyez sur [LT]" : "appuyez sur [Espace]"),
             "Tirez pour commencer."
         };
@@ -235,7 +235,7 @@ public class GameManager : Singleton<GameManager>
         //Enable the right character
         Remy.SetActive(DataManager.instance.IsRemySelected.Value);
         Megan.SetActive(DataManager.instance.IsMeganSelected.Value);
-        Mousey.SetActive(DataManager.instance.IsMouseySelected.Value);
+        Mousey.SetActive(DataManager.instance.IsDogSelected.Value);
         
         //Reset some values
         _isMazeGenerated = false;

@@ -152,7 +152,7 @@ public class FillPresets : MonoBehaviour
                         DataManager.instance.IsMeganSelected.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.Mousey:
-                        DataManager.instance.IsMouseySelected.SetValue(keyValuePair.Value >= 0.5f);
+                        DataManager.instance.IsDogSelected.SetValue(keyValuePair.Value >= 0.5f);
                         break;
                     case ColumnNames.AutoMode:
                         DataManager.instance.IsAutoMode.SetValue(keyValuePair.Value >= 0.5f);

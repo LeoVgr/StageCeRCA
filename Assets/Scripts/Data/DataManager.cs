@@ -23,7 +23,7 @@ public class DataManager : Singleton<DataManager>
     public FloatVariable BreakForce;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
-    public BoolVariable IsMouseySelected;
+    public BoolVariable IsDogSelected;
     public BoolVariable IsAutoMode;
     public BoolVariable IsSemiAutoMode;
     public BoolVariable IsManualMode;
@@ -79,7 +79,7 @@ public class DataManager : Singleton<DataManager>
       BreakForce.Reset();
       IsRemySelected.Reset();
       IsMeganSelected.Reset();
-      IsMouseySelected.Reset();
+      IsDogSelected.Reset();
       IsAutoMode.Reset();
       IsSemiAutoMode.Reset();
       IsManualMode.Reset();
