@@ -74,7 +74,7 @@ public class GameManager : Singleton<GameManager>
             (InputManager.instance.IsUsingGamepad()? "Appuyez sur [RT] pour tirer" : "Appuyer sur le clic gauche pour tirer"),
             "Pour déplacer le chariot, "+(InputManager.instance.IsUsingGamepad()? "utilisez le joystick gauche" : "utilisez les touches [Z] et [S]"),
             "Pour faire freiner le chariot, "+(InputManager.instance.IsUsingGamepad()? "appuyez sur [LT]" : "appuyez sur [Espace]"),
-            "Tirez pour commencer."
+            "Est-ce que tu es prêt à commencer ?"
         };
     }
     private void Update()
