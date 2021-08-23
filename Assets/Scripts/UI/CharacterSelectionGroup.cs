@@ -8,29 +8,29 @@ public class CharacterSelectionGroup : MonoBehaviour
 {    
     public GameObject RemyCharacterPreview;
     public GameObject MeganCharacterPreview;
-    public GameObject MouseyCharacterPreview;
+    public GameObject DogCharacterPreview;
 
     public Toggle ToggleRemy;
     public Toggle ToggleMegan;
-    public Toggle ToggleMousey;
+    public Toggle ToggleDog;
 
     private void Awake()
     {
         //Add event to change preview when a toggle is clicked
         ToggleRemy.onValueChanged.AddListener(delegate { SetRemyAsCharacter(ToggleRemy.isOn); });
         ToggleMegan.onValueChanged.AddListener(delegate { SetMeganAsCharacter(ToggleMegan.isOn); });
-        ToggleMousey.onValueChanged.AddListener(delegate { SetMouseyAsCharacter(ToggleMousey.isOn); });
+        ToggleDog.onValueChanged.AddListener(delegate { SetDogAsCharacter(ToggleDog.isOn); });
     }
     private void OnDestroy()
     {
         ToggleRemy.onValueChanged.RemoveListener(delegate { SetRemyAsCharacter(ToggleRemy.isOn); });
         ToggleMegan.onValueChanged.RemoveListener(delegate { SetMeganAsCharacter(ToggleMegan.isOn); });
-        ToggleMousey.onValueChanged.RemoveListener(delegate { SetMouseyAsCharacter(ToggleMousey.isOn); });
+        ToggleDog.onValueChanged.RemoveListener(delegate { SetDogAsCharacter(ToggleDog.isOn); });
     }
     private void Start()
     {
         //Enable or disable previews at the launch with value of atom's variables
-        SetMouseyAsCharacter(DataManager.instance.IsMouseySelected.Value);
+        SetDogAsCharacter(DataManager.instance.IsDogSelected.Value);
         SetMeganAsCharacter(DataManager.instance.IsMeganSelected.Value);
         SetRemyAsCharacter(DataManager.instance.IsRemySelected.Value);
     }
@@ -43,8 +43,8 @@ public class CharacterSelectionGroup : MonoBehaviour
     {
         RemyCharacterPreview.SetActive(isRemyCharacter);       
     }
-    private void SetMouseyAsCharacter(bool isMouseyCharacter)
+    private void SetDogAsCharacter(bool isDogCharacter)
     {
-        MouseyCharacterPreview.SetActive(isMouseyCharacter);        
+        DogCharacterPreview.SetActive(isDogCharacter);        
     }
 }

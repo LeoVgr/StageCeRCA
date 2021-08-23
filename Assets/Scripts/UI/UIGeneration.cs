@@ -15,8 +15,7 @@ using Random = UnityEngine.Random;
 public class UIGeneration : MonoBehaviour
 {
 
-    public GameObject mazeUI;
-    public GameObject inputIdentfiant;
+    public GameObject InputIdentfiant;
     public SavePreset SavePreset;
 
     
@@ -25,7 +24,7 @@ public class UIGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        idBaseScale = inputIdentfiant.transform.localScale;
+        idBaseScale = InputIdentfiant.transform.localScale;
     }
 
 
@@ -33,8 +32,8 @@ public class UIGeneration : MonoBehaviour
     {
         if (DataManager.instance.IdPlayer.Value.Length < 1)
         {
-            inputIdentfiant.transform.DOScale(inputIdentfiant.transform.localScale * Random.Range(1.1f, 1.5f), 0.2f)
-                .OnComplete(() => inputIdentfiant.transform.DOScale(idBaseScale, 0.2f));
+            InputIdentfiant.transform.DOScale(InputIdentfiant.transform.localScale * Random.Range(1.1f, 1.5f), 0.2f)
+                .OnComplete(() => InputIdentfiant.transform.DOScale(idBaseScale, 0.2f));
         }
         else
         {
@@ -48,8 +47,8 @@ public class UIGeneration : MonoBehaviour
     {
         if (DataManager.instance.IdPlayer.Value.Length < 1)
         {
-            inputIdentfiant.transform.DOScale(inputIdentfiant.transform.localScale * Random.Range(1.1f, 1.5f), 0.2f)
-                .OnComplete(() => inputIdentfiant.transform.DOScale(idBaseScale, 0.2f));
+            InputIdentfiant.transform.DOScale(InputIdentfiant.transform.localScale * Random.Range(1.1f, 1.5f), 0.2f)
+                .OnComplete(() => InputIdentfiant.transform.DOScale(idBaseScale, 0.2f));
         }
         else
         {

@@ -140,7 +140,7 @@ public class UIManager : Singleton<UIManager>
         FpsViewText.text = "" + (DataManager.instance.FpsCamera.Value ? "Oui" : "Non");
         ColorizedCrosshairText.text = "" + (DataManager.instance.IsCrosshairColorized.Value ? "Oui" : "Non");
         MovementModeText.text = "" + (DataManager.instance.IsAutoMode.Value ? "Auto" : (DataManager.instance.IsManualMode.Value ? "Manuel" : "Semi-Auto"));
-        CharacterText.text = "" + (DataManager.instance.IsMeganSelected.Value? "Megan" : (DataManager.instance.IsRemySelected.Value? "Remy" : "Mousey"));
+        CharacterText.text = "" + (DataManager.instance.IsMeganSelected.Value? "Megan" : (DataManager.instance.IsRemySelected.Value? "Remy" : "Dog"));
         SpeedText.text = "" + DataManager.instance.Speed.Value;
         BreakText.text = "" + DataManager.instance.BreakForce.Value;
     }

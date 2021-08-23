@@ -449,7 +449,6 @@ public class MazeGenerator : MonoBehaviour
         {
             MazeNode node = valuePair.Value;
 
-            //float wallPosition = _wallHeight / 2.0f + 0.5f;
             Vector3 baseVector = new Vector3(node.GetPosition().X * _cubeSize, 0, node.GetPosition().Z * _cubeSize);
 
 
@@ -458,13 +457,6 @@ public class MazeGenerator : MonoBehaviour
             //Create Floor
             GameObject floor = CreateFloor(i, node);
 
-            //GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //floor.transform.position =  new Vector3(node.GetPosition().X * _cubeSizeX, 0 ,node.GetPosition().Z * _cubeSizeZ);
-            //floor.transform.localScale = new Vector3(_cubeSizeX, 1, _cubeSizeZ);
-            //floor.name = node.GetDirection() + " Corridor floor " + i;
-            //floor.GetComponent<MeshRenderer>().material = floorMaterial;
-
-            //floor.transform.SetParent(_master.transform);
             #endregion
 
             #region Spawn Image
@@ -564,10 +556,6 @@ public class MazeGenerator : MonoBehaviour
             #endregion
 
             #region Spawn Wall
-
-
-            /*if (node.GetPreviousNode() != null && node.GetNextNode() != null)
-                Debug.Log("Number : " + i + " next " + node.GetNextNode().GetDirection() + " previous " + node.GetPreviousNode().GetDirection());*/
 
 
             WallsToDestroy(node.GetNextNode(), node.GetPreviousNode(), out Direction directionSupprPrevious, out Direction directionSupprNext);
@@ -742,16 +730,18 @@ public class MazeGenerator : MonoBehaviour
         if (useToSetImagePosition)
             n.SetIntImagePositon(i);
 
+        float midHeightOnWall = ((_wallHeight - 0.5f) / 2.0f) + 0.5f;
+
         switch (i)
         {
             case 0:
-                return new Vector3(np.X * _cubeSize + xDecal, _imageSize, np.Z * _cubeSize + zDecal);
+                return new Vector3(np.X * _cubeSize + xDecal, midHeightOnWall - midHeightOnWall/2.0f, np.Z * _cubeSize + zDecal);
             case 1:
-                return new Vector3(np.X * _cubeSize + xDecal, _wallHeight + (1 - _imageSize), np.Z * _cubeSize + zDecal);
+                return new Vector3(np.X * _cubeSize + xDecal, midHeightOnWall + midHeightOnWall/2.0f, np.Z * _cubeSize + zDecal);
             case 2:
-                return new Vector3(np.X * _cubeSize - xDecal, _imageSize, np.Z * _cubeSize - zDecal);
+                return new Vector3(np.X * _cubeSize - xDecal, midHeightOnWall - midHeightOnWall/2.0f, np.Z * _cubeSize - zDecal);
             case 3:
-                return new Vector3(np.X * _cubeSize - xDecal, _wallHeight + (1 - _imageSize), np.Z * _cubeSize - zDecal);
+                return new Vector3(np.X * _cubeSize - xDecal, midHeightOnWall + midHeightOnWall/2.0f, np.Z * _cubeSize - zDecal);
         }
 
 
