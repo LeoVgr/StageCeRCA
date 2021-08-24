@@ -278,7 +278,7 @@ MonoBehaviour:
   Direction: 0
   Sprite: {fileID: 0}
   ScoreUpText: {fileID: 1993744744068276680}
-  SplashImage: {fileID: 21300000, guid: f556e9231fe62b845bd38ce02f3ec6bd, type: 3}
+  SplashImage: {fileID: 21300000, guid: fbc1d04161f265a41a619a82e41b282a, type: 3}
   AudioValidate: {fileID: 3933361146657578940}
   AudioMiss: {fileID: 3256541757772262156}
   WayPointIndex: 0
@@ -730,7 +730,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d31af2876a67bf24bbd676121bde5ec7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: -1.61
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d31af2876a67bf24bbd676121bde5ec7,
         type: 3}
@@ -810,27 +810,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: bf4e380d08f5e964896aca1aa9f2f556,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bf4e380d08f5e964896aca1aa9f2f556,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bf4e380d08f5e964896aca1aa9f2f556,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bf4e380d08f5e964896aca1aa9f2f556,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.1556354
+      value: -4.19
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bf4e380d08f5e964896aca1aa9f2f556,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4124806
+      value: -0.349
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bf4e380d08f5e964896aca1aa9f2f556,
         type: 3}

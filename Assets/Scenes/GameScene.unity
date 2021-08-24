@@ -1233,7 +1233,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88df4ef0bb9f3bf47bba5df74ebc9b7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fbc1d04161f265a41a619a82e41b282a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2391,7 +2391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &266788258
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10244,7 +10244,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88df4ef0bb9f3bf47bba5df74ebc9b7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fbc1d04161f265a41a619a82e41b282a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12395,7 +12395,7 @@ MonoBehaviour:
   KeyImage: {fileID: 686261955}
   ButtonImage: {fileID: 578730461}
   TipText: {fileID: 1317153675}
-  SplashSprite: {fileID: 21300000, guid: 88df4ef0bb9f3bf47bba5df74ebc9b7d, type: 3}
+  SplashSprite: {fileID: 21300000, guid: fbc1d04161f265a41a619a82e41b282a, type: 3}
   CountDownText: {fileID: 617799848}
   MainPauseUI: {fileID: 2120489070}
   OptionsPauseUI: {fileID: 2051977053}
@@ -19261,7 +19261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88df4ef0bb9f3bf47bba5df74ebc9b7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fbc1d04161f265a41a619a82e41b282a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
