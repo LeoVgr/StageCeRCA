@@ -175,7 +175,7 @@ public class UIManager : Singleton<UIManager>
         splashImage.sprite = SplashSprite;
 
         //Random color
-        Color[] colors = { Color.red, Color.blue, Color.green };
+        Color[] colors = { new Color(0.25f,0.89f,0.67f), new Color(0.89f, 0.83f, 0.21f), new Color(1, 0.48f, 0.36f) };
         splashImage.color = colors[Random.Range(0, 3)];
 
         splash.transform.parent = HurtScreen.transform;

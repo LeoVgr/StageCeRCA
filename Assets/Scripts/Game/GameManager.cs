@@ -69,12 +69,12 @@ public class GameManager : Singleton<GameManager>
             "Le but du jeu est d'arriver au bout de ce couloir dans le temps imparti tout en marquant des points",
             "Pour cela, tirez sur les images " + (DataManager.instance.IsCrosshairColorized.Value? "lorsque votre viseur devient vert en les survolants" : "que le chercheur vous a décrites"),
             (DataManager.instance.IsCrosshairColorized.Value? "Si votre viseur est rouge, il ne faut pas tirer dessus" : "Sinon il ne faut pas tirer dessus"),
-            "Parfois, une tourelle fera son apparaition, empressez vous de la neutraliser",
+            "Parfois, une tourelle fera son apparition, empressez vous de la neutraliser",
             (InputManager.instance.IsUsingGamepad()? "Utilisez le joystick droit pour bouger la vue" : "Utilisez la souris pour bouger la vue"),
             (InputManager.instance.IsUsingGamepad()? "Appuyez sur [RT] pour tirer" : "Appuyer sur le clic gauche pour tirer"),
             "Pour déplacer le chariot, "+(InputManager.instance.IsUsingGamepad()? "utilisez le joystick gauche" : "utilisez les touches [Z] et [S]"),
             "Pour faire freiner le chariot, "+(InputManager.instance.IsUsingGamepad()? "appuyez sur [LT]" : "appuyez sur [Espace]"),
-            "Est-ce que tu es prêt à commencer ?"
+            "Prêt à jouer ?"
         };
     }
     private void Update()
@@ -320,7 +320,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            UIManager.instance.TipText.text = "Est-ce que tu es prêt à commencer ?";           
+            UIManager.instance.TipText.text = "Prêt à jouer ?";           
         }
 
         //Check if the player is ready
