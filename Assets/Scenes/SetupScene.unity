@@ -3105,7 +3105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MOUSEY
+  m_text: DOGGEY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2b157f3ca95b9d645afb24151ec1e53e, type: 2}
   m_sharedMaterial: {fileID: 7164527884369922173, guid: 2b157f3ca95b9d645afb24151ec1e53e,
