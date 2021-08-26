@@ -18,9 +18,23 @@ MonoBehaviour:
   - StreamingAssets/Audio/hit.ogg
   - StreamingAssets/Audio/validate.ogg
   - StreamingAssets/Audio/faillure.ogg
-  - StreamingAssets/Audio/increaseScore.ogg
-  - StreamingAssets/Audio/decreaseScore.ogg
+  - StreamingAssets/Audio/increase_score.ogg
+  - StreamingAssets/Audio/decrease_score.ogg
+  - StreamingAssets/Audio/spawn_turret.ogg
+  - StreamingAssets/Audio/spawn_target.ogg
+  - StreamingAssets/Audio/despawn_turret.ogg
+  - StreamingAssets/Audio/despawn_target.ogg
+  - StreamingAssets/Audio/driving.ogg
+  - StreamingAssets/Audio/brake.ogg
   clips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

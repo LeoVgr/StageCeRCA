@@ -14,12 +14,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             if (_instance == null)
             {
                 _instance = GameObject.FindObjectOfType<T>();
-                if (_instance == null)
-                {
-                    var singletonObj = new GameObject();
-                    singletonObj.name = typeof(T).ToString();
-                    _instance = singletonObj.AddComponent<T>();
-                }
             }
             return _instance;
         }
@@ -44,7 +38,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
         if (keepAlive)
         {
-            DontDestroyOnLoad(gameObject);
+            DontDestroy(gameObject);
         }
 
         if (_instance == null)
@@ -59,4 +53,15 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     }
 
+    private void DontDestroy(GameObject o)
+    {
+        var parent = o.transform.parent;
+        if(parent == null)
+            DontDestroyOnLoad(o);
+        else
+        {
+            transform.SetParent(null);
+            DontDestroy(o);
+        }
+    }
 }

@@ -281,6 +281,8 @@ MonoBehaviour:
   SplashImage: {fileID: 21300000, guid: fbc1d04161f265a41a619a82e41b282a, type: 3}
   AudioValidate: {fileID: 3933361146657578940}
   AudioMiss: {fileID: 3256541757772262156}
+  AudioSpawn: {fileID: 0}
+  AudioDespawn: {fileID: 0}
   WayPointIndex: 0
   IsNegateImage: 0
   HasToBeShot: 0
@@ -590,6 +592,16 @@ PrefabInstance:
     - target: {fileID: 763208263, guid: eea72ecab5d9d7648a31a320e3f22978, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2859028151596291126, guid: eea72ecab5d9d7648a31a320e3f22978,
+        type: 3}
+      propertyPath: SoundIndex
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3919990082075095098, guid: eea72ecab5d9d7648a31a320e3f22978,
+        type: 3}
+      propertyPath: SoundIndex
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7246851261278487827, guid: eea72ecab5d9d7648a31a320e3f22978,
         type: 3}

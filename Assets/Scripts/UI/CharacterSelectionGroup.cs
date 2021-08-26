@@ -30,9 +30,10 @@ public class CharacterSelectionGroup : MonoBehaviour
     private void Start()
     {
         //Enable or disable previews at the launch with value of atom's variables
-        SetDogAsCharacter(DataManager.instance.IsDogSelected.Value);
-        SetMeganAsCharacter(DataManager.instance.IsMeganSelected.Value);
-        SetRemyAsCharacter(DataManager.instance.IsRemySelected.Value);
+        var dataManager = DataManager.instance;
+        SetDogAsCharacter(dataManager.IsDogSelected.Value);
+        SetMeganAsCharacter(dataManager.IsMeganSelected.Value);
+        SetRemyAsCharacter(dataManager.IsRemySelected.Value);
     }
 
     private void SetMeganAsCharacter(bool isMeganCharacter)
