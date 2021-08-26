@@ -16,11 +16,11 @@ namespace Audio
         
         public bool IsSfxSound;
 
-        private void Update()
+        private void Start()
         {
-            if (!Source)
-                return;
-
+            if (Source == null)
+                Source = GetComponent<AudioSource>();
+            
             //Adjust the sound of the clip depending options
             if (!IsSfxSound)
             {
@@ -32,14 +32,8 @@ namespace Audio
                 if (DataManager.instance.SfxVolume)
                     Source.volume = DataManager.instance.SfxVolume.Value;
             }
-        }
-
-        private void Start()
-        {
-            if (Source == null)
-                Source = GetComponent<AudioSource>();
-
-            if (References.clips.Count <= SoundIndex)
+            
+            if (References.clips.Length <= SoundIndex || References.clips[SoundIndex] == null)
             {
                 Debug.LogError("sound file at path : " + Application.dataPath + "/" +
                                References.AudioFilesPaths[SoundIndex] + " not found ! GameObject : " + gameObject.name +

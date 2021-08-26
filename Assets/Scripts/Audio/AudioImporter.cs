@@ -18,7 +18,7 @@ namespace Audio
         {
             _myIndex = index++;
             DontDestroyOnLoad(gameObject);
-
+            
             Debug.Log("Start loading audio file "+path);
             Importer.Loaded += OnLoaded;
             Importer.Import(path);
@@ -28,7 +28,7 @@ namespace Audio
         private void OnLoaded(AudioClip clip)
         {
             Debug.Log("Loading audio file "+path);
-            References.clips.Insert(_myIndex,clip);
+            References.clips[_myIndex] = clip;
         }
 
         private void Update()

@@ -28,6 +28,9 @@ public class Target : MonoBehaviour
     [Header("Sound Effect")] 
     public AudioSource AudioValidate;
     public AudioSource AudioMiss;
+    public AudioSource AudioSpawn;
+    public AudioSource AudioDespawn;
+    
     
     [HideInInspector()]
     public int WayPointIndex;
@@ -175,6 +178,8 @@ public class Target : MonoBehaviour
         
             if (DataManager.instance.ImageTime.Value > 0.1f)
                 DOVirtual.DelayedCall(DataManager.instance.ImageTime.Value, Hide);
+            
+            AudioSpawn.Play();
         }
     }
     private void Hide()
@@ -193,6 +198,8 @@ public class Target : MonoBehaviour
 
             //Set some variables
             _hasBeenShown = true;
+            
+            AudioDespawn.Play();
         }  
     }
     public void Hit()

@@ -13,6 +13,7 @@ namespace Audio
         public GameObject PrefabImporter;
 
         private static bool _launched = false;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -22,9 +23,9 @@ namespace Audio
                 Destroy(this.gameObject);
                 return;
             }
-            
+
             DontDestroyOnLoad(this.gameObject);
-            References.clips = new List<AudioClip>();
+            References.clips = new AudioClip[References.AudioFilesPaths.Length];
 
             for (int i = 0; i < References.AudioFilesPaths.Length; i++)
             {
