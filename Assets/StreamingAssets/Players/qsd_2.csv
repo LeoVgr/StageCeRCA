@@ -1,0 +1,28 @@
+Date et heure;25/08/2021 17:00:53
+Type Camera;TPS
+Identifiant;qsd
+Temps de jeu (s);23,20871
+Nombres d'images;5
+Cibles manquees;2
+Longueur;10
+Nombre  Virages;0
+Images Random;Non
+Taille images;1,5
+Temps images;2
+Seed;1
+Preset;[TempSave]
+Score;200
+Tir Actif;Oui
+Score Affiche;Oui
+Vitesse;10
+Force frein;1
+Viseur colorise;Oui
+Mode deplacement;Manuel
+Personnage;Dog
+
+Nom image;Position image;Temps affichage;Cible a toucher ?;Cible effectivement touchee ?;Succes ?
+01_N_Diapositive01.jpg;3;2,004497;Non;Non;Oui;
+02_N_Diapositive02.jpg;2;1,916588;Non;Oui;Non;
+03_T1_Diapositive03.jpg;0;2,008396;Oui;Non;Non;
+04Diapositive04.jpg;2;1,783939;Oui;Oui;Oui;
+05_N_Diapositive05.jpg;1;2,012211;Non;Non;Oui;

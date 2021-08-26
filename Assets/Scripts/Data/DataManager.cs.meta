@@ -3,7 +3,59 @@ guid: 13c9ef69c2f5c5d428828678a0f82141
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Seed: {fileID: 11400000, guid: a2f15147b769162489a3b044f75ee289, type: 2}
+  - CorridorLength: {fileID: 11400000, guid: 2dc1943597174f84486651913eb770a1, type: 2}
+  - TurnNumber: {fileID: 11400000, guid: 40aef326c318a824b892d716ae64543a, type: 2}
+  - CorridorWidth: {fileID: 11400000, guid: 5135faead9e1c8c459aeb40effcf96c5, type: 2}
+  - WallHeight: {fileID: 11400000, guid: d23eeb8e098569c4a9f02845d6cf1c61, type: 2}
+  - ImageSize: {fileID: 11400000, guid: e324e0a6612f28d4b99a46dc504a000f, type: 2}
+  - ImageTime: {fileID: 11400000, guid: 1e797b68470377a4dabedfa80e7bbbeb, type: 2}
+  - Timer: {fileID: 11400000, guid: cf8f2140f8d78604cb077c0164cf87fd, type: 2}
+  - RandomizeImage: {fileID: 11400000, guid: a2165e6d4fa685946883ddbb84fa857c, type: 2}
+  - DisplayScore: {fileID: 11400000, guid: 858691476eddd37479523f19b4fd1735, type: 2}
+  - FpsCamera: {fileID: 11400000, guid: 98b5640cb8025db499a56c1c9d15e6a0, type: 2}
+  - IsShootActivated: {fileID: 11400000, guid: be80e8c6a3b5fe244b0b5d53bd4f9bf0, type: 2}
+  - ShowEndTime: {fileID: 11400000, guid: 22b35ac1c0554014ba5a08c9b5ea179c, type: 2}
+  - Speed: {fileID: 11400000, guid: 816eb1ce8001d314e948df7ae900e6f2, type: 2}
+  - BreakForce: {fileID: 11400000, guid: fc95649e560a9974280aab331d4b7545, type: 2}
+  - IsRemySelected: {fileID: 11400000, guid: 557e3dd6a7f645d4680d5f22cd7d93ce, type: 2}
+  - IsMeganSelected: {fileID: 11400000, guid: 4acb55f8e8d45794783f2bee59d95473, type: 2}
+  - IsDogSelected: {fileID: 11400000, guid: 81aeeadf71bf55248a1b7ad8b43a96e0, type: 2}
+  - IsAutoMode: {fileID: 11400000, guid: 9be0cf80078b3f442b5b07660f12bb8a, type: 2}
+  - IsSemiAutoMode: {fileID: 11400000, guid: e3c59c096728a5c499dd14fa94896890, type: 2}
+  - IsManualMode: {fileID: 11400000, guid: e1d9061d3fc21824ea90d032409d1f2d, type: 2}
+  - IdPlayer: {fileID: 11400000, guid: 6b40424f6d528704191880f7de751b65, type: 2}
+  - MusicVolume: {fileID: 11400000, guid: 311b6e26860b232418f58c16c53e30a9, type: 2}
+  - SfxVolume: {fileID: 11400000, guid: 0ffa6401be7bed041b38ace6b1418bcf, type: 2}
+  - IsCrosshairColorized: {fileID: 11400000, guid: 2869ffac9f3a6f848931055bdca58792,
+      type: 2}
+  - TargetCount: {fileID: 11400000, guid: c4d80aeec2a5caf448224d260d301704, type: 2}
+  - TargetHit: {fileID: 11400000, guid: 0bf3203a3ed23d643b809180df1979e3, type: 2}
+  - PresetName: {fileID: 11400000, guid: efc805666c764a54e8c61b8dfe779195, type: 2}
+  - TimeToShootList: {fileID: 11400000, guid: 1da2ab57a39258f4f95803b7908c839d, type: 2}
+  - TargetList: {fileID: 11400000, guid: 26a3e23c8a051fd4fb496d204fcdb5f3, type: 2}
+  - Score: {fileID: 11400000, guid: 430167122483e4f4db623e61b74f5da2, type: 2}
+  - Player: {fileID: 11400000, guid: 568a051a508ce914588e3e41642586b7, type: 2}
+  - DistanceToShow: {fileID: 11400000, guid: 279a6b959a0a9724b92d6d34af42480f, type: 2}
+  - ScreenShakesValues: {fileID: 11400000, guid: 211d00b7c00e89345a44e7bb56f594ef,
+      type: 2}
+  - LifeAmount: {fileID: 11400000, guid: e587d2d333bf98e4aaa414ceeb1bcba8, type: 2}
+  - WaypointIndex: {fileID: 11400000, guid: bce1e3eec14fdbe48b9eb6e5ac0fc20b, type: 2}
+  - IsTutorial: {fileID: 11400000, guid: 152d2dfdc75fa354297f356c6377d1a2, type: 2}
+  - PlayerWaypointChange: {fileID: 11400000, guid: 1a8098de4b8af1044b9498a43a61127d,
+      type: 2}
+  - UpdateEvent: {fileID: 11400000, guid: 4035d89cfd7d5e449a5469e71d543269, type: 2}
+  - WidthHeight: {fileID: 11400000, guid: e42d50b71015c8e45b6c2c1b636b9d96, type: 2}
+  - MinMaxLength: {fileID: 11400000, guid: d70f7324bd9d473429b24c21629a29b6, type: 2}
+  - MinMaxSize: {fileID: 11400000, guid: 3663bb87a75ccab44b90f99a743fd8d9, type: 2}
+  - MinMaxImageSizeSlider: {fileID: 11400000, guid: 570d3118573cfe6479bb07f25259ebca,
+      type: 2}
+  - MinMaxHeightSlider: {fileID: 11400000, guid: 17c2e8f2bb03eb6499562a496d4b078e,
+      type: 2}
+  - MinMaxTurnSlider: {fileID: 11400000, guid: bdb6e285fd60e804a83a57a79606f46f, type: 2}
+  - MinMaxImagesTime: {fileID: 11400000, guid: 58e6676d91cf7ee4cb4b88f6be2d93ea, type: 2}
+  - MinMaxMusicVolume: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
