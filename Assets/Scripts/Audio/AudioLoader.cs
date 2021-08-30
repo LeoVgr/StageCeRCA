@@ -24,7 +24,7 @@ namespace Audio
             //Adjust the sound of the clip depending options
             if (!IsSfxSound)
             {
-                if(DataManager.instance.MusicVolume)
+                if (DataManager.instance.MusicVolume)
                     Source.volume = DataManager.instance.MusicVolume.Value;
             }
             else
