@@ -260,7 +260,8 @@ public class GameManager : Singleton<GameManager>
         InputManager.instance.EnableMovementInputs();
 
         //Play Music
-        MusicManager.Play();
+        if(!MusicManager.isPlaying)
+            MusicManager.Play();
     }
     public void EnterPauseStatement()
     {
@@ -396,7 +397,7 @@ public class GameManager : Singleton<GameManager>
     public void ExitRunningStatement()
     {
         //Hide the UI
-        UIManager.instance.ShowInGameUI(false);
+        UIManager.instance.ShowInGameUI(false);        
     }
     public void ExitPauseStatement()
     {
@@ -454,6 +455,8 @@ public class GameManager : Singleton<GameManager>
 
         //Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+
+        MusicManager.Stop();
     }
     public void Exit()
     {

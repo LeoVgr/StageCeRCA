@@ -16,11 +16,11 @@ namespace Audio
         
         public bool IsSfxSound;
 
-        private void Start()
+        private void Update()
         {
-            if (Source == null)
-                Source = GetComponent<AudioSource>();
-            
+            if (!Source)
+                return;
+
             //Adjust the sound of the clip depending options
             if (!IsSfxSound)
             {
@@ -32,7 +32,13 @@ namespace Audio
                 if (DataManager.instance.SfxVolume)
                     Source.volume = DataManager.instance.SfxVolume.Value;
             }
-            
+        }
+
+        private void Start()
+        {
+            if (Source == null)
+                Source = GetComponent<AudioSource>();
+
             if (References.clips.Length <= SoundIndex || References.clips[SoundIndex] == null)
             {
                 Debug.LogError("sound file at path : " + Application.dataPath + "/" +
@@ -47,16 +53,18 @@ namespace Audio
             Source.clip = referencesClip;
 
             if (Source.playOnAwake)
-                Source.Play();         
+                Source.Play();
         }
 
         public void SetVolumeMusic(float value)
         {
             DataManager.instance.MusicVolume.Value = value;
+            Source.volume = DataManager.instance.MusicVolume.Value;
         }
         public void SetSfxVolumeMusic(float value)
         {
             DataManager.instance.SfxVolume.Value = value;
+            Source.volume = DataManager.instance.SfxVolume.Value;
         }
     }
 }
