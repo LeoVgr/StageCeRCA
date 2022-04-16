@@ -15,8 +15,7 @@ using Random = UnityEngine.Random;
 public class UIGeneration : MonoBehaviour
 {
 
-    public GameObject mazeUI;
-    public GameObject inputIdentfiant;
+    public GameObject InputIdentfiant;
     public SavePreset SavePreset;
 
     
@@ -25,20 +24,36 @@ public class UIGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        idBaseScale = inputIdentfiant.transform.localScale;
+        idBaseScale = InputIdentfiant.transform.localScale;
     }
 
 
-    public void GenerateMaze()
+    public void Play()
     {
         if (DataManager.instance.IdPlayer.Value.Length < 1)
         {
-            inputIdentfiant.transform.DOScale(inputIdentfiant.transform.localScale * Random.Range(1.1f, 1.5f), 0.2f)
-                .OnComplete(() => inputIdentfiant.transform.DOScale(idBaseScale, 0.2f));
+            InputIdentfiant.transform.DOScale(InputIdentfiant.transform.localScale * Random.Range(1.1f, 1.5f), 0.2f)
+                .OnComplete(() => InputIdentfiant.transform.DOScale(idBaseScale, 0.2f));
         }
         else
         {
             SavePreset.AddItemThenSave(true);
+            DataManager.instance.IsTutorial.Value = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+
+    public void PlayTutorial()
+    {
+        if (DataManager.instance.IdPlayer.Value.Length < 1)
+        {
+            InputIdentfiant.transform.DOScale(InputIdentfiant.transform.localScale * Random.Range(1.1f, 1.5f), 0.2f)
+                .OnComplete(() => InputIdentfiant.transform.DOScale(idBaseScale, 0.2f));
+        }
+        else
+        {
+            SavePreset.AddItemThenSave(true);
+            DataManager.instance.IsTutorial.Value = true;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }

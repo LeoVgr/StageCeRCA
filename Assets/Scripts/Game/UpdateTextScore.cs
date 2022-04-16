@@ -25,25 +25,28 @@ public class UpdateTextScore : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
+        //Get references 
         _textMeshProUi = GetComponent<TextMeshProUGUI>();
         _text = GetComponent<Text>();
+
+        //Register event
         DataManager.instance.UpdateEvent.Register(UpdateText);
+
+        //Display or not the score according to the atom's variable
         ShowText(DataManager.instance.DisplayScore);
+    }
+    private void OnDestroy()
+    {
+        if(DataManager.instance.UpdateEvent)
+            DataManager.instance.UpdateEvent.Unregister(UpdateText);
     }
 
     private void ShowText(bool val)
     {
         gameObject.SetActive(val);
     }
-
-    private void OnDestroy()
-    {
-        DataManager.instance.UpdateEvent.Unregister(UpdateText);
-    }
-
-
     void UpdateText(int i)
     {
         ScaleEvent();
@@ -64,7 +67,6 @@ public class UpdateTextScore : MonoBehaviour
         }      
         
     }
-
     private void ScaleEvent()
     {
         var localScale = transform.localScale;
@@ -76,7 +78,6 @@ public class UpdateTextScore : MonoBehaviour
                 new Vector3(localScale.x + x, localScale.y + y, localScale.z), 0.35f)
             .SetEase(Ease.OutBounce).SetLoops(2, LoopType.Yoyo);
     }
-
     private void ColorEvent()
     {
         if (_text)
@@ -84,7 +85,6 @@ public class UpdateTextScore : MonoBehaviour
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() => _text.material.DOColor(Color.yellow * 2.0f, "_Color", 0.35f));
     }
-
     private void UpdateFloatText(float f)
     {
         if (_textMeshProUi)

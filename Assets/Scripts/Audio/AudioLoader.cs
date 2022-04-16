@@ -24,7 +24,7 @@ namespace Audio
             //Adjust the sound of the clip depending options
             if (!IsSfxSound)
             {
-                if(DataManager.instance.MusicVolume)
+                if (DataManager.instance.MusicVolume)
                     Source.volume = DataManager.instance.MusicVolume.Value;
             }
             else
@@ -39,7 +39,7 @@ namespace Audio
             if (Source == null)
                 Source = GetComponent<AudioSource>();
 
-            if (References.clips.Count <= SoundIndex)
+            if (References.clips.Length <= SoundIndex || References.clips[SoundIndex] == null)
             {
                 Debug.LogError("sound file at path : " + Application.dataPath + "/" +
                                References.AudioFilesPaths[SoundIndex] + " not found ! GameObject : " + gameObject.name +
@@ -53,7 +53,18 @@ namespace Audio
             Source.clip = referencesClip;
 
             if (Source.playOnAwake)
-                Source.Play();         
+                Source.Play();
+        }
+
+        public void SetVolumeMusic(float value)
+        {
+            DataManager.instance.MusicVolume.Value = value;
+            Source.volume = DataManager.instance.MusicVolume.Value;
+        }
+        public void SetSfxVolumeMusic(float value)
+        {
+            DataManager.instance.SfxVolume.Value = value;
+            Source.volume = DataManager.instance.SfxVolume.Value;
         }
     }
 }

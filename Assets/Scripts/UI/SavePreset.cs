@@ -82,7 +82,7 @@ public class SavePreset : MonoBehaviour
         dico[inputTextName][(FillPresets.ColumnNames.BreakForce)] = DataManager.instance.BreakForce.Value;
         dico[inputTextName][(FillPresets.ColumnNames.Remy)] = DataManager.instance.IsRemySelected.Value ? 1 : 0;
         dico[inputTextName][(FillPresets.ColumnNames.Megan)] = DataManager.instance.IsMeganSelected.Value ? 1 : 0;
-        dico[inputTextName][(FillPresets.ColumnNames.Mousey)] = DataManager.instance.IsMouseySelected.Value ? 1 : 0;
+        dico[inputTextName][(FillPresets.ColumnNames.Dog)] = DataManager.instance.IsDogSelected.Value ? 1 : 0;
         dico[inputTextName][(FillPresets.ColumnNames.AutoMode)] = DataManager.instance.IsAutoMode.Value ? 1 : 0;
         dico[inputTextName][(FillPresets.ColumnNames.SemiAutoMode)] = DataManager.instance.IsSemiAutoMode.Value ? 1 : 0;
         dico[inputTextName][(FillPresets.ColumnNames.ManualMode)] = DataManager.instance.IsManualMode.Value ? 1 : 0;
@@ -180,8 +180,8 @@ public class SavePreset : MonoBehaviour
                 return "Remy";
             case FillPresets.ColumnNames.Megan:
                 return "Megan";
-            case FillPresets.ColumnNames.Mousey:
-                return "Mousey";
+            case FillPresets.ColumnNames.Dog:
+                return "Dog";
             case FillPresets.ColumnNames.AutoMode:
                 return "AutoMode";
             case FillPresets.ColumnNames.SemiAutoMode:

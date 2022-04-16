@@ -50,7 +50,8 @@ public class MazeGenerator : MonoBehaviour
     #region "Attributs"
     [Header("Prefab, material,...")]
     public GameObject PrefabWall;
-    public GameObject PrefabCeiling;
+    public GameObject PrefabEndCeiling;
+    public GameObject PrefabCeilingMiddlePart;
     public GameObject PrefabColumn;
     public GameObject PrefabStraightRail;
     public GameObject PrefabRotatingRail;
@@ -181,7 +182,7 @@ public class MazeGenerator : MonoBehaviour
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture(wwwImageFilePath);
                 yield return www.SendWebRequest();
 
-                if (www.isNetworkError || www.isHttpError)
+                if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
                 {
                     Debug.Log(www.error);
                 }
@@ -443,15 +444,12 @@ public class MazeGenerator : MonoBehaviour
     private void BuildMaze()
     {
         int i = 0;
-        float decal = -0.5f;
-
 
         foreach (var valuePair in _maze)
         {
             MazeNode node = valuePair.Value;
 
-            float wallPosition = _wallHeight / 2.0f + 0.5f;
-            Vector3 baseVector = new Vector3(node.GetPosition().X * _cubeSize, wallPosition, node.GetPosition().Z * _cubeSize);
+            Vector3 baseVector = new Vector3(node.GetPosition().X * _cubeSize, 0, node.GetPosition().Z * _cubeSize);
 
 
             #region Spawn Floor
@@ -459,13 +457,6 @@ public class MazeGenerator : MonoBehaviour
             //Create Floor
             GameObject floor = CreateFloor(i, node);
 
-            //GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //floor.transform.position =  new Vector3(node.GetPosition().X * _cubeSizeX, 0 ,node.GetPosition().Z * _cubeSizeZ);
-            //floor.transform.localScale = new Vector3(_cubeSizeX, 1, _cubeSizeZ);
-            //floor.name = node.GetDirection() + " Corridor floor " + i;
-            //floor.GetComponent<MeshRenderer>().material = floorMaterial;
-
-            //floor.transform.SetParent(_master.transform);
             #endregion
 
             #region Spawn Image
@@ -567,35 +558,32 @@ public class MazeGenerator : MonoBehaviour
             #region Spawn Wall
 
 
-            /*if (node.GetPreviousNode() != null && node.GetNextNode() != null)
-                Debug.Log("Number : " + i + " next " + node.GetNextNode().GetDirection() + " previous " + node.GetPreviousNode().GetDirection());*/
-
-
             WallsToDestroy(node.GetNextNode(), node.GetPreviousNode(), out Direction directionSupprPrevious, out Direction directionSupprNext);
 
 
             //Create Wall South
-            if (directionSupprPrevious != Direction.South && directionSupprNext != Direction.South)
-                CreateWall(Direction.South, floor.transform, baseVector, decal, node);
-
+            if (directionSupprPrevious != Direction.South && directionSupprNext != Direction.South)           
+                CreateWall(Direction.South, floor.transform, baseVector);
+                                           
             //Create Wall North
-            if (directionSupprPrevious != Direction.North && directionSupprNext != Direction.North)
-                CreateWall(Direction.North, floor.transform, baseVector, decal, node);
+            if (directionSupprPrevious != Direction.North && directionSupprNext != Direction.North)           
+                CreateWall(Direction.North, floor.transform, baseVector);                                        
 
             //Create Wall East
-            if (directionSupprPrevious != Direction.East && directionSupprNext != Direction.East)
-                CreateWall(Direction.East, floor.transform, baseVector, decal, node);
-
+            if (directionSupprPrevious != Direction.East && directionSupprNext != Direction.East)        
+                CreateWall(Direction.East, floor.transform, baseVector);
+                                            
             //Create Wall West
-            if (directionSupprPrevious != Direction.West && directionSupprNext != Direction.West)
-                CreateWall(Direction.West, floor.transform, baseVector, decal, node);
+            if (directionSupprPrevious != Direction.West && directionSupprNext != Direction.West)           
+                CreateWall(Direction.West, floor.transform, baseVector);
+               
+
 
             //Create Ceiling 
             CreateCeiling(floor.transform, baseVector);
 
-            //Create Columns 
-            CreateCeiling(floor.transform, baseVector);
-           
+            //Create Columns
+            CreateColumns(directionSupprPrevious, directionSupprNext, floor.transform, baseVector);
 
             #endregion
 
@@ -614,7 +602,7 @@ public class MazeGenerator : MonoBehaviour
         }
 
         //Create Rails
-        CreateRail(/*node.GetNextNode(), node.GetPreviousNode(), node, floor.transform, baseVector*/);
+        CreateRail();
     }
     private void CreateFakeTarget(MazeNode node, GameObject floor)
     {
@@ -742,16 +730,18 @@ public class MazeGenerator : MonoBehaviour
         if (useToSetImagePosition)
             n.SetIntImagePositon(i);
 
+        float midHeightOnWall = ((_wallHeight - 0.5f) / 2.0f) + 0.5f;
+
         switch (i)
         {
             case 0:
-                return new Vector3(np.X * _cubeSize + xDecal, _imageSize, np.Z * _cubeSize + zDecal);
+                return new Vector3(np.X * _cubeSize + xDecal, midHeightOnWall - midHeightOnWall/2.0f, np.Z * _cubeSize + zDecal);
             case 1:
-                return new Vector3(np.X * _cubeSize + xDecal, _wallHeight + (1 - _imageSize), np.Z * _cubeSize + zDecal);
+                return new Vector3(np.X * _cubeSize + xDecal, midHeightOnWall + midHeightOnWall/2.0f, np.Z * _cubeSize + zDecal);
             case 2:
-                return new Vector3(np.X * _cubeSize - xDecal, _imageSize, np.Z * _cubeSize - zDecal);
+                return new Vector3(np.X * _cubeSize - xDecal, midHeightOnWall - midHeightOnWall/2.0f, np.Z * _cubeSize - zDecal);
             case 3:
-                return new Vector3(np.X * _cubeSize - xDecal, _wallHeight + (1 - _imageSize), np.Z * _cubeSize - zDecal);
+                return new Vector3(np.X * _cubeSize - xDecal, midHeightOnWall + midHeightOnWall/2.0f, np.Z * _cubeSize - zDecal);
         }
 
 
@@ -850,32 +840,165 @@ public class MazeGenerator : MonoBehaviour
         //Destroy the rail's model
         Destroy(rail);
     }
-    private void CreateWall(Direction d, Transform floorTransform, Vector3 basePosition, float decal, MazeNode node)
+    private void CreateWall(Direction d, Transform floorTransform, Vector3 basePosition)
     {
+        //Instantiate first wall
         GameObject wall = Instantiate(PrefabWall);
-        wall.transform.localScale = new Vector3(0.06f * _cubeSize, 0.15f * _wallHeight, 0.41f);
+        wall.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+        //Compute wall bounds for prefab of wall since they're composed of multiple gameobject
+        Bounds bounds = new Bounds();
+        bounds.size = Vector3.zero; // reset
+        Renderer[] renderers = wall.GetComponentsInChildren<Renderer>();
+        foreach (Renderer rend in renderers)
+        {
+            bounds.Encapsulate(rend.bounds);
+        }
+
+        //Declare some usefull variable
+        int i = 1;
+        float wallHeight = bounds.extents.y * 2;
+        float wallLength = bounds.extents.x * 2;
+
+        float currentHeight = wallHeight/2.0f; //Because the first wall is half in the ground (we don't wanna see space between floor and wall)
+        float currentLength = wallLength;
+
+        Vector3 startingPosition; 
 
         switch (d)
         {
             case Direction.North:
                 wall.name = "North Wall ";
-                wall.transform.position = basePosition + new Vector3(0, 0, _cubeSize / 2.0f - decal);
-                wall.transform.rotation = Quaternion.Euler(0, -180, 0);
+
+                //Define the starting position (bottom left corner of the section)
+                startingPosition = basePosition + new Vector3((-_cubeSize / 2.0f) + wallLength / 2.0f, 0, (_cubeSize / 2.0f));
+                wall.transform.position = startingPosition;
+                wall.transform.rotation = Quaternion.Euler(0,-180,0);
+
+                //Add walls to fit he length of the section
+                i = 1;
+                while(currentLength < _cubeSize)
+                {
+                    GameObject nextWall = Instantiate(PrefabWall);
+                    nextWall.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                    nextWall.transform.rotation = Quaternion.Euler(0, -180, 0);
+                    nextWall.transform.position = startingPosition + new Vector3(i * (wallLength * (2.7f / 3.0f)), 0, 0);
+                    nextWall.transform.parent = wall.transform;
+                    ++i;
+                    currentLength += wallLength * (2.7f/3.0f);
+                }
+
+                //Add walls to fit the height of the section
+                i = 1;
+                while (currentHeight < _wallHeight)
+                {
+                    GameObject nextWall = Instantiate(wall);
+                    nextWall.transform.position = startingPosition + new Vector3(0, i * (wallHeight/2.0f), 0);
+                    nextWall.transform.parent = wall.transform;
+                    ++i;
+                    currentHeight += wallHeight/2.0f;
+                }
+
                 break;
             case Direction.East:
                 wall.name = "East Wall ";
-                wall.transform.position = basePosition + new Vector3(_cubeSize / 2.0f - decal, 0, 0);
+
+                //Define the starting position (bottom left corner of the section)
+                startingPosition = basePosition + new Vector3((_cubeSize / 2.0f), 0, (-_cubeSize / 2.0f) + wallLength / 2.0f);
+                wall.transform.position = startingPosition;
                 wall.transform.rotation = Quaternion.Euler(0, -90, 0);
+
+                //Add walls to fit he length of the section
+                i = 1;
+                while (currentLength < _cubeSize)
+                {
+                    GameObject nextWall = Instantiate(PrefabWall);
+                    nextWall.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                    nextWall.transform.rotation = Quaternion.Euler(0, -90, 0);
+                    nextWall.transform.position = startingPosition + new Vector3(0, 0, i * (wallLength * (2.7f / 3.0f)));
+                    nextWall.transform.parent = wall.transform;
+                    ++i;
+                    currentLength += wallLength * (2.7f / 3.0f);
+                }
+
+                //Add walls to fit the height of the section
+                i = 1;
+                while (currentHeight < _wallHeight)
+                {
+                    GameObject nextWall = Instantiate(wall);
+                    nextWall.transform.position = startingPosition + new Vector3(0, i * (wallHeight / 2.0f), 0);
+                    nextWall.transform.parent = wall.transform;
+                    ++i;
+                    currentHeight += wallHeight / 2.0f;
+                }
+
+
                 break;
             case Direction.West:
                 wall.name = "West Wall ";
-                wall.transform.position = basePosition + new Vector3(-_cubeSize / 2.0f + decal, 0, 0);
+
+                //Define the starting position (bottom left corner of the section)
+                startingPosition = basePosition + new Vector3((-_cubeSize / 2.0f), 0, (-_cubeSize / 2.0f) + wallLength / 2.0f);
+                wall.transform.position = startingPosition;
                 wall.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+                //Add walls to fit he length of the section
+                i = 1;
+                while (currentLength < _cubeSize)
+                {
+                    GameObject nextWall = Instantiate(PrefabWall);
+                    nextWall.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                    nextWall.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    nextWall.transform.position = startingPosition + new Vector3(0, 0, i * (wallLength * (2.7f / 3.0f)));
+                    nextWall.transform.parent = wall.transform;
+                    ++i;
+                    currentLength += wallLength * (2.7f / 3.0f);
+                }
+
+                //Add walls to fit the height of the section
+                i = 1;
+                while (currentHeight < _wallHeight)
+                {
+                    GameObject nextWall = Instantiate(wall);
+                    nextWall.transform.position = startingPosition + new Vector3(0, i * (wallHeight / 2.0f), 0);
+                    nextWall.transform.parent = wall.transform;
+                    ++i;
+                    currentHeight += wallHeight / 2.0f;
+                }
+
                 break;
             case Direction.South:
                 wall.name = "South Wall ";
-                wall.transform.position = basePosition + new Vector3(0, 0, -_cubeSize / 2.0f + decal);
+
+                //Define the starting position (bottom left corner of the section)
+                startingPosition = basePosition + new Vector3((-_cubeSize / 2.0f) + wallLength / 2.0f, 0, (-_cubeSize / 2.0f));
+                wall.transform.position = startingPosition;
                 wall.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+                //Add walls to fit he length of the section
+                i = 1;
+                while (currentLength < _cubeSize)
+                {
+                    GameObject nextWall = Instantiate(PrefabWall);
+                    nextWall.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                    nextWall.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    nextWall.transform.position = startingPosition + new Vector3(i * (wallLength * (2.7f / 3.0f)), 0, 0);
+                    nextWall.transform.parent = wall.transform;
+                    ++i;
+                    currentLength += wallLength * (2.7f / 3.0f);
+                }
+
+                //Add walls to fit the height of the section
+                i = 1;
+                while (currentHeight < _wallHeight)
+                {
+                    GameObject nextWall = Instantiate(wall);
+                    nextWall.transform.position = startingPosition + new Vector3(0, i * (wallHeight / 2.0f), 0);
+                    nextWall.transform.parent = wall.transform;
+                    ++i;
+                    currentHeight += wallHeight / 2.0f;
+                }
+
                 break;
         }
 
@@ -884,13 +1007,101 @@ public class MazeGenerator : MonoBehaviour
     private void CreateCeiling(Transform floorTransform, Vector3 basePosition)
     {
         //Create ceiling
-        GameObject ceiling = Instantiate(PrefabCeiling);
+        GameObject ceiling = Instantiate(PrefabCeilingMiddlePart);
+        ceiling.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        ceiling.transform.rotation = Quaternion.identity;
 
-        ceiling.transform.position = new Vector3(basePosition.x, DataManager.instance.WallHeight.Value + 3f, basePosition.z);
-        ceiling.transform.rotation = Quaternion.Euler(90, 90 * Random.Range(0, 3), 0);
-        ceiling.transform.localScale = new Vector3(0.09f * _cubeSize, 0.09f * _cubeSize, 0.6f);
+        //Compute ceiling bounds for prefab of wall since they're composed of multiple gameobject
+        Bounds bounds = new Bounds();
+        bounds.size = Vector3.zero; // reset
+        Renderer[] renderers = ceiling.GetComponentsInChildren<Renderer>();
+        foreach (Renderer rend in renderers)
+        {
+            bounds.Encapsulate(rend.bounds);
+        }
+
+        //Usefull variables
+        float ceilingLengthX = bounds.extents.x * 2;
+        float ceilingLengthY = bounds.extents.y * 2;
+        float ceilingLengthZ = bounds.extents.z * 2;
+
+        //print(ceilingLengthX +" "+ ceilingLengthY+" "+ ceilingLengthZ);
+        float currentFilledPart;
+
+        Vector3 startingPosition = new Vector3(basePosition.x - (_cubeSize / 2.0f), DataManager.instance.WallHeight.Value + ceilingLengthY/2.0f, basePosition.z - (_cubeSize / 2.0f));
+        ceiling.transform.position = startingPosition;
+
+        //Fill X axis
+        int i = 1;
+        currentFilledPart = ceilingLengthX / 2.0f;
+        while (currentFilledPart < _cubeSize)
+        {
+            GameObject nextCeiling = Instantiate(PrefabCeilingMiddlePart);
+            nextCeiling.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+            nextCeiling.transform.rotation = Quaternion.identity;
+
+            nextCeiling.transform.position = startingPosition + new Vector3(i * (ceilingLengthX / 2.0f), 0, 0);
+            nextCeiling.transform.parent = ceiling.transform;
+            currentFilledPart += ceilingLengthX / 2.0f;
+            ++i;
+        }
+
+        //Fill Z axis
+        i = 1;
+        currentFilledPart = ceilingLengthZ / 2.0f;
+        while (currentFilledPart < _cubeSize)
+        {
+            GameObject nextCeiling = Instantiate(ceiling);
+
+            nextCeiling.transform.position = startingPosition + new Vector3(0, 0, i * (ceilingLengthZ *(1.7f/ 2.0f)));
+            nextCeiling.transform.parent = floorTransform.transform;
+            currentFilledPart += ceilingLengthZ * (1.7f / 2.0f);
+            ++i;
+        }
+
         ceiling.transform.SetParent(floorTransform);
 
+    }
+    private void CreateColumns(Direction previousDirection, Direction nextDirection, Transform floorTransform, Vector3 basePosition)
+    {
+        GameObject leftColumns = Instantiate(PrefabColumn);        
+        leftColumns.transform.localScale = new Vector3(0.25f, 0.25f , 0.3f + (1.0f / 5.0f) * (_wallHeight - 4f)); //We scale z cause prefab has to be rotated
+        leftColumns.transform.rotation = Quaternion.Euler(90, 0, 0);
+
+        GameObject rightColumns = Instantiate(leftColumns);
+        float columnsHeight = leftColumns.GetComponent<Renderer>().bounds.extents.y * 2;
+
+
+        switch (nextDirection)
+        {
+            case Direction.East:
+                leftColumns.transform.position = basePosition + new Vector3(_cubeSize / 2.0f, _wallHeight/2.0f + 0.5f, _cubeSize * (0.8f / 2.0f));
+                rightColumns.transform.position = basePosition + new Vector3(_cubeSize / 2.0f, _wallHeight / 2.0f + 0.5f, -_cubeSize * (0.8f / 2.0f));
+                break;
+
+            case Direction.West:
+                leftColumns.transform.position = basePosition + new Vector3(-_cubeSize / 2.0f, _wallHeight / 2.0f + 0.5f, -_cubeSize * (0.8f / 2.0f));
+                rightColumns.transform.position = basePosition + new Vector3(-_cubeSize / 2.0f, _wallHeight / 2.0f + 0.5f, _cubeSize * (0.8f / 2.0f));
+                break;
+
+            case Direction.North:
+                leftColumns.transform.position = basePosition + new Vector3(-_cubeSize * (0.8f / 2.0f), _wallHeight / 2.0f + 0.5f, _cubeSize /2.0f);
+                rightColumns.transform.position = basePosition + new Vector3(_cubeSize * (0.8f / 2.0f), _wallHeight / 2.0f + 0.5f, _cubeSize / 2.0f);
+                break;
+
+            case Direction.South:
+                leftColumns.transform.position = basePosition + new Vector3(-_cubeSize * (0.8f / 2.0f), _wallHeight / 2.0f + 0.5f, -_cubeSize /2.0f);
+                rightColumns.transform.position = basePosition + new Vector3(-_cubeSize * (0.8f / 2.0f), _wallHeight / 2.0f + 0.5f, _cubeSize / 2.0f);
+                break;
+
+            default:
+                Destroy(leftColumns);
+                Destroy(rightColumns);
+                break;
+        }
+
+        leftColumns.transform.parent = floorTransform;
+        rightColumns.transform.parent = floorTransform;
     }
     /* --- */
     #endregion

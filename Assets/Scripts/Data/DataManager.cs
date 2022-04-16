@@ -23,7 +23,7 @@ public class DataManager : Singleton<DataManager>
     public FloatVariable BreakForce;
     public BoolVariable IsRemySelected;
     public BoolVariable IsMeganSelected;
-    public BoolVariable IsMouseySelected;
+    public BoolVariable IsDogSelected;
     public BoolVariable IsAutoMode;
     public BoolVariable IsSemiAutoMode;
     public BoolVariable IsManualMode;
@@ -42,6 +42,7 @@ public class DataManager : Singleton<DataManager>
     public Vector2Variable ScreenShakesValues;
     public FloatVariable LifeAmount;
     public IntVariable WaypointIndex;
+    public BoolVariable IsTutorial;
 
     [Header("Atoms Events")]
     public IntEvent PlayerWaypointChange;
@@ -78,7 +79,7 @@ public class DataManager : Singleton<DataManager>
       BreakForce.Reset();
       IsRemySelected.Reset();
       IsMeganSelected.Reset();
-      IsMouseySelected.Reset();
+      IsDogSelected.Reset();
       IsAutoMode.Reset();
       IsSemiAutoMode.Reset();
       IsManualMode.Reset();
@@ -97,13 +98,7 @@ public class DataManager : Singleton<DataManager>
       ScreenShakesValues.Reset();
       LifeAmount.Reset();
       WaypointIndex.Reset();
-      WidthHeight.Reset();
-      MinMaxLength.Reset();
-      MinMaxSize.Reset();
-      MinMaxImageSizeSlider.Reset();
-      MinMaxHeightSlider.Reset();
       MinMaxTurnSlider.Reset();
-      MinMaxImagesTime.Reset();
-      MinMaxMusicVolume.Reset();
-}
+      IsTutorial.Reset();
+    }
 }
