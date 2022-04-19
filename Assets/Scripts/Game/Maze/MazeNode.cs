@@ -27,7 +27,7 @@ public class MazeNode
     {
         _nodePosition.X = x;
         _nodePosition.Z = z;
-        _nodePosition.ImagePositionInt = -1;
+        _nodePosition.ImageLocation = ImageLoc.None;
         _imagePosition = Vector3.zero;
         _direction = d;
     }
@@ -53,9 +53,9 @@ public class MazeNode
     {
         return _nodePosition;
     }
-    public void SetIntImagePositon(int pos)
+    public void SetImageLocation(ImageLoc loc)
     {
-        _nodePosition.ImagePositionInt = pos;
+        _nodePosition.ImageLocation = loc;
     }
     public MazeNode GetPreviousNode()
     {
@@ -73,7 +73,7 @@ public class MazeNode
     {
         _nextNode = nextNode;
     }
-    public void SetImagePositon(Vector3 pos)
+    public void SetImageLocation(Vector3 pos)
     {
         _imagePosition = pos;
     }
@@ -101,9 +101,9 @@ public class MazeNode
     {
         _direction = newDirection;
     }
-    public int GetIntImagePosition()
+    public ImageLoc GetImageLocation()
     {
-        return _nodePosition.ImagePositionInt;
+        return _nodePosition.ImageLocation;
     }
     #endregion
 

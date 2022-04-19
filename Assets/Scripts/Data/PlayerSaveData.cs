@@ -132,7 +132,7 @@ namespace Data
             foreach (GameObject o in DataManager.instance.TargetList.List)
             {
                 text += o.GetComponent<Target>().Sprite.name + ";" +
-                        o.GetComponent<Target>().TargetPosition + ";" +
+                        o.GetComponent<Target>().TargetLocation + ";" +
                         (o.GetComponent<Target>().GetTimeToShoot()) + ";" +
                         (o.GetComponent<Target>().HasToBeShot ? "Oui" : "Non") + ";" +
                         (o.GetComponent<Target>().GetIsHit() ? "Oui" : "Non") + ";" +

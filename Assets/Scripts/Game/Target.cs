@@ -37,7 +37,7 @@ public class Target : MonoBehaviour
     [HideInInspector()]
     public bool IsNegateImage;
     public bool HasToBeShot;
-    public int TargetPosition;
+    public ImageLoc TargetLocation;
 
     private List<Collider> _colliders;
     private SpriteRenderer _spriteRenderer;
