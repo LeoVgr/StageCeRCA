@@ -73,7 +73,7 @@ public class MazeNode
     {
         _nextNode = nextNode;
     }
-    public void SetImageLocation(Vector3 pos)
+    public void SetImagePosition(Vector3 pos)
     {
         _imagePosition = pos;
     }

@@ -200,7 +200,7 @@ public class MazeGenerator : MonoBehaviour
                 }
                 else
                 {
-                    Texture2D myTexture = ((DownloadHandlerTexture) www.downloadHandler).texture;
+                    Texture2D myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
                     Sprite sprite = Sprite.Create(myTexture, new Rect(0, 0, myTexture.width, myTexture.height),
                         new Vector2(0.5f, 0.5f));
                     sprite.name = file.Name;
@@ -320,7 +320,6 @@ public class MazeGenerator : MonoBehaviour
 
         //Save previous node, all nodes know previous and next node
         MazeNode previousNode = _maze[position];
-
         for (int i = 0; i < _startLength - 1; i++)
         {
             position = GetPosition(newDirection, position);
@@ -390,7 +389,7 @@ public class MazeGenerator : MonoBehaviour
                 oldImagePosition = currentImagePosition;*/
 
 
-                _maze[position].SetImageLocation(imagePosition);
+                _maze[position].SetImagePosition(imagePosition);
                 _maze[position].SetNegateImage(waypoint.position);
             }
 
@@ -414,25 +413,42 @@ public class MazeGenerator : MonoBehaviour
             if (mazeNode.Value.IsCorner() && mazeNode.Value.GetImagePosition() != Vector3.zero)
             {
                 bool isBot = Random.Range(0, 2) == 0;
-                switch (mazeNode.Value.GetNextNode().GetDirection())
+                Direction previousDir = mazeNode.Value.GetPreviousNode().GetDirection();
+                Direction nextDir = mazeNode.Value.GetNextNode().GetDirection();
+                switch (nextDir)
                 {
                     case Direction.North:
-                        if (mazeNode.Value.GetPreviousNode().GetDirection() == Direction.East)
+                        if (previousDir == Direction.East)
+                        {
                             mazeNode.Value.SetNegateImage(true);
-                        if (mazeNode.Value.GetPreviousNode().GetDirection() == Direction.West)
+                            mazeNode.Value.SetImagePosition(ImagePosition(isBot ? ImageLoc.BotRight : ImageLoc.TopRight,
+                                mazeNode.Value));
+                        }
+                        else if (previousDir == Direction.West)
+                        {
                             mazeNode.Value.SetNegateImage(false);
-                        mazeNode.Value.SetImageLocation(ImagePosition(isBot ? ImageLoc.BotLeft : ImageLoc.TopLeft, mazeNode.Value));
+                            mazeNode.Value.SetImagePosition(ImagePosition(isBot ? ImageLoc.BotLeft : ImageLoc.TopLeft,
+                                mazeNode.Value));
+                        }
+                        else
+                        {
+                            Debug.LogError("Impossible next Direction");
+                        }
+
                         break;
                     case Direction.East:
-                        if (mazeNode.Value.GetPreviousNode().GetDirection() == Direction.North ||
-                            mazeNode.Value.GetPreviousNode().GetDirection() == Direction.East)
+                        if (previousDir == Direction.North)
                             mazeNode.Value.SetNegateImage(false);
-                        mazeNode.Value.SetImageLocation(ImagePosition(isBot ? ImageLoc.BotLeft : ImageLoc.TopLeft, mazeNode.Value));
+                        else if (previousDir == Direction.East)
+                            mazeNode.Value.SetNegateImage(false);
+                        mazeNode.Value.SetImagePosition(ImagePosition(isBot ? ImageLoc.BotLeft : ImageLoc.TopLeft,
+                            mazeNode.Value));
                         break;
                     case Direction.West:
-                        if (mazeNode.Value.GetPreviousNode().GetDirection() == Direction.North)
+                        if (previousDir == Direction.North)
                             mazeNode.Value.SetNegateImage(true);
-                        mazeNode.Value.SetImageLocation(ImagePosition(isBot ? ImageLoc.BotRight : ImageLoc.TopRight, mazeNode.Value));
+                        mazeNode.Value.SetImagePosition(ImagePosition(isBot ? ImageLoc.BotRight : ImageLoc.TopRight,
+                            mazeNode.Value));
                         break;
                 }
             }
@@ -516,15 +532,16 @@ public class MazeGenerator : MonoBehaviour
                         turretTarget.Direction = node.GetDirection();
                         turretTarget.Sprite = selectedSprite;
 
-                        //Depending the target side left or right 
-                        turretTarget.IsNegateImage = node.IsNegateImagePosition();
+                        //Depending the target side left or right
+                        var isNegatePosition = node.IsNegateImagePosition();
+                        turretTarget.IsNegateImage = isNegatePosition;
                         turretTarget.WayPointIndex = i;
                         turretTarget.TargetLocation = node.GetImageLocation();
 
                         var transform1 = turretTarget.transform;
                         transform1.localScale = _imageSize * transform1.localScale;
 
-                        if (node.IsNegateImagePosition())
+                        if (isNegatePosition)
                         {
                             SpriteRenderer spireRenderer = turretTarget.GetComponentInChildren<SpriteRenderer>();
                             if (spireRenderer)
@@ -624,8 +641,9 @@ public class MazeGenerator : MonoBehaviour
     {
         for (int j = 0; j < 4; ++j)
         {
-            ImageLoc targetLoc = (ImageLoc) j;
-            if (node.GetImageLocation() != targetLoc)
+            ImageLoc targetLoc = (ImageLoc)j;
+            ImageLoc imageLoc = node.GetImageLocation();
+            if (imageLoc != targetLoc)
             {
                 Vector3 positon = ImagePosition(targetLoc, node, false);
 
@@ -635,35 +653,36 @@ public class MazeGenerator : MonoBehaviour
 
                 if (node.IsCorner())
                 {
+                    Direction currentDirection = node.GetDirection();
                     switch (node.GetNextNode().GetDirection())
                     {
                         case Direction.North:
-                            if (node.GetDirection() == Direction.East)
+                            if (currentDirection == Direction.East)
                                 removeLeft = true;
-                            if (node.GetDirection() == Direction.West)
-                                removeLeft = true;
+                            if (currentDirection == Direction.West)
+                                removeRight = true;
                             break;
                         case Direction.East:
-                            if (node.GetDirection() == Direction.North)
-                                removeLeft = true;
-                            if (node.GetDirection() == Direction.West)
+                            if (currentDirection == Direction.North)
                                 removeRight = true;
+                            if (currentDirection == Direction.West)
+                                removeLeft = true;
                             break;
 
                         case Direction.West:
-                            if (node.GetDirection() == Direction.East)
-                                removeLeft = true;
-                            if (node.GetDirection() == Direction.North)
+                            if (currentDirection == Direction.East)
                                 removeRight = true;
+                            if (currentDirection == Direction.North)
+                                removeLeft = true;
                             break;
                     }
 
-                    if (removeLeft && j < 2)
+                    if (removeLeft && (targetLoc == ImageLoc.BotLeft || targetLoc == ImageLoc.TopLeft))
                     {
                         create = false;
                     }
 
-                    if (removeRight && j >= 2)
+                    if (removeRight && (targetLoc == ImageLoc.BotRight || targetLoc == ImageLoc.TopRight))
                     {
                         create = false;
                     }
@@ -699,7 +718,7 @@ public class MazeGenerator : MonoBehaviour
 
     private Vector3 GenerateRandomImagePosition(MazeNode n, out ImageLoc imageLoc)
     {
-        imageLoc = (ImageLoc) Random.Range(0, 4);
+        imageLoc = (ImageLoc)Random.Range(0, 4);
         return ImagePosition(imageLoc, n);
     }
 
@@ -714,10 +733,14 @@ public class MazeGenerator : MonoBehaviour
         switch (direction)
         {
             case Direction.North:
-            case Direction.South:
                 xDecal = _cubeSize / 2.0f - 1.0f;
                 break;
+            case Direction.South:
+                xDecal = -_cubeSize / 2.0f + 1.0f;
+                break;
             case Direction.East:
+                zDecal = -_cubeSize / 2.0f + 1.0f;
+                break;
             case Direction.West:
                 zDecal = _cubeSize / 2.0f - 1.0f;
                 break;
@@ -728,22 +751,25 @@ public class MazeGenerator : MonoBehaviour
 
         float midHeightOnWall = ((_wallHeight - 0.5f) / 2.0f) + 0.5f;
 
-        switch ((ImageLoc) loc)
+        switch ((ImageLoc)loc)
         {
             case ImageLoc.BotRight:
                 // Bot Right
-                return new Vector3(position.X * _cubeSize + xDecal, midHeightOnWall - midHeightOnWall / 2.0f, position.Z * _cubeSize + zDecal);
+                return new Vector3(position.X * _cubeSize + xDecal, midHeightOnWall - midHeightOnWall / 2.0f,
+                    position.Z * _cubeSize + zDecal);
             case ImageLoc.TopRight:
                 // Top Right
-                return new Vector3(position.X * _cubeSize + xDecal, midHeightOnWall + midHeightOnWall / 2.0f, position.Z * _cubeSize + zDecal);
+                return new Vector3(position.X * _cubeSize + xDecal, midHeightOnWall + midHeightOnWall / 2.0f,
+                    position.Z * _cubeSize + zDecal);
             case ImageLoc.BotLeft:
                 // Bot Left
-                return new Vector3(position.X * _cubeSize - xDecal, midHeightOnWall - midHeightOnWall / 2.0f, position.Z * _cubeSize - zDecal);
+                return new Vector3(position.X * _cubeSize - xDecal, midHeightOnWall - midHeightOnWall / 2.0f,
+                    position.Z * _cubeSize - zDecal);
             case ImageLoc.TopLeft:
                 // Top Left
-                return new Vector3(position.X * _cubeSize - xDecal, midHeightOnWall + midHeightOnWall / 2.0f, position.Z * _cubeSize - zDecal);
+                return new Vector3(position.X * _cubeSize - xDecal, midHeightOnWall + midHeightOnWall / 2.0f,
+                    position.Z * _cubeSize - zDecal);
         }
-
 
         return Vector3.zero;
     }
@@ -802,7 +828,6 @@ public class MazeGenerator : MonoBehaviour
 
         return Direction.East;
     }
-
 
     /* Build physical parts of the mine*/
     private GameObject CreateFloor(int index, MazeNode node)
@@ -1097,23 +1122,31 @@ public class MazeGenerator : MonoBehaviour
         switch (nextDirection)
         {
             case Direction.East:
-                leftColumns.transform.position = basePosition + new Vector3(_cubeSize / 2.0f, _wallHeight/2.0f + 0.5f, _cubeSize * (0.8f / 2.0f));
-                rightColumns.transform.position = basePosition + new Vector3(_cubeSize / 2.0f, _wallHeight / 2.0f + 0.5f, -_cubeSize * (0.8f / 2.0f));
+                leftColumns.transform.position = basePosition + new Vector3(_cubeSize / 2.0f, _wallHeight / 2.0f + 0.5f,
+                    _cubeSize * (0.8f / 2.0f));
+                rightColumns.transform.position = basePosition + new Vector3(_cubeSize / 2.0f,
+                    _wallHeight / 2.0f + 0.5f, -_cubeSize * (0.8f / 2.0f));
                 break;
 
             case Direction.West:
-                leftColumns.transform.position = basePosition + new Vector3(-_cubeSize / 2.0f, _wallHeight / 2.0f + 0.5f, -_cubeSize * (0.8f / 2.0f));
-                rightColumns.transform.position = basePosition + new Vector3(-_cubeSize / 2.0f, _wallHeight / 2.0f + 0.5f, _cubeSize * (0.8f / 2.0f));
+                leftColumns.transform.position = basePosition + new Vector3(-_cubeSize / 2.0f,
+                    _wallHeight / 2.0f + 0.5f, -_cubeSize * (0.8f / 2.0f));
+                rightColumns.transform.position = basePosition + new Vector3(-_cubeSize / 2.0f,
+                    _wallHeight / 2.0f + 0.5f, _cubeSize * (0.8f / 2.0f));
                 break;
 
             case Direction.North:
-                leftColumns.transform.position = basePosition + new Vector3(-_cubeSize * (0.8f / 2.0f), _wallHeight / 2.0f + 0.5f, _cubeSize /2.0f);
-                rightColumns.transform.position = basePosition + new Vector3(_cubeSize * (0.8f / 2.0f), _wallHeight / 2.0f + 0.5f, _cubeSize / 2.0f);
+                leftColumns.transform.position = basePosition + new Vector3(-_cubeSize * (0.8f / 2.0f),
+                    _wallHeight / 2.0f + 0.5f, _cubeSize / 2.0f);
+                rightColumns.transform.position = basePosition + new Vector3(_cubeSize * (0.8f / 2.0f),
+                    _wallHeight / 2.0f + 0.5f, _cubeSize / 2.0f);
                 break;
 
             case Direction.South:
-                leftColumns.transform.position = basePosition + new Vector3(-_cubeSize * (0.8f / 2.0f), _wallHeight / 2.0f + 0.5f, -_cubeSize /2.0f);
-                rightColumns.transform.position = basePosition + new Vector3(-_cubeSize * (0.8f / 2.0f), _wallHeight / 2.0f + 0.5f, _cubeSize / 2.0f);
+                leftColumns.transform.position = basePosition + new Vector3(-_cubeSize * (0.8f / 2.0f),
+                    _wallHeight / 2.0f + 0.5f, -_cubeSize / 2.0f);
+                rightColumns.transform.position = basePosition + new Vector3(-_cubeSize * (0.8f / 2.0f),
+                    _wallHeight / 2.0f + 0.5f, _cubeSize / 2.0f);
                 break;
 
             default:
